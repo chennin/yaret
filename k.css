@@ -50,3 +50,4 @@ table thead {
 	font-weight: bold;
 	text-align: center;
 }
+p.disclaimer { font-size: 70%; text-align: center; margin-left: auto;  margin-right: auto; width:60%; }

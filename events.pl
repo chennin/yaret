@@ -6,7 +6,7 @@ use LWP::UserAgent;
 use POSIX qw/floor strftime/;
 use DateTime;
 use CGI "meta";
-use CGI::Carp qw(warningsToBrowser fatalsToBrowser);
+#use CGI::Carp qw(warningsToBrowser fatalsToBrowser);
 use File::Temp qw/tempfile/;
 
 my $json = JSON::XS->new();
@@ -57,22 +57,28 @@ push(@dcs, \%nadc);
 push(@dcs, \%eudc);
 
 foreach my $dc (@dcs) {
-#  foreach my $zoneid ( @{ $dc->{"ids"} } ) { print $zoneid; }
-
-}
-foreach my $dc (@dcs) {
   my ($temp, $filename) = tempfile("retXXXXX", TMPDIR => 1, UNLINK => 0);
-  my $html = new CGI;#::Compress::Gzip;
+  my $html = new CGI;
 #print $html->header; # HTTP header
 
   print $temp $html->start_html(
       -title => "YARET",
+      -encoding => 'UTF-8',
       -style => { -src => 'k.css'},
       -head => meta({-http_equiv => 'Refresh',
         -content => '60'}),
       );
   print $temp "<center><h3>Yet Another Rift Event Tracker</h3>";
-  print $temp "<div>This one with more colors</div></center>\n";
+  print $temp "<p>This one with more colors</p>\n";
+
+  print $temp "<p>\n";
+  foreach my $otherdc (@dcs) {
+        if ($dc != $otherdc) {
+                print $temp '<a href="'. $otherdc->{"shortname"} . '.html">' . $otherdc->{"shortname"} . "</a> ";
+        }
+        else { print $temp $dc->{"shortname"} . " "; }
+  }
+  print $temp "</p></center>\n";
 
   my @headers = ("Shard", "Zone", "Event Name", "Elapsed Time");
   print $temp "<table>";
@@ -98,7 +104,7 @@ foreach my $dc (@dcs) {
         my $time = floor((time - $zone->{"started"})/60);
 
         my $class = "oldnews"; my $place = 1;
-        if ($zone->{"zone"} =~ /^(The Dendrome|Steppes of Infinity|Morban|Ashora|Kingsward)$/) { $class = "relevant"; $place = 0; }
+        if ($zone->{"zone"} =~ /^(The Dendrome|Steppes of Infinity|Morban|Ashora|Kingsward|Das Dendrom|Steppen der Unendlichkeit|Königszirkel|Le Rhizome|Steppes de l'Infini|Protectorat du Roi)$/) { $class = "relevant"; $place = 0; }
 
         if ($zone->{"name"} eq "Hooves and Horns") { $class .= " pony"; }
 #      if ($zone->{"name"} eq "The Awakening") { $class .= " pony"; }
@@ -123,9 +129,10 @@ foreach my $dc (@dcs) {
   my $dt = DateTime->now(time_zone => $dc->{"tz"});
   print $temp '<p align="center"><small>Generated ' . $dt->strftime("%F %T %Z") . '</small></p>';
 
+  print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n"; 
   print $temp $html->end_html;
 
   close $temp;
-  chmod "0644", $filename;
+  chmod oct("0644"), $filename;
   rename($filename, "/var/www/rift/" . $dc->{"shortname"} . ".html");
 }
