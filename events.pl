@@ -67,7 +67,7 @@ foreach my $dc (@dcs) {
   print $temp $html->start_html(
       -title => "YARET",
       -encoding => 'UTF-8',
-      -style => { -src => 'k.css'},
+      -style => { -src => 'ret.css'},
       -head => meta({-http_equiv => 'Refresh',
         -content => '60'}),
       );
