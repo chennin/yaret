@@ -19,12 +19,15 @@ position: absolute;
 					z-index: 98;
 width: 220px;
 				}
+.olddesc{border-top: 1px dotted gray}
 .new{font-style: italic;}
 .label{font-weight: bold;}
 .end{color:#F00}
-.relevant{color:#6FF}
-.oldnews{color:#CCC}
+.relevant{color:#FFF}
+.oldnews{color:#999}
 .pony{color:#F3C !important}
+.behemoth {color: #F99 !important}
+.volan {color:#FFC !important}
 table {
 	margin-left: auto;
 	margin-right: auto;
@@ -46,8 +49,13 @@ table tbody:nth-child(2n+1) {
 table tbody tr:hover {
 	background-color: #333333;
 }
+table tbody tr.firstold {
+	border-top: 1px dotted gray;
+
+}
 table thead {
 	font-weight: bold;
 	text-align: center;
 }
 p.disclaimer { font-size: 70%; text-align: center; margin-left: auto;  margin-right: auto; width:60%; }
+caption {margin-top: 10px;}
