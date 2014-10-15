@@ -7,6 +7,7 @@ use POSIX qw/floor strftime/;
 use DateTime;
 use CGI "meta";
 use CGI::Carp qw(warningsToBrowser fatalsToBrowser);
+use File::Temp qw/tempfile/;
 
 my $json = JSON::XS->new();
 my @euids = qw/2702 2714 2711 2721 2741 2722/;
@@ -30,43 +31,65 @@ my %usnames = (
 
 my $ua = LWP::UserAgent->new(
     agent => 'Opera/9.80 (X11; Linux x86_64) Presto/2.12.388 Version/12.16',
-    timeout => 30,
+    timeout => 5,
     );
 
 my $usurl = "http://chat-us.riftgame.com:8080/chatservice/zoneevent/list?shardId=";
 my $euurl = "http://chat-eu.riftgame.com:8080/chatservice/zoneevent/list?shardId=";
 
-my $html = new CGI;#::Compress::Gzip;
-#print $html->header; # HTTP header
+my %nadc = (
+        url => "http://chat-us.riftgame.com:8080/chatservice/zoneevent/list?shardId=",
+        shortname => "na",
+        names => \%usnames,
+        ids => \@usids,
+        tz => "America/Los_Angeles",
+);
+my %eudc = (
+        url => "http://chat-eu.riftgame.com:8080/chatservice/zoneevent/list?shardId=",
+        shortname => "eu",
+        names => \%eunames,
+        ids => \@euids,
+        tz => "GMT",
+);
 
-print $html->start_html(
-    -title => "YARET",
-#    -script => { -type =>'JAVASCRIPT', -src => "sorttable.js", },
-    -style => { -src => 'k.css'},
-#    -onLoad => 'javascript:var myTH = document.getElementsByTagName("th")[0]; sorttable.innerSortFunction.apply(myTH, []);', # browser sort by name after load - cheat
-    -head => meta({-http_equiv => 'Refresh',
-                -content => '60'}),
-    );
+my @dcs = ();
+push(@dcs, \%nadc);
+push(@dcs, \%eudc);
 
-print "<center><h3>Yet Another Rift Event Tracker</h3>";
-print "<div>This one with more colors</div></center>\n";
+foreach my $dc (@dcs) {
+        foreach my $zoneid ( $dc->{"ids"}) { print $zoneid; }
 
-my @headers = ("Shard", "Event Name", "Zone", "Elapsed Time");
-print "<table>";
-
-print '<caption align="bottom">';
-print '<span class="relevant">Max level content</span> / <span class="oldnews">Old content</span> + <span class="new">Event just starting</span>';
-my $dt =  DateTime->now(time_zone => 'America/Los_Angeles');
-print '<div><small>Generated ' . $dt->strftime("%F %T %Z") . '</small></div>';
-print '</caption>';
-print "<thead><tr>\n";
-foreach my $header (@headers) {
-  print "<th>$header</th>";
 }
+exit;
+foreach my $dc (@dcs) {
+        my ($temp, $filename) = tempfile("retXXXXX", TMPDIR => 1);
+        my $html = new CGI;#::Compress::Gzip;
+        #print $html->header; # HTTP header
 
-print "</tr></thead>\n";
+        print $temp $html->start_html(
+            -title => "YARET",
+            -style => { -src => 'k.css'},
+            -head => meta({-http_equiv => 'Refresh',
+                        -content => '60'}),
+            );
+        print $temp "<center><h3>Yet Another Rift Event Tracker</h3>";
+        print $temp "<div>This one with more colors</div></center>\n";
 
-foreach my $zoneid (@usids) {
+        my @headers = ("Shard", "Zone", "Event Name", "Elapsed Time");
+        print $temp "<table>";
+
+        print $temp '<caption align="bottom">';
+        print $temp '<span class="relevant">Max level content</span> / <span class="oldnews">Old content</span> + <span class="new">Event just starting</span>';
+        print $temp '</caption>';
+        print $temp "<thead><tr>\n";
+        foreach my $header (@headers) {
+                print $temp "<th>$header</th>";
+        }
+
+        print $temp "</tr></thead>\n";
+
+        foreach my $zoneid ( $dc->{"ids"} ) { 
+
   print "<tbody>\n";
   my $site = $ua->get("$usurl$zoneid");
   my $result = $json->decode($site->content);
@@ -98,4 +121,8 @@ foreach my $zoneid (@usids) {
 }
 
 print "</table>\n";
-print $html->end_html;
+
+my $dt =  DateTime->now(time_zone => 'America/Los_Angeles');
+print '<p align="center"><small>Generated ' . $dt->strftime("%F %T %Z") . '</small></p>';
+
+#print $html->end_html;
