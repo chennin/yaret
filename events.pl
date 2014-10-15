@@ -8,10 +8,13 @@ use DateTime;
 use CGI "meta";
 use File::Temp qw/tempfile/;
 
-my $json = JSON::XS->new();
+my $REFRESH = 60;
+my $WWWFOLDER = "/var/www/rift/"; # include trailing slash
+my $TIMEOUT = 5; # Timeout per HTTP request to the Rift server (one per shard)
+
+# DO NOT EDIT BELOW THIS LINE
 
 # Set up datacenter information
-
 # Shard IDs culled from http://chat-us.riftgame.com:8080/chatservice/shard/list
 my @euids = qw/2702 2714 2711 2721 2741 2722/;
 my @usids = qw/1704 1707 1702 1721 1708 1701 1706/;
@@ -52,11 +55,15 @@ my @dcs = ();
 push(@dcs, \%nadc);
 push(@dcs, \%eudc);
 
-# Set up browser. Max 5s timeout = 5*(6+5) = max 55s runtime in theory
+# REALLY DO NOT EDIT BELOW THIS LINE
+
+# Set up browser.
 my $ua = LWP::UserAgent->new(
     agent => 'Opera/9.80 (X11; Linux x86_64) Presto/2.12.388 Version/12.16',
-    timeout => 5,
+    timeout => $TIMEOUT,
     );
+
+my $json = JSON::XS->new();
 
 # Go through each DC and construct web pages
 foreach my $dc (@dcs) {
@@ -69,7 +76,7 @@ foreach my $dc (@dcs) {
       -encoding => 'UTF-8',
       -style => { -src => 'ret.css'},
       -head => meta({-http_equiv => 'Refresh',
-        -content => '60'}),
+        -content => "$REFRESH"}),
       );
   print $temp "<center><h3>Yet Another Rift Event Tracker</h3>";
 
@@ -150,5 +157,5 @@ foreach my $dc (@dcs) {
 
   close $temp;
   chmod oct("0644"), $filename;
-  rename($filename, "/var/www/rift/" . $dc->{"shortname"} . ".html");
+  rename($filename, $WWWFOLDER . $dc->{"shortname"} . ".html");
 }
