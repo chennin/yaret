@@ -19,7 +19,7 @@ position: absolute;
 					z-index: 98;
 width: 220px;
 				}
-.new{text-decoration: underline;}
+.new{font-style: italic;}
 .label{font-weight: bold;}
 .end{color:#F00}
 .relevant{color:#6FF}
