@@ -115,9 +115,10 @@ foreach my $dc (@dcs) {
 #      if ($zone->{"name"} eq "The Awakening") { $class .= " pony"; }
         elsif ($zone->{"name"} =~ /^(Bloodfire Behemoth|Béhémoth feu-sanglant|Blutfeuer-Ungetüm)$/) { $class .= " behemoth"; }
         elsif ($zone->{"name"} =~ /^(Dreams of Blood and Bone|Rêves de sang et d'os|Träume aus Blut und Gebeinen)$/) { $class .= " volan"; }
+        elsif ($zone->{"name"} =~ /(^Unstable |^Instabil: | instable$)/) { $class .= " unstable"; }
 
 # Minutes to consider an event new
-        if ($time < 4) { $class .= " new"; }
+        if ($time < 5) { $class .= " new"; }
 
         if (($place == 1) && ($seenanold == 0)) { $class .= " firstold"; $seenanold = 1; }
         $text[$place] .= "<tr class='$class'>\n";
@@ -136,9 +137,10 @@ foreach my $dc (@dcs) {
   print $temp "</table>\n";
 
 # Construct footer
+  print $temp '<p align="center">Legend: </p>';
   print $temp '<p class="caption"><span class="relevant">Max level content</span>';
   print $temp '<br /><span class="oldnews olddesc">Old content</span></p>';
-  print $temp '<p class="caption"><span class="new">Newly started event</span>, <span class="behemoth">Bloodfire Behemoth</span>, <span class="volan">Volan</span>, <span class="pony">Unicorns</span></p>';
+  print $temp '<p class="caption"><span class="new">Newly started event</span>, <span class="behemoth">Bloodfire Behemoth</span>, <span class="volan">Volan</span>, <span class="pony">Unicorns</span>, <span class="unstable">Unstable Artifact</span></p>';
 
   my $dt = DateTime->now(time_zone => $dc->{"tz"});
   print $temp '<p></p><p align="center"><small>Generated ' . $dt->strftime("%F %T %Z") . '</small></p>';
