@@ -72,7 +72,6 @@ foreach my $dc (@dcs) {
         -content => '60'}),
       );
   print $temp "<center><h3>Yet Another Rift Event Tracker</h3>";
-  print $temp "<p>This one with more colors</p>\n";
 
 # Insert links to other datacenter's pages
   print $temp "<p>\n";
@@ -88,9 +87,6 @@ foreach my $dc (@dcs) {
   my @headers = ("Shard", "Zone", "Event Name", "Elapsed Time");
   print $temp "<table>";
 
-  print $temp '<caption align="bottom">';
-  print $temp '<span class="relevant">Max level content</span> / <span class="oldnews olddesc">Old content</span> + <span class="new">Newly started event</span>';
-  print $temp '</caption>';
   print $temp "<thead><tr>\n";
   foreach my $header (@headers) {
     print $temp "<th>$header</th>";
@@ -138,8 +134,12 @@ foreach my $dc (@dcs) {
   print $temp "</table>\n";
 
 # Construct footer
+  print $temp '<p class="caption"><span class="relevant">Max level content</span>';
+  print $temp '<br /><span class="oldnews olddesc">Old content</span></p>';
+  print $temp '<p class="caption"><span class="new">Newly started event</span>, <span class="behemoth">Bloodfire Behemoth</span>, <span class="volan">Volan</span>, <span class="pony">Unicorns</span></p>';
+
   my $dt = DateTime->now(time_zone => $dc->{"tz"});
-  print $temp '<p align="center"><small>Generated ' . $dt->strftime("%F %T %Z") . '</small></p>';
+  print $temp '<p></p><p align="center"><small>Generated ' . $dt->strftime("%F %T %Z") . '</small></p>';
 
   print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n"; 
   print $temp $html->end_html;

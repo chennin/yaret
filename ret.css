@@ -21,4 +21,4 @@ table tbody tr:hover{background-color:#333}
 table tbody tr.firstold{border-top:1px dotted gray}
 table thead{font-weight:700;text-align:center}
 p.disclaimer{font-size:70%;text-align:center;margin-left:auto;margin-right:auto;width:60%}
-caption{margin-top:10px}
+p.caption{font-size:90%;text-align:center;}
