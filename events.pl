@@ -11,7 +11,7 @@ use File::Temp qw/tempfile/;
 
 my $json = JSON::XS->new();
 my @euids = qw/2702 2714 2711 2721 2741 2722/;
-my @usids = qw/1704 1707 1702 1721 1701 1706/;
+my @usids = qw/1704 1707 1702 1721 1708 1701 1706/;
 my %eunames = (
     2702 => "Bloodiron",
     2714 => "Brisesol",
@@ -25,6 +25,7 @@ my %usnames = (
     1707 => "Faeblight",
     1702 => "Greybriar",
     1721 => "Hailol",
+    1708 => "Laethys",
     1701 => "Seastone",
     1706 => "Wolfsbane",
     );
@@ -95,8 +96,8 @@ foreach my $dc (@dcs) {
 
   foreach my $zoneid ( @{ $dc->{"ids"} } ) { 
     print $temp "<tbody>\n";
-    my $site = $ua->get($dc->{"url"} . $zoneid) or die $!;
-    my $result = $json->decode($site->content);
+    my $site = $ua->get($dc->{"url"} . $zoneid) or next;
+    my $result = $json->decode($site->content) or next;
     print $temp "<tr><td class='label'>" .  $dc->{"names"}{$zoneid} . "</td><td></td><td></td><td></td></tr>";
     my @text = ("", "");
     foreach my $zone (@{ $result->{"data"} }) {
@@ -106,7 +107,7 @@ foreach my $dc (@dcs) {
         my $class = "oldnews"; my $place = 1;
         if ($zone->{"zone"} =~ /^(The Dendrome|Steppes of Infinity|Morban|Ashora|Kingsward|Das Dendrom|Steppen der Unendlichkeit|Königszirkel|Le Rhizome|Steppes de l'Infini|Protectorat du Roi)$/) { $class = "relevant"; $place = 0; }
 
-        if ($zone->{"name"} eq "Hooves and Horns") { $class .= " pony"; }
+        if ($zone->{"name"} =~ /^(Hooves and Horns|Des sabots et des cornes|Hufe und Hörner)$/) { $class .= " pony"; }
 #      if ($zone->{"name"} eq "The Awakening") { $class .= " pony"; }
 
         if ($time < 4) { $class .= " new"; }
