@@ -100,7 +100,8 @@ foreach my $dc (@dcs) {
     my $result = $json->decode($site->content) or next;
     print $temp "<tr><td class='label'>" .  $dc->{"names"}{$zoneid} . "</td><td></td><td></td><td></td></tr>";
 # Construct zone event rows.  Max level content will be displayed first.
-    my @text = ("", "<tr class=\"firstold\"></tr>"); 
+    my @text = ("", "");
+    my $seenanold = 0;
     foreach my $zone (@{ $result->{"data"} }) {
       if ($zone->{"name"}) { 
         my $time = floor((time - $zone->{"started"})/60);
@@ -118,6 +119,7 @@ foreach my $dc (@dcs) {
 # Minutes to consider an event new
         if ($time < 4) { $class .= " new"; }
 
+        if (($place == 1) && ($seenanold == 0)) { $class .= " firstold"; $seenanold = 1; }
         $text[$place] .= "<tr class='$class'>\n";
         $text[$place] .= "<td></td>";
         $text[$place] .= "<td>" . $zone->{"zone"} . "</td>";
