@@ -103,8 +103,9 @@ foreach my $dc (@dcs) {
 
   foreach my $zoneid ( @{ $dc->{"ids"} } ) {  # @{ ... } = turning an array reference into a usable array
     print $temp "<tbody>\n";
-    my $site = $ua->get($dc->{"url"} . $zoneid) or next;
-    my $result = $json->decode($site->content) or next;
+    my $site = $ua->get($dc->{"url"} . $zoneid);
+    if (! $site->is_success) { next; }
+    my $result = $json->decode($site->content) or die $!;
     print $temp "<tr><td class='label'>" .  $dc->{"names"}{$zoneid} . "</td><td></td><td></td><td></td></tr>";
 # Construct zone event rows.  Max level content will be displayed first.
     my @text = ("", "");

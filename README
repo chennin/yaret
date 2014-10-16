@@ -18,5 +18,5 @@ package manager if available:
 * File::Temp
 
 Run the script with perl, preferably via cron.  HTML files for each datacenter
-(na and eu) are generated and put in /var/www/rift by default. You should
+(na and eu) are generated and put in /var/www/rift/ by default. You should
 change this destination by editing events.pl.  Include a trailing slash.
