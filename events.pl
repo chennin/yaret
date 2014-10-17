@@ -7,6 +7,7 @@ use POSIX qw/floor strftime/;
 use DateTime;
 use CGI "meta";
 use File::Temp qw/tempfile/;
+use DBD::mysql;
 
 my $REFRESH = 60;
 my $WWWFOLDER = "/var/www/rift/"; # include trailing slash
@@ -123,7 +124,7 @@ foreach my $dc (@dcs) {
 #      if ($zone->{"name"} eq "The Awakening") { $class .= " pony"; }
         elsif ($zone->{"name"} =~ /^(Bloodfire Behemoth|Béhémoth feu-sanglant|Blutfeuer-Ungetüm)$/) { $class .= " behemoth"; }
         elsif ($zone->{"name"} =~ /^(Dreams of Blood and Bone|Rêves de sang et d'os|Träume aus Blut und Gebeinen)$/) { $class .= " volan"; }
-        elsif ($zone->{"name"} =~ /(^Unstable |^Instabil: | instable$)/) { $class .= " unstable"; }
+        elsif ($zone->{"name"} =~ /(^Unstable |^Instabil: | instables?$)/) { $class .= " unstable"; }
 
 # Minutes to consider an event new
         if ($time < 5) { $class .= " new"; }
