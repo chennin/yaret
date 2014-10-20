@@ -55,18 +55,45 @@ if ($usesql) {
 my (%eubyid, %nabyid, %eubyname, %nabyname);
 if ($usesql) {
   $sth = $dbh->prepare("SELECT id, name, dc FROM shards");
-  $sth->execute() or die "Can't get shards. $DBI::errstr\n";
-
-  while (my $row = $sth->fetchrow_hashref()) {
-    if ($row->{'dc'} eq "eu") {
-      $eubyid{$row->{'id'}} = $row->{'name'};
-      $eubyname{$row->{'name'}} = $row->{'id'};
-    }
-    elsif ($row->{'dc'} eq "na") {
-      $nabyid{$row->{'id'}} = $row->{'name'};
-      $nabyname{$row->{'name'}} = $row->{'id'};
+  my $success = $sth->execute();
+  if (!$success) { print STDERR "Can't get shards. $DBI::errstr\n"; }
+  else {
+    while (my $row = $sth->fetchrow_hashref()) {
+      if ($row->{'dc'} eq "eu") {
+        $eubyid{$row->{'id'}} = $row->{'name'};
+        $eubyname{$row->{'name'}} = $row->{'id'};
+      }
+      elsif ($row->{'dc'} eq "na") {
+        $nabyid{$row->{'id'}} = $row->{'name'};
+        $nabyname{$row->{'name'}} = $row->{'id'};
+      }
     }
   }
+}
+# Hard code shards for fallback
+# Only if SQL not in use
+if (!%nabyid) {
+    %nabyid = (
+        1704 => "Deepwood",
+        1707 => "Faeblight",
+        1702 => "Greybriar",
+        1721 => "Hailol",
+        1708 => "Laethys",
+        1701 => "Seastone",
+        1706 => "Wolfsbane",
+        );
+    %nabyname = reverse %nabyid;
+}
+if (!%eubyid) {
+    %eubyid = (
+        2702 => "Bloodiron",
+        2714 => "Brisesol",
+        2711 => "Brutwacht",
+        2721 => "Gelidra",
+        2741 => "Typhiria",
+        2722 => "Zaviel",
+        );
+    %eubyname = reverse %eubyid;
 }
 my %nadc = (
     url => "http://chat-us.riftgame.com:8080/chatservice/zoneevent/list?shardId=",
@@ -223,7 +250,7 @@ foreach my $dc (@dcs) {
       }
     }
 
-    # Max then lower level
+# Max then lower level
     print $temp $text[0];
     print $temp $text[1];
     print $temp "</tbody>\n";

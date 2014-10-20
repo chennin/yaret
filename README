@@ -20,7 +20,7 @@ package manager if available:
 * DBD::mysql
 
 History tracking is done via MySQL.  Set up a database and user and fill in the
-values in ret.conf.  This support is optional.
+values in ret.conf.  This support is optional (set SQLENABLE=false).
 
 Run the script with perl, preferably via cron.  HTML files for each datacenter
 (na and eu) are generated and put in /var/www/rift/ by default. You should
