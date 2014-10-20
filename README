@@ -16,7 +16,14 @@ package manager if available:
 * DateTime
 * CGI
 * File::Temp
+* Config::Simple
+* DBD::mysql
+
+History tracking is done via MySQL.  Set up a database and user and fill in the
+values in ret.conf.  This support is optional.
 
 Run the script with perl, preferably via cron.  HTML files for each datacenter
 (na and eu) are generated and put in /var/www/rift/ by default. You should
 change this destination by editing events.pl.  Include a trailing slash.
+
+Thanks to RiftPluz for collecting the translations in one place.
