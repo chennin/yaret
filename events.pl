@@ -52,9 +52,9 @@ if ($usesql) {
   }
 }
 # Get & store shards to reference by name and ID
-my (%eubyid, %nabyid, %eubyname, %nabyname);
+my (%eubyid, %nabyid, %eubyname, %nabyname, %pvps);
 if ($usesql) {
-  $sth = $dbh->prepare("SELECT id, name, dc FROM shards");
+  $sth = $dbh->prepare("SELECT id, name, dc, pvp FROM shards");
   my $success = $sth->execute();
   if (!$success) { print STDERR "Can't get shards. $DBI::errstr\n"; }
   else {
@@ -67,6 +67,8 @@ if ($usesql) {
         $nabyid{$row->{'id'}} = $row->{'name'};
         $nabyname{$row->{'name'}} = $row->{'id'};
       }
+# Keep track of PvP servers for later in/exclusion from average times
+      $pvps{$row->{'name'}} = $row->{'pvp'};
     }
   }
 }
@@ -201,12 +203,20 @@ foreach my $dc (@dcs) {
           my @params = ();
           push(@params, $eventsbyname{$zone->{'name'}});
           my $shardstr = " AND (";
+          my $pvp = $pvps{$shardname};
+          if (!defined($pvp)) { $pvp = 0; }
+
+# Only include servers of the same PvP-ness
           foreach my $otherid (keys %{ $dc->{"shardsbyid"} }) {
-            $shardstr .= "shardid = ? OR ";
-            push(@params, $otherid);
+            if ($pvp == $pvps{$dc->{"shardsbyid"}->{$otherid}}) {
+              $shardstr .= "shardid = ? OR ";
+              push(@params, $otherid);
+            }
           }
-          $shardstr = substr($shardstr, 0, -3); # Remove final "OR "
-            $shardstr .= ")";
+
+# Remove final "OR "
+          $shardstr = substr($shardstr, 0, -3);
+          $shardstr .= ")";
           $sth = $dbh->prepare("SELECT FLOOR(AVG(endtime - starttime)/60) FROM events WHERE eventid = ? AND endtime <> 0 $shardstr");
           $sth->execute( @params );
           ($avgruntime) = $sth->fetchrow_array;
@@ -221,7 +231,7 @@ foreach my $dc (@dcs) {
         $text[$place] .= "<td></td>";
         $text[$place] .= "<td>" . $zone->{"zone"} . "</td>";
         $text[$place] .= "<td>" . $zone->{"name"} . "</td>";
-        $text[$place] .= "<td class=\"$nearend\" title=\"This event lasts $avgruntime minutes on average on this cluster\">" . $time . "m</td>";
+        $text[$place] .= "<td class=\"$nearend\" title=\"This event lasts $avgruntime minutes on average.\">" . $time . "m</td>";
         $text[$place] .= "</tr>\n";
 
 # Compare current event state with last known state
@@ -263,7 +273,7 @@ foreach my $dc (@dcs) {
   print $temp '<p class="caption"><span class="relevant">Max level content</span>';
   print $temp '<br /><span class="oldnews olddesc">Old content</span></p>';
   print $temp '<p class="caption"><span class="new">Newly started event</span>, <span class="nearend">Nearing its average run time</span>, <span class="behemoth">Bloodfire Behemoth</span>, <span class="volan">Volan</span>, <span class="pony">Unicorns</span>, <span class="unstable">Unstable Artifact</span></p>';
-  print $temp '<p align="center">Hover over the elapsed time to see the average run time of this event on this cluster. Run time data is since 2014-10-20.</p>';
+  print $temp '<p align="center">Hover over the elapsed time to see the average run time of this event (by cluster with/without the PvP server(s)). Run time data is since 2014-10-20.</p>';
 
   my $dt = DateTime->now(time_zone => $dc->{"tz"});
   print $temp '<p></p><p align="center"><small>Generated ' . $dt->strftime("%F %T %Z") . '</small></p>';
