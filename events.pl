@@ -148,28 +148,35 @@ foreach my $dc (@dcs) {
       -head => meta({-http_equiv => 'Refresh',
         -content => "$REFRESH"}),
       );
-  print $temp "<center><h3>Yet Another Rift Event Tracker</h3>";
+  print $temp "<h2 class=\"normal\">Yet Another Rift Event Tracker</h2>";
 
 # Insert links to other datacenter's pages
-  print $temp "<p>\n";
+  print $temp "<p class=\"normal\">Switch to:\n";
   foreach my $otherdc (@dcs) {
     if ($dc != $otherdc) {
-      print $temp '<a href="'. $otherdc->{"shortname"} . '.html">' . $otherdc->{"shortname"} . "</a> ";
+      print $temp '<a href="'. $otherdc->{"shortname"} . '.html">' . uc($otherdc->{"shortname"}) . "</a> ";
     }
-    else { print $temp $dc->{"shortname"} . " "; }
+    else { print $temp uc($dc->{"shortname"}) . " "; }
   }
-  print $temp "</p></center>\n";
+  print $temp "</p>\n";
 
 # Construct table
   my @headers = ("Shard", "Zone", "Event Name", "Elapsed Time");
   print $temp "<table>";
 
+  print $temp '<caption align="right" class="caption">' . "\n";
+  print $temp '<div><span class="relevant">Storm Legion content</span>';
+  print $temp '<br /><span class="oldnews olddesc">Vanilla content</span></div>';
+  print $temp '<br /><div class="new">Newly started event</div> <div class="nearend">Nearing its average run time</div>';
+  print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="volan">Volan</div> <div class="pony">Unicorns</div> <div class="unstable">Unstable Artifact</div>';
+  print $temp '</caption>' . "\n";
+ 
   print $temp "<thead><tr>\n";
   foreach my $header (@headers) {
     print $temp "<th>$header</th>";
   }
-
-  print $temp "</tr></thead>\n";
+  print $temp "</tr>";
+  print $temp "</thead>\n";
 
   foreach my $shardname (sort keys %{ $dc->{"shardsbyname"} } ) {  # @{ ... } = turning an array reference into a usable array
     print $temp "<tbody>\n";
@@ -223,7 +230,7 @@ foreach my $dc (@dcs) {
         }
 
         my $nearend = "good";
-        if ((!defined $avgruntime) || ($avgruntime !~ /^[0-9]+$/)) { $avgruntime = "<THERE IS AS YET INSUFFICIENT DATA FOR A MEANINGFUL NUMBER>"; }
+        if ((!defined $avgruntime) || ($avgruntime !~ /^[0-9]+$/)) { $avgruntime = "&lt;THERE IS AS YET INSUFFICIENT DATA FOR A MEANINGFUL NUMBER&gt;"; }
         elsif ($time > ($avgruntime - 6)) { $nearend = "nearend"; }
 
         if (($place == 1) && ($seenanold == 0)) { $class .= " firstold"; $seenanold = 1; }
@@ -269,14 +276,10 @@ foreach my $dc (@dcs) {
   print $temp "</table>\n";
 
 # Construct footer
-  print $temp '<p align="center">Legend: </p>';
-  print $temp '<p class="caption"><span class="relevant">Max level content</span>';
-  print $temp '<br /><span class="oldnews olddesc">Old content</span></p>';
-  print $temp '<p class="caption"><span class="new">Newly started event</span>, <span class="nearend">Nearing its average run time</span>, <span class="behemoth">Bloodfire Behemoth</span>, <span class="volan">Volan</span>, <span class="pony">Unicorns</span>, <span class="unstable">Unstable Artifact</span></p>';
-  print $temp '<p align="center">Hover over the elapsed time to see the average run time of this event (by cluster with/without the PvP server(s)). Run time data is since 2014-10-20.</p>';
+  print $temp '<p class="footer">Hover over the elapsed time to see the average run time of this event (by cluster with/without the PvP server(s)). Run time data is since 2014-10-20.</p>';
 
   my $dt = DateTime->now(time_zone => $dc->{"tz"});
-  print $temp '<p></p><p align="center"><small>Generated ' . $dt->strftime("%F %T %Z") . '</small></p>';
+  print $temp '<p></p><p class="disclaimer">Generated ' . $dt->strftime("%F %T %Z") . '</p>';
 
   print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
   print $temp $html->end_html;
