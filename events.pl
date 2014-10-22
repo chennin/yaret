@@ -30,6 +30,7 @@ if ((defined $usesql) && (lc $usesql eq "true") && (defined $cfg->param('SQLDB')
     undef $usesql;
   }
 }
+else { undef $usesql; }
 
 # Get & store event definitions
 my %eventsbyname;
@@ -165,8 +166,8 @@ foreach my $dc (@dcs) {
   print $temp "<table>";
 
   print $temp '<caption align="right" class="caption">' . "\n";
-  print $temp '<div><span class="relevant">Storm Legion content</span>';
-  print $temp '<br /><span class="oldnews olddesc">Vanilla content</span></div>';
+  print $temp '<div><span class="relevant">Nightmare Tide content</span>';
+  print $temp '<br /><span class="oldnews olddesc">Old content (Storm Legion + Vanilla)</span></div>';
   print $temp '<br /><div class="new">Newly started event</div> <div class="nearend">Nearing its average run time</div>';
   print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="volan">Volan</div> <div class="pony">Unicorns</div> <div class="unstable">Unstable Artifact</div>';
   print $temp '</caption>' . "\n";
@@ -194,7 +195,8 @@ foreach my $dc (@dcs) {
 # Assign CSS classes to different events
         my $class = "oldnews"; my $place = 1;
 
-        if ($zone->{"zone"} =~ /^(The Dendrome|Steppes of Infinity|Morban|Ashora|Kingsward|Das Dendrom|Steppen der Unendlichkeit|Königszirkel|Le Rhizome|Steppes de l'Infini|Protectorat du Roi)$/) { $class = "relevant"; $place = 0; }
+        if ($zonesbyname{$zone->{"zone"}} =~ /^301|302$/) { $class = "relevant"; $place = 0; } # Goboro Reef, Draumheim, 
+#        if ($zone->{"zone"} =~ /^(The Dendrome|Steppes of Infinity|Morban|Ashora|Kingsward|Das Dendrom|Steppen der Unendlichkeit|Königszirkel|Le Rhizome|Steppes de l'Infini|Protectorat du Roi)$/) { $class = "relevant"; $place = 0; }
 
         if ($zone->{"name"} =~ /^(Hooves and Horns|Des sabots et des cornes|Hufe und Hörner)$/) { $class .= " pony"; }
         elsif ($zone->{"name"} =~ /^(Bloodfire Behemoth|Béhémoth feu-sanglant|Blutfeuer-Ungetüm)$/) { $class .= " behemoth"; }
