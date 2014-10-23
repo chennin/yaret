@@ -167,7 +167,7 @@ foreach my $dc (@dcs) {
 
   print $temp '<caption align="right" class="caption">' . "\n";
   print $temp '<div><span class="relevant">Nightmare Tide content</span>';
-  print $temp '<br /><span class="oldnews olddesc">Old content (Storm Legion + Vanilla)</span></div>';
+  print $temp '<br /><span class="oldnews olddesc">Old content (SL + Vanilla)</span></div>';
   print $temp '<br /><div class="new">Newly started event</div> <div class="nearend">Nearing its average run time</div>';
   print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="volan">Volan</div> <div class="pony">Unicorns</div> <div class="unstable">Unstable Artifact</div>';
   print $temp '</caption>' . "\n";
