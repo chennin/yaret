@@ -9,7 +9,10 @@ use CGI "meta";
 use File::Temp qw/tempfile/;
 use Config::Simple;
 use DBD::mysql;
-use encoding qw(utf8);
+use Time::HiRes qw/gettimeofday tv_interval/;
+use encoding qw/utf8/;
+
+my $t0 = [gettimeofday];
 
 my $REFRESH = 60;
 my $WWWFOLDER = "/var/www/rift/"; # include trailing slash
@@ -130,7 +133,7 @@ my $json = JSON::XS->new();
 # Get last known state of events from SQL
 my $laststate = ();
 if ($usesql) {
-  $sth = $dbh->prepare("SELECT * FROM events WHERE 'endtime' = 0");
+  $sth = $dbh->prepare("SELECT * FROM events WHERE endtime = 0");
   $sth->execute() or die $DBI::errstr;
   $laststate = $sth->fetchall_arrayref({});
 }
@@ -163,7 +166,7 @@ foreach my $dc (@dcs) {
 
 # Construct table
   my @headers = ("Shard", "Zone", "Event Name", "Elapsed Time");
-  print $temp "<table>";
+  print $temp "<table class='ret'>";
 
   print $temp '<caption align="right" class="caption">' . "\n";
   print $temp '<div><span class="relevant">Nightmare Tide content</span>';
@@ -278,10 +281,12 @@ foreach my $dc (@dcs) {
   print $temp "</table>\n";
 
 # Construct footer
+  my $elapsed = tv_interval ($t0);
+
   print $temp '<p class="footer">Hover over the elapsed time to see the average run time of this event (by cluster with/without the PvP server(s)). Run time data is since 2014-10-20.</p>';
 
   my $dt = DateTime->now(time_zone => $dc->{"tz"});
-  print $temp '<p></p><p class="disclaimer">Generated ' . $dt->strftime("%F %T %Z") . '</p>';
+  print $temp '<p></p><p class="disclaimer">Generated ' . $dt->strftime("%F %T %Z") . ' in ' . $elapsed . 's</p>';
 
   print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
   print $temp $html->end_html;

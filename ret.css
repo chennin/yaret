@@ -15,7 +15,7 @@ tooltip:hover:after{background:#333;background:rgba(0,0,0,.8);border-radius:5px;
 .volan{color:#FF9!important}
 .unstable{color:#69F!important}
 .nearend{color:#F60}
-table.sortable{margin-left:5%;border-collapse:collapse;width:60%}
+table.ret,table.sortable{margin-left:5%;border-collapse:collapse;width:60%}
 table tbody{border:1px solid #fff;border-collapse:separate;border-spacing:1px}
 table tbody td{text-align:center}
 table tbody:nth-child(2n+1){background-color:#00002D}
