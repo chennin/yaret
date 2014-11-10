@@ -79,27 +79,27 @@ if ($usesql) {
 # Hard code shards for fallback
 # Only if SQL not in use
 if (!%nabyid) {
-    %nabyid = (
-        1704 => "Deepwood",
-        1707 => "Faeblight",
-        1702 => "Greybriar",
-        1721 => "Hailol",
-        1708 => "Laethys",
-        1701 => "Seastone",
-        1706 => "Wolfsbane",
-        );
-    %nabyname = reverse %nabyid;
+  %nabyid = (
+      1704 => "Deepwood",
+      1707 => "Faeblight",
+      1702 => "Greybriar",
+      1721 => "Hailol",
+      1708 => "Laethys",
+      1701 => "Seastone",
+      1706 => "Wolfsbane",
+      );
+  %nabyname = reverse %nabyid;
 }
 if (!%eubyid) {
-    %eubyid = (
-        2702 => "Bloodiron",
-        2714 => "Brisesol",
-        2711 => "Brutwacht",
-        2721 => "Gelidra",
-        2741 => "Typhiria",
-        2722 => "Zaviel",
-        );
-    %eubyname = reverse %eubyid;
+  %eubyid = (
+      2702 => "Bloodiron",
+      2714 => "Brisesol",
+      2711 => "Brutwacht",
+      2721 => "Gelidra",
+      2741 => "Typhiria",
+      2722 => "Zaviel",
+      );
+  %eubyname = reverse %eubyid;
 }
 my %nadc = (
     url => "http://chat-us.riftgame.com:8080/chatservice/zoneevent/list?shardId=",
@@ -174,7 +174,7 @@ foreach my $dc (@dcs) {
   print $temp '<br /><div class="new">Newly started event</div> <div class="nearend">Nearing its average run time</div>';
   print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="volan">Volan</div> <div class="pony">Unicorns</div> <div class="unstable">Unstable Artifact</div>';
   print $temp '</caption>' . "\n";
- 
+
   print $temp "<thead><tr>\n";
   foreach my $header (@headers) {
     print $temp "<th>$header</th>";
@@ -185,7 +185,11 @@ foreach my $dc (@dcs) {
   foreach my $shardname (sort keys %{ $dc->{"shardsbyname"} } ) {  # @{ ... } = turning an array reference into a usable array
     print $temp "<tbody>\n";
     my $site = $ua->get($dc->{"url"} . $dc->{'shardsbyname'}{$shardname});
-    if (! $site->is_success) { print $temp "<tr><td class='label'>Error retrieving events for " .  $shardname . ".</td></tr></tbody>\n" ; next; }
+    if (!$site->is_success) {
+      print $temp "<tr><td class='label'>Error retrieving events for " .  $shardname . ".</td></tr></tbody>\n";
+      print STDERR "Error retrieving events for " .  $shardname . ". " . $site->status_line . "\n";
+      next;
+    }
     my $result = $json->decode($site->content) or die $!;
     print $temp "<tr><td class='label'>" .  $shardname . "</td><td></td><td></td><td></td></tr>";
 # Construct zone event rows.  Max level content will be displayed first later.
@@ -195,6 +199,7 @@ foreach my $dc (@dcs) {
       if ($zone->{"name"}) {
         my $time = floor((time - $zone->{"started"})/60);
 
+        if ($zone->{"name"} eq "Terror aus der Tiefe") { $zone->{"name"} = "Terror aus den Tiefen"; } # Fix for inconsistent Trion translation
 # Assign CSS classes to different events
         my $class = "oldnews"; my $place = 1;
 
@@ -264,7 +269,13 @@ foreach my $dc (@dcs) {
             $sth = $dbh->prepare("INSERT INTO events (shardid, zoneid, eventid, starttime) VALUES (?, ?, ?, ?)");
             my $success = $sth->execute($dc->{'shardsbyname'}{$shardname}, $zone->{'zoneId'}, $eventsbyname{$zone->{'name'}}, $zone->{'started'});
             if (!$success) {
-              print STDERR "Error updating. " . $DBI::errstr . "\n";
+              if ($dbh->err == 1062) { # MySQL 'Duplicate entry for key PRIMARY' - event erroneously removed before end
+                $sth = $dbh->prepare("UPDATE events SET endtime = 0 WHERE shardid = ? AND zoneid = ? AND eventid = ? AND starttime = ?");
+                $success = $sth->execute($dc->{'shardsbyname'}{$shardname}, $zone->{'zoneId'}, $eventsbyname{$zone->{'name'}}, $zone->{'started'});
+              }
+            }
+            if (!$success) {
+              print STDERR "Error updating. " . $dbh->err . ": " . $DBI::errstr . "\n";
               print STDERR "Params: $dc->{'shardsbyname'}{$shardname}//$shardname, $zone->{'zoneId'}==$zone->{'zone'}, $eventsbyname{$zone->{'name'}}==$zone->{'name'}, $zone->{'started'}//$zone->{'started'}\n";
             }
           }
