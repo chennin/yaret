@@ -165,15 +165,15 @@ foreach my $dc (@dcs) {
   print $temp "</p>\n";
 
 # Construct table
-  my @headers = ("Shard", "Zone", "Event Name", "Elapsed Time");
-  print $temp "<table class='ret'>";
-
-  print $temp '<caption align="right" class="caption">' . "\n";
+  print $temp '<span class="caption">' . "\n";
   print $temp '<div><span class="relevant">Nightmare Tide content</span>';
   print $temp '<br /><span class="oldnews olddesc">Old content (SL + Vanilla)</span></div>';
   print $temp '<br /><div class="new">Newly started event</div> <div class="nearend">Nearing its average run time</div>';
-  print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="volan">Volan</div> <div class="pony">Unicorns</div> <div class="unstable">Unstable Artifact</div>';
-  print $temp '</caption>' . "\n";
+  print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="pony">Unicorns</div> <div class="unstable">Unstable Artifact</div>';
+  print $temp '</span>' . "\n";
+
+  my @headers = ("Shard", "Zone", "Event Name", "Elapsed Time");
+  print $temp "<table class='ret'>";
 
   print $temp "<thead><tr>\n";
   foreach my $header (@headers) {
@@ -209,6 +209,7 @@ foreach my $dc (@dcs) {
         if ($zone->{"name"} =~ /^(Hooves and Horns|Des sabots et des cornes|Hufe und Hörner)$/) { $class .= " pony"; }
         elsif ($zone->{"name"} =~ /^(Bloodfire Behemoth|Béhémoth feu-sanglant|Blutfeuer-Ungetüm)$/) { $class .= " behemoth"; }
         elsif ($zone->{"name"} =~ /^(Dreams of Blood and Bone|Rêves de sang et d'os|Träume aus Blut und Gebeinen)$/) { $class .= " volan"; }
+        elsif ($zone->{"name"} =~ /^(There Arose Such A Clatter|Un grand fracas se fit alors entendre|Da erklang solch ein Rumpeln)$/) { $class .= " yule"; }
         elsif ($zone->{"name"} =~ /(^Unstable |^Instabil: | instables?$)/) { $class .= " unstable"; }
 
 # Minutes to consider an event new
@@ -234,7 +235,8 @@ foreach my $dc (@dcs) {
 # Remove final "OR "
           $shardstr = substr($shardstr, 0, -3);
           $shardstr .= ")";
-          $sth = $dbh->prepare("SELECT FLOOR(AVG(endtime - starttime)/60) FROM events WHERE eventid = ? AND endtime <> 0 $shardstr");
+          my $sincetime = time - 60*60*24*30; # Last month
+          $sth = $dbh->prepare("SELECT FLOOR(AVG(endtime - starttime)/60) FROM events WHERE eventid = ? AND endtime >= $sincetime $shardstr");
           $sth->execute( @params );
           ($avgruntime) = $sth->fetchrow_array;
         }
@@ -248,7 +250,7 @@ foreach my $dc (@dcs) {
         $text[$place] .= "<td></td>";
         $text[$place] .= "<td>" . $zone->{"zone"} . "</td>";
         $text[$place] .= "<td>" . $zone->{"name"} . "</td>";
-        $text[$place] .= "<td class=\"$nearend\" title=\"This event lasts $avgruntime minutes on average.\">" . $time . "m</td>";
+        $text[$place] .= "<td class=\"$nearend\" title=\"This event ended in an average of $avgruntime minutes in the past 30 days.\">" . $time . "m</td>";
         $text[$place] .= "</tr>\n";
 
 # Compare current event state with last known state
@@ -312,7 +314,9 @@ foreach my $dc (@dcs) {
 if ($usesql) {
   foreach my $row (@{ $laststate }) {
     $sth = $dbh->prepare("UPDATE events SET endtime = ? WHERE shardid = ? AND zoneid = ? AND eventid = ? AND starttime = ? AND endtime = 0");
-    my $success = $sth->execute(time, $row->{'shardid'}, $row->{'zoneid'}, $row->{'eventid'}, $row->{'starttime'});
+    my $endtime = time;
+    if ($endtime - $row->{'starttime'} > 7200) { $endtime = $row->{'starttime'} + 7260; } # absolute max event run time
+    my $success = $sth->execute($endtime, $row->{'shardid'}, $row->{'zoneid'}, $row->{'eventid'}, $row->{'starttime'});
     if (!$success) {
       print STDERR "Error removing. " . $DBI::errstr . "\n";
       print STDERR time . "$row->{'shardid'}, $row->{'zoneid'}, $row->{'eventid'}, $row->{'starttime'}\n";

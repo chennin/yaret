@@ -135,6 +135,7 @@ CREATE TABLE events (
   starttime INTEGER UNSIGNED NOT NULL,
   endtime INTEGER UNSIGNED DEFAULT 0,
   PRIMARY KEY (shardid, zoneid, eventid, starttime),
+  INDEX (endtime),
   FOREIGN KEY (shardid) REFERENCES shards(id),
   FOREIGN KEY (zoneid) REFERENCES zones(id),
   FOREIGN KEY (eventid) REFERENCES eventnames(id)
