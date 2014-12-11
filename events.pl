@@ -195,11 +195,12 @@ foreach my $dc (@dcs) {
 # Construct zone event rows.  Max level content will be displayed first later.
     my @text = ("", "");
     my $seenanold = 0;
-    foreach my $zone (@{ $result->{"data"} }) {
+    foreach my $zone (sort { $a->{"zone"} cmp $b->{"zone"} } @{ $result->{"data"} }) {
       if ($zone->{"name"}) {
         my $time = floor((time - $zone->{"started"})/60);
 
         if ($zone->{"name"} eq "Terror aus der Tiefe") { $zone->{"name"} = "Terror aus den Tiefen"; } # Fix for inconsistent Trion translation
+
 # Assign CSS classes to different events
         my $class = "oldnews"; my $place = 1;
 
@@ -232,8 +233,7 @@ foreach my $dc (@dcs) {
             }
           }
 
-# Remove final "OR "
-          $shardstr = substr($shardstr, 0, -3);
+          $shardstr = substr($shardstr, 0, -3); # Remove final "OR "
           $shardstr .= ")";
           my $sincetime = time - 60*60*24*30; # Last month
           $sth = $dbh->prepare("SELECT FLOOR(AVG(endtime - starttime)/60) FROM events WHERE eventid = ? AND endtime >= $sincetime $shardstr");
