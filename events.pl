@@ -169,7 +169,7 @@ foreach my $dc (@dcs) {
   print $temp '<div><span class="relevant">Nightmare Tide content</span>';
   print $temp '<br /><span class="oldnews olddesc">Old content (SL + Vanilla)</span></div>';
   print $temp '<br /><div class="new">Newly started event</div> <div class="nearend">Nearing its average run time</div>';
-  print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="pony">Unicorns</div> <div class="unstable">Unstable Artifact</div>';
+  print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="unstable">Unstable Artifact</div> <div class="pony">Unicorns</div> <div class="yule">Fae Yule</div>';
   print $temp '</span>' . "\n";
 
   my @headers = ("Shard", "Zone", "Event Name", "Elapsed Time");
