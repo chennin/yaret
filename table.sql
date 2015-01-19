@@ -336,7 +336,7 @@ INSERT INTO eventnames (id, name, lang) VALUES
 (75,"Terre fracassée", "fr_FR"),
 (110,"L'essaim du siècle", "fr_FR"),
 (116,"L'Éveil", "fr_FR"),
-(56,"l'Art du Conflit", "fr_FR"),
+(56,"L'Art du Conflit", "fr_FR"),
 (121,"Le festin macabre", "fr_FR"),
 (128,"Le Soulèvement des profondeurs", "fr_FR"),
 (6,"L'Armée d'airain", "fr_FR"),
