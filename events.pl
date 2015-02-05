@@ -204,7 +204,7 @@ foreach my $dc (@dcs) {
 # Assign CSS classes to different events
         my $class = "oldnews"; my $place = 1;
 
-        if ($zone->{"zone"} =~ /^Draumheim|Goboro Reef|Goboro-Riff|Récif de Goboro|Tarken-Gletscher|Tarken Glacier|Glacier de Tarken$/) { $class = "relevant"; $place = 0; }
+        if ($zone->{"zone"} =~ /^Draumheim|Goboro Reef|Goboro-Riff|Récif de Goboro|Tarken-Gletscher|Tarken Glacier|Glacier de Tarken|Tyrant's Throne|Trône du Tyran|Tyrannenthron$/) { $class = "relevant"; $place = 0; }
 #        if ($zone->{"zone"} =~ /^(The Dendrome|Steppes of Infinity|Morban|Ashora|Kingsward|Das Dendrom|Steppen der Unendlichkeit|Königszirkel|Le Rhizome|Steppes de l'Infini|Protectorat du Roi)$/) { $class = "relevant"; $place = 0; }
 
         if ($zone->{"name"} =~ /^(Hooves and Horns|Des sabots et des cornes|Hufe und Hörner)$/) { $class .= " pony"; }

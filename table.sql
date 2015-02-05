@@ -95,7 +95,10 @@ INSERT INTO zones (id, name, lang, map) VALUES
 (12,"Silberwald","de_DE",'Mathosia'),
 (303,"Tarken-Gletscher","de_DE",'Plane of Water'),
 (301,"Goboro-Riff","de_DE",'Plane of Water'),
-(302,"Draumheim","de_DE",'Plane of Water');
+(302,"Draumheim","de_DE",'Plane of Water'),
+(426135797,"Tyrant's Throne","en_US",'Plane of Water'),
+(426135797,"Tyrannenthron","de_DE",'Plane of Water'),
+(426135797,"Trône du Tyran","fr_FR",'Plane of Water');
 DROP TABLE IF EXISTS shards;
 CREATE TABLE shards (
   dc VARCHAR(8) NOT NULL,
@@ -671,4 +674,12 @@ INSERT INTO eventnames (id, name, lang) VALUES
 (176,"Redoute cristalline","fr_FR"),
 (177,"Aquium Citadel","en_US"),
 (177,"Aquium-Zitadelle","de_DE"),
-(177,"Citadelle d'Aquium","fr_FR");
+(177,"Citadelle d'Aquium","fr_FR"),
+(178,"Aphogglach","en_US"),
+(179,"Leviathan","en_US"),
+(179,"Léviathan","fr_FR"),
+(179,"Leviathan","de_DE"),
+(180,"The Ravenous Devourer","en_US"),
+(181,"Dunkelheit aus der Tiefe","de_DE"),
+(181,"Ténèbres des Profondeurs","fr_FR"),
+(181,"Darkness from the Depths","en_US");
