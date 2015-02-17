@@ -6,21 +6,22 @@ span.link{color:#ff6}
 tooltip:hover:after{background:#333;background:rgba(0,0,0,.8);border-radius:5px;bottom:26px;color:#fff;content:attr(title);left:20%;padding:5px 15px;position:absolute;z-index:98;width:220px}
 .olddesc{border-top:1px dotted gray}
 .new{font-style:italic}
-.label{font-weight:700}
 .end{color:red}
 .relevant{color:#FFF}
-.oldnews{color:#999}
+/*.oldnews{color:#999}*/
 .pony{color:#F3C!important}
-.behemoth{color:#F00!important}
+.behemoth{color:#FF4D4D!important}
 /*.volan{color:#FF9!important}*/
 .yule{color:#0F0!important}
 .unstable{color:#69F!important}
-.nearend{color:#F60}
+.nearavg{color:#F60}
+.nearend{color:#F00}
+.pvp1{color:#B20000!important}
 table.ret,table.sortable{margin-left:5%;border-collapse:collapse;width:60%}
 table tbody{border:1px solid #fff;border-collapse:separate;border-spacing:1px}
 table tbody td{text-align:center}
-table tbody:nth-child(2n+1){background-color:#00002D}
-table tr.stats:nth-child(2n+1){background-color:#00002D}
+table.ret tr:nth-child(even) {background: #00002D;}
+table tr.stats:nth-child(even){background-color:#00002D}
 table tbody tr.firstold{border-top:1px dotted gray}
 table tbody tr:hover{background-color:#333!important}
 table thead{font-weight:700;text-align:center}
@@ -40,3 +41,4 @@ span.caption {font-size:85%;text-align:left;width:20%;vertical-align:middle;marg
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
 	    content: " \25B4\25BE"
 }
+h4.label{margin-left:5%;font-weight:700;text-align:left;margin-bottom: 0;}

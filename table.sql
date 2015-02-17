@@ -3,6 +3,7 @@ CREATE TABLE eventnames (
   name VARCHAR(64) NOT NULL,
   id INTEGER UNSIGNED NOT NULL,
   lang VARCHAR(8),
+  maxruntime INTEGER UNSIGNED DEFAULT 7200,
   PRIMARY KEY (id, lang),
   INDEX (id)
   ) DEFAULT CHARSET=utf8;
@@ -540,6 +541,8 @@ INSERT INTO eventnames (id, name, lang) VALUES
 (177,"Aquium-Zitadelle","de_DE"),
 (177,"Citadelle d'Aquium","fr_FR"),
 (178,"Aphogglach","en_US"),
+(178,"Aphogglach","fr_FR"),
+(178,"Aphogglach","de_DE"),
 (179,"Leviathan","en_US"),
 (179,"Léviathan","fr_FR"),
 (179,"Leviathan","de_DE"),
