@@ -38,6 +38,8 @@ my $TIMEOUT = 5; # Timeout per HTTP request to the Rift server (one per shard)
 my $CONFIGFILE = "/home/alucard/rift/ret.conf";
 
 # DO NOT EDIT BELOW THIS LINE
+sub findmaxtime($);
+
 my $cfg = new Config::Simple($CONFIGFILE) or die "Failed to read config. $!\n";
 my ($dsn, $dbh, $sth);
 
@@ -300,11 +302,7 @@ foreach my $dc (@dcs) {
       elsif ($time > ($avgruntime - 6)) { $nearend = "nearavg"; }
 
 # Find max run time for this event
-      my $maxtime = 0;
-      $sth2 = $dbh->prepare("SELECT maxruntime FROM eventnames WHERE id = ?");
-      $sth2->execute($row->{"eventid"}) or die "Unable to get max run time for event $row->{'eventid'}. $!\n";
-      ($maxtime) = $sth2->fetchrow_array;
-      if ((!defined $maxtime) || ($maxtime !~ /^\d+$/) || ($maxtime < 0) || ($maxtime > 7200)) { $maxtime = 7200; }
+      my $maxtime = findmaxtime($row->{'eventid'});
       if ($time > ($maxtime/60 - 6)) { $nearend = "nearend"; }
 
 # Fill in events
@@ -350,10 +348,24 @@ foreach my $dc (@dcs) {
 foreach my $row (@{ $laststate }) {
   $sth = $dbh->prepare("UPDATE events SET endtime = ? WHERE shardid = ? AND zoneid = ? AND eventid = ? AND starttime = ? AND endtime = 0");
   my $endtime = time;
-  if ($endtime - $row->{'starttime'} > 7200) { $endtime = $row->{'starttime'} + 7260; } # absolute max event run time
+  my $maxtime = findmaxtime($row->{'eventid'});
+# If the end time is more than the max (due to server restarts and API keeping
+# them up, set it to the max + 1 minute
+  if ($endtime - $row->{'starttime'} > $maxtime) { $endtime = $row->{'starttime'} + $maxtime + 60; }
   my $success = $sth->execute($endtime, $row->{'shardid'}, $row->{'zoneid'}, $row->{'eventid'}, $row->{'starttime'});
   if (!$success) {
     print STDERR "Error removing. " . $DBI::errstr . "\n";
     print STDERR time . "$row->{'shardid'}, $row->{'zoneid'}, $row->{'eventid'}, $row->{'starttime'}\n";
   }
+}
+
+sub findmaxtime($) {
+# Find max run time for this event
+        my $eventid = shift;
+        my $maxtime = 0;
+        my $sth2 = $dbh->prepare("SELECT maxruntime FROM eventnames WHERE id = ?");
+        $sth2->execute($eventid) or die "Unable to get max run time for event $eventid. $!\n";
+        ($maxtime) = $sth2->fetchrow_array;
+        if ((!defined $maxtime) || ($maxtime !~ /^\d+$/) || ($maxtime < 0) || ($maxtime > 7200)) { $maxtime = 7200; } # absolute max is 2 hours
+        return $maxtime;
 }

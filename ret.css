@@ -10,12 +10,12 @@ tooltip:hover:after{background:#333;background:rgba(0,0,0,.8);border-radius:5px;
 .relevant{color:#FFF}
 /*.oldnews{color:#999}*/
 .pony{color:#F3C!important}
-.behemoth{color:#FF4D4D!important}
+.behemoth{color:#F60!important}
 /*.volan{color:#FF9!important}*/
 .yule{color:#0F0!important}
 .unstable{color:#69F!important}
-.nearavg{color:#F60}
-.nearend{color:#F00}
+.nearavg{color:#FF0!important}
+.nearend{color:#F00!important}
 .pvp1{color:#B20000!important}
 table.ret,table.sortable{margin-left:5%;border-collapse:collapse;width:60%}
 table tbody{border:1px solid #fff;border-collapse:separate;border-spacing:1px}
