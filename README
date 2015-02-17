@@ -1,14 +1,14 @@
 Yet Another Rift Event Tracker
 
-This one in Perl and with more colored events.
+This one in Perl, with more colored events, and with history tracking.
 
 See LICENSE for license details.
 
 See live version @ http://kiserai.net/rift
 
-A Unix system with Perl is required.  The following Perl modules are also
-required. If you do not have them, install them via CPAN or your distribution's
-package manager if available:
+A Unix system with Perl and MySQL is required.  The following Perl modules are
+also required. If you do not have them, install them via CPAN or your 
+distribution's package manager if available:
 
 * JSON::XS
 * LWP::UserAgent
@@ -18,9 +18,14 @@ package manager if available:
 * File::Temp
 * Config::Simple
 * DBD::mysql
+* File::Temp
+* Time::HiRes
+* File::Copy
 
 History tracking is done via MySQL.  Set up a database and user and fill in the
-values in ret.conf.  This support is optional (set SQLENABLE=false).
+values in ret.conf.
+
+Move ret.conf.dist to ret.conf and fill in the values.
 
 Run the script with perl, preferably via cron.  HTML files for each datacenter
 (na and eu) are generated and put in /var/www/rift/ by default. You should

@@ -3,3 +3,4 @@ SQLUSER=ret
 SQLDB=ret
 SQLLOC=localhost
 SQLPASS=
+WWWFOLDER=/var/www/rift/
