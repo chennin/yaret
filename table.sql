@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS eventnames;
 CREATE TABLE eventnames (
   name VARCHAR(64) NOT NULL,
@@ -7,142 +6,7 @@ CREATE TABLE eventnames (
   PRIMARY KEY (id, lang),
   INDEX (id)
   ) DEFAULT CHARSET=utf8;
-DROP TABLE IF EXISTS zones;
-CREATE TABLE zones (
-  name VARCHAR(32) NOT NULL,
-  id INTEGER UNSIGNED NOT NULL,
-  lang VARCHAR(8),
-  mapid SMALLINT UNSIGNED NOT NULL,
-  PRIMARY KEY (id, lang),
-  FOREIGN KEY (mapid) REFERENCES maps(id),
-  INDEX (id)
-  ) DEFAULT CHARSET=utf8;
-INSERT INTO zones (id, name, lang, map) VALUES
-(282584906,"The Dendrome","en_US",'Brevane/Dusken'),
-(790513416,"Ashora","en_US",'Brevane/Dusken'),
-(798793247,"Steppes of Infinity","en_US",'Brevane/Dusken'),
-(956914599,"Morban","en_US",'Brevane/Dusken'),
-(1300766935,"Kingsward","en_US",'Brevane/Dusken'),
-(1446819710,"Ardent Domain","en_US",'Brevane/Dusken'),
-(1213399942,"Eastern Holdings","en_US",'Brevane/Dusken'),
-(1967477725,"City Core","en_US",'Brevane/Dusken'),
-(1494372221,"Seratos","en_US",'Brevane/Dusken'),
-(1770829751,"Cape Jule","en_US",'Brevane/Dusken'),
-(479431687,"Kingdom of Pelladane","en_US",'Brevane/Dusken'),
-(1992854106,"Ember Isle","en_US",'Mathosia'),
-(26,"Stillmoor","en_US",'Mathosia'),
-(22,"Iron Pine Peak","en_US",'Mathosia'),
-(6,"Shimmersand","en_US",'Mathosia'),
-(336995470,"Droughtlands","en_US",'Mathosia'),
-(24,"Moonshade Highlands","en_US",'Mathosia'),
-(20,"Scarwood Reach","en_US",'Mathosia'),
-(26580443,"Scarlet Gorge","en_US",'Mathosia'),
-(27,"Gloamwood","en_US",'Mathosia'),
-(1481781477,"Stonefield","en_US",'Mathosia'),
-(19,"Freemarch","en_US",'Mathosia'),
-(12,"Silverwood","en_US",'Mathosia'),
-(302,"Draumheim","en_US",'Plane of Water'),
-(301,"Goboro Reef","en_US",'Plane of Water'),
-(303,"Tarken Glacier","en_US",'Plane of Water'),
-(282584906,"Le Rhizome","fr_FR",'Brevane/Dusken'),
-(790513416,"Ashora","fr_FR",'Brevane/Dusken'),
-(798793247,"Steppes de l'Infini","fr_FR",'Brevane/Dusken'),
-(956914599,"Morban","fr_FR",'Brevane/Dusken'),
-(1300766935,"Protectorat du Roi","fr_FR",'Brevane/Dusken'),
-(1446819710,"Contrée Ardente","fr_FR",'Brevane/Dusken'),
-(1213399942,"Fiefs de l'Orient","fr_FR",'Brevane/Dusken'),
-(1967477725,"Cœur de la Cité","fr_FR",'Brevane/Dusken'),
-(1494372221,"Serratos","fr_FR",'Brevane/Dusken'),
-(1770829751,"Cap Yule","fr_FR",'Brevane/Dusken'),
-(479431687,"Royaume de Pelladane","fr_FR",'Brevane/Dusken'),
-(1992854106,"Île de Braise","fr_FR",'Mathosia'),
-(26,"Mornelande","fr_FR",'Mathosia'),
-(22,"Pic du Pin de fer","fr_FR",'Mathosia'),
-(6,"Sable-chatoyant","fr_FR",'Mathosia'),
-(336995470,"Plaines Arides","fr_FR",'Mathosia'),
-(24,"Hautes-Terres d'Ombrelune","fr_FR",'Mathosia'),
-(20,"Étendue de Bois Meurtris","fr_FR",'Mathosia'),
-(26580443,"Gorges Écarlates","fr_FR",'Mathosia'),
-(27,"Bois du Crépuscule","fr_FR",'Mathosia'),
-(1481781477,"Champ de Pierre","fr_FR",'Mathosia'),
-(19,"Libremarche","fr_FR",'Mathosia'),
-(12,"Bois d'Argent","fr_FR",'Mathosia'),
-(301,"Récif de Goboro","fr_FR",'Plane of Water'),
-(303,"Glacier de Tarken","fr_FR",'Plane of Water'),
-(302,"Draumheim","fr_FR",'Plane of Water'),
-(282584906,"Das Dendrom","de_DE",'Brevane/Dusken'),
-(790513416,"Ashora","de_DE",'Brevane/Dusken'),
-(798793247,"Steppen der Unendlichkeit","de_DE",'Brevane/Dusken'),
-(956914599,"Morban","de_DE",'Brevane/Dusken'),
-(1300766935,"Königszirkel","de_DE",'Brevane/Dusken'),
-(1446819710,"Eiferer-Reich","de_DE",'Brevane/Dusken'),
-(1213399942,"Östliche Besitztümer","de_DE",'Brevane/Dusken'),
-(1967477725,"Stadtkern","de_DE",'Brevane/Dusken'),
-(1494372221,"Seratos","de_DE",'Brevane/Dusken'),
-(1770829751,"Kap Jul","de_DE",'Brevane/Dusken'),
-(479431687,"Königreich Pelladane","de_DE",'Brevane/Dusken'),
-(1992854106,"Glutinsel","de_DE",'Mathosia'),
-(26,"Stillmoor","de_DE",'Mathosia'),
-(22,"Eisenkieferngipfel","de_DE",'Mathosia'),
-(6,"Schimmersand","de_DE",'Mathosia'),
-(336995470,"Ödlande","de_DE",'Mathosia'),
-(24,"Mondschattenberge","de_DE",'Mathosia'),
-(20,"Wundwaldregion","de_DE",'Mathosia'),
-(26580443,"Scharlachrote Schlucht","de_DE",'Mathosia'),
-(27,"Dämmerwald","de_DE",'Mathosia'),
-(1481781477,"Steinfeld","de_DE",'Mathosia'),
-(19,"Freimark","de_DE",'Mathosia'),
-(12,"Silberwald","de_DE",'Mathosia'),
-(303,"Tarken-Gletscher","de_DE",'Plane of Water'),
-(301,"Goboro-Riff","de_DE",'Plane of Water'),
-(302,"Draumheim","de_DE",'Plane of Water'),
-(426135797,"Tyrant's Throne","en_US",'Plane of Water'),
-(426135797,"Tyrannenthron","de_DE",'Plane of Water'),
-(426135797,"Trône du Tyran","fr_FR",'Plane of Water');
-DROP TABLE IF EXISTS shards;
-CREATE TABLE shards (
-  dc VARCHAR(8) NOT NULL,
-  id INTEGER UNSIGNED NOT NULL PRIMARY KEY,
-  name VARCHAR(16) NOT NULL,
-  pvp BOOLEAN DEFAULT FALSE,
-  lang VARCHAR(8)
-  ) DEFAULT CHARSET=utf8;
-INSERT INTO shards (dc, id, name, pvp, lang) VALUES
-  ("eu", 2702, "Bloodiron", true, "en_GB"),
-  ("eu", 2714, "Brisesol", false, "fr_FR"),
-  ("eu", 2711, "Brutwacht", false, "de_DE"),
-  ("eu", 2721, "Gelidra", false, "en_GB"),
-  ("eu", 2741, "Typhiria", false, "en_GB"),
-  ("eu", 2722, "Zaviel", false, "en_GB"),
-  ("na", 1704, "Deepwood", false, "en_US"),
-  ("na", 1707, "Faeblight", false, "en_US"),
-  ("na", 1702, "Greybriar", false, "en_US"),
-  ("na", 1721, "Hailol", false, "en_US"),
-  ("na", 1708, "Laethys", false, "en_US"),
-  ("na", 1701, "Seastone", true, "en_US"),
-  ("na", 1706, "Wolfsbane", false, "en_US");
-DROP TABLE IF EXISTS maps;
-CREATE TABLE maps (
-  map VARCHAR(16) NOT NULL,
-  id SMALLINT UNSIGNED NOT NULL PRIMARY KEY,
-  lang VARCHAR(8)
-  ) DEFAULT CHARSET=utf8;
-INSERT INTO maps (map, id, lang) VALUES
-  ("Mathosia", 1, "en_US"),
-  ("Brevane/Dusken", "2", "en_US"),
-  ("Plane of Water", "3", "en_US");
-CREATE TABLE events (
-  shardid INTEGER UNSIGNED NOT NULL,
-  zoneid INTEGER UNSIGNED NOT NULL,
-  eventid INTEGER UNSIGNED NOT NULL,
-  starttime INTEGER UNSIGNED NOT NULL,
-  endtime INTEGER UNSIGNED DEFAULT 0,
-  PRIMARY KEY (shardid, zoneid, eventid, starttime),
-  INDEX (endtime),
-  FOREIGN KEY (shardid) REFERENCES shards(id),
-  FOREIGN KEY (zoneid) REFERENCES zones(id),
-  FOREIGN KEY (eventid) REFERENCES eventnames(id)
-  ) DEFAULT CHARSET=utf8;
+
 INSERT INTO eventnames (id, name, lang) VALUES
 (159,"Aggressive Colonization", "en_US"),
 (154,"Bloodfire Behemoth", "en_US"),
@@ -329,7 +193,7 @@ INSERT INTO eventnames (id, name, lang) VALUES
 (119,"Chasse : Menace arboricole", "fr_FR"),
 (122,"Chasse : La peur de la liberté", "fr_FR"),
 (120,"Chasse : Point de fusion", "fr_FR"),
-(123,"Chasse : Fermer les yeux", "fr_FR"),
+(123,"Chasse : Fermer les yeux", "fr_FR"),
 (109,"Chasse : Présages de la terreur", "fr_FR"),
 (111,"Chasse : Des rêves en éclats", "fr_FR"),
 (118,"Le maelström intérieur", "fr_FR"),
@@ -683,3 +547,148 @@ INSERT INTO eventnames (id, name, lang) VALUES
 (181,"Dunkelheit aus der Tiefe","de_DE"),
 (181,"Ténèbres des Profondeurs","fr_FR"),
 (181,"Darkness from the Depths","en_US");
+
+  
+DROP TABLE IF EXISTS maps;
+CREATE TABLE maps (
+  map VARCHAR(16) NOT NULL,
+  id SMALLINT UNSIGNED NOT NULL PRIMARY KEY,
+  lang VARCHAR(8)
+  ) DEFAULT CHARSET=utf8;
+INSERT INTO maps (map, id, lang) VALUES
+  ("Mathosia", 1, "en_US"),
+  ("Brevane/Dusken", 2, "en_US"),
+  ("Plane of Water", 3, "en_US");
+
+
+DROP TABLE IF EXISTS zones;
+CREATE TABLE zones (
+  name VARCHAR(32) NOT NULL,
+  id INTEGER UNSIGNED NOT NULL,
+  lang VARCHAR(8),
+  mapid SMALLINT UNSIGNED NOT NULL,
+  PRIMARY KEY (id, lang),
+  FOREIGN KEY (mapid) REFERENCES maps(id),
+  INDEX (id)
+  ) DEFAULT CHARSET=utf8;
+INSERT INTO zones (id, name, lang, mapid) VALUES
+(282584906,"The Dendrome","en_US",2),
+(790513416,"Ashora","en_US",2),
+(798793247,"Steppes of Infinity","en_US",2),
+(956914599,"Morban","en_US",2),
+(1300766935,"Kingsward","en_US",2),
+(1446819710,"Ardent Domain","en_US",2),
+(1213399942,"Eastern Holdings","en_US",2),
+(1967477725,"City Core","en_US",2),
+(1494372221,"Seratos","en_US",2),
+(1770829751,"Cape Jule","en_US",2),
+(479431687,"Kingdom of Pelladane","en_US",2),
+(1992854106,"Ember Isle","en_US",1),
+(26,"Stillmoor","en_US",1),
+(22,"Iron Pine Peak","en_US",1),
+(6,"Shimmersand","en_US",1),
+(336995470,"Droughtlands","en_US",1),
+(24,"Moonshade Highlands","en_US",1),
+(20,"Scarwood Reach","en_US",1),
+(26580443,"Scarlet Gorge","en_US",1),
+(27,"Gloamwood","en_US",1),
+(1481781477,"Stonefield","en_US",1),
+(19,"Freemarch","en_US",1),
+(12,"Silverwood","en_US",1),
+(302,"Draumheim","en_US",3),
+(301,"Goboro Reef","en_US",3),
+(303,"Tarken Glacier","en_US",3),
+(282584906,"Le Rhizome","fr_FR",2),
+(790513416,"Ashora","fr_FR",2),
+(798793247,"Steppes de l'Infini","fr_FR",2),
+(956914599,"Morban","fr_FR",2),
+(1300766935,"Protectorat du Roi","fr_FR",2),
+(1446819710,"Contrée Ardente","fr_FR",2),
+(1213399942,"Fiefs de l'Orient","fr_FR",2),
+(1967477725,"Cœur de la Cité","fr_FR",2),
+(1494372221,"Serratos","fr_FR",2),
+(1770829751,"Cap Yule","fr_FR",2),
+(479431687,"Royaume de Pelladane","fr_FR",2),
+(1992854106,"Île de Braise","fr_FR",1),
+(26,"Mornelande","fr_FR",1),
+(22,"Pic du Pin de fer","fr_FR",1),
+(6,"Sable-chatoyant","fr_FR",1),
+(336995470,"Plaines Arides","fr_FR",1),
+(24,"Hautes-Terres d'Ombrelune","fr_FR",1),
+(20,"Étendue de Bois Meurtris","fr_FR",1),
+(26580443,"Gorges Écarlates","fr_FR",1),
+(27,"Bois du Crépuscule","fr_FR",1),
+(1481781477,"Champ de Pierre","fr_FR",1),
+(19,"Libremarche","fr_FR",1),
+(12,"Bois d'Argent","fr_FR",1),
+(301,"Récif de Goboro","fr_FR",3),
+(303,"Glacier de Tarken","fr_FR",3),
+(302,"Draumheim","fr_FR",3),
+(282584906,"Das Dendrom","de_DE",2),
+(790513416,"Ashora","de_DE",2),
+(798793247,"Steppen der Unendlichkeit","de_DE",2),
+(956914599,"Morban","de_DE",2),
+(1300766935,"Königszirkel","de_DE",2),
+(1446819710,"Eiferer-Reich","de_DE",2),
+(1213399942,"Östliche Besitztümer","de_DE",2),
+(1967477725,"Stadtkern","de_DE",2),
+(1494372221,"Seratos","de_DE",2),
+(1770829751,"Kap Jul","de_DE",2),
+(479431687,"Königreich Pelladane","de_DE",2),
+(1992854106,"Glutinsel","de_DE",1),
+(26,"Stillmoor","de_DE",1),
+(22,"Eisenkieferngipfel","de_DE",1),
+(6,"Schimmersand","de_DE",1),
+(336995470,"Ödlande","de_DE",1),
+(24,"Mondschattenberge","de_DE",1),
+(20,"Wundwaldregion","de_DE",1),
+(26580443,"Scharlachrote Schlucht","de_DE",1),
+(27,"Dämmerwald","de_DE",1),
+(1481781477,"Steinfeld","de_DE",1),
+(19,"Freimark","de_DE",1),
+(12,"Silberwald","de_DE",1),
+(303,"Tarken-Gletscher","de_DE",3),
+(301,"Goboro-Riff","de_DE",3),
+(302,"Draumheim","de_DE",3),
+(426135797,"Tyrant's Throne","en_US",3),
+(426135797,"Tyrannenthron","de_DE",3),
+(426135797,"Trône du Tyran","fr_FR",3);
+
+
+DROP TABLE IF EXISTS shards;
+CREATE TABLE shards (
+  dc VARCHAR(8) NOT NULL,
+  id INTEGER UNSIGNED NOT NULL PRIMARY KEY,
+  name VARCHAR(16) NOT NULL,
+  pvp BOOLEAN DEFAULT FALSE,
+  lang VARCHAR(8)
+  ) DEFAULT CHARSET=utf8;
+INSERT INTO shards (dc, id, name, pvp, lang) VALUES
+  ("eu", 2702, "Bloodiron", true, "en_GB"),
+  ("eu", 2714, "Brisesol", false, "fr_FR"),
+  ("eu", 2711, "Brutwacht", false, "de_DE"),
+  ("eu", 2721, "Gelidra", false, "en_GB"),
+  ("eu", 2741, "Typhiria", false, "en_GB"),
+  ("eu", 2722, "Zaviel", false, "en_GB"),
+  ("na", 1704, "Deepwood", false, "en_US"),
+  ("na", 1707, "Faeblight", false, "en_US"),
+  ("na", 1702, "Greybriar", false, "en_US"),
+  ("na", 1721, "Hailol", false, "en_US"),
+  ("na", 1708, "Laethys", false, "en_US"),
+  ("na", 1701, "Seastone", true, "en_US"),
+  ("na", 1706, "Wolfsbane", false, "en_US");
+  
+
+DROP TABLE IF EXISTS events;
+CREATE TABLE events (
+  shardid INTEGER UNSIGNED NOT NULL,
+  zoneid INTEGER UNSIGNED NOT NULL,
+  eventid INTEGER UNSIGNED NOT NULL,
+  starttime INTEGER UNSIGNED NOT NULL,
+  endtime INTEGER UNSIGNED DEFAULT 0,
+  PRIMARY KEY (shardid, zoneid, eventid, starttime),
+  INDEX (endtime),
+  FOREIGN KEY (shardid) REFERENCES shards(id),
+  FOREIGN KEY (zoneid) REFERENCES zones(id),
+  FOREIGN KEY (eventid) REFERENCES eventnames(id)
+  ) DEFAULT CHARSET=utf8;
