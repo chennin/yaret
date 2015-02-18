@@ -1,3 +1,4 @@
+// Cookie functions
 function createCookie(name,value,days) {
   if (days) {
     var date = new Date();
@@ -17,19 +18,34 @@ function readCookie(name) {
   }
   return null;
 }
-function dopref() {
+function eraseCookie(name) {
+        createCookie(name,"",-1);
+}
+function hidetr(i) {
+        var color = document.getElementById(i).style.color;
+        if (color != "rgb(76, 76, 76)") {
+                document.getElementById(i).style.color = "#4C4C4C";
+                document.getElementById(i).oldColor = color;
+        }
+        else {
+                document.getElementById(i).style.color = document.getElementById(i).oldColor;
+        }
+}
+function initialize() {
+  // Add handlers to th's to set sort col pref
   var headers = ["Event", "Shard", "Zone", "Age"]; 
-  var funcs = [];
-  function createfunc(i) {
+  var headerfuncs = [];
+  function clickheader(i) {
     return function() { createCookie("sort",i,365); };
   }
   for (var h=0; h<headers.length; h++) {
     var elements = document.getElementsByClassName(headers[h]);  
-    funcs[h] = createfunc(headers[h]);
+    headerfuncs[h] = clickheader(headers[h]);
     for (var i=0; i<elements.length; i++) { 
-      elements[i].addEventListener('click', funcs[h]);
+      elements[i].addEventListener('click', headerfuncs[h]);
     }
   }
+  // If sort col pref is set, sort on page load
   var sortpref = readCookie('sort');
   if (sortpref) {
     var sortname = sortpref + "";
@@ -38,8 +54,25 @@ function dopref() {
       sorttable.innerSortFunction.apply(elements[i], []);
     }
   }
+  // If HTML5 local storage is available, use it to keep track of
+  // events user does not want to see
+  if (typeof(Storage) != "undefined") {
+        var trfuncs = [];
+        function clicktr(i) {
+                return function() { hidetr(i); };
+        }
+        var elements = document.querySelectorAll('.relevant, .oldnews');
+        for (var i=0; i<elements.length; i++) {
+               trfuncs[i] = clicktr(elements[i].id);
+               elements[i].addEventListener('click', trfuncs[i]);
+        }
+  }
 }
-window.onload = dopref;
-function eraseCookie(name) {
-        createCookie(name,"",-1);
-}
+
+window.onload = initialize;
+/*
+    localStorage.setItem("lastname", "Smith");
+    // Retrieve
+    document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+sessionStorage.
+}*/

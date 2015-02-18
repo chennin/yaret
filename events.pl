@@ -214,7 +214,7 @@ foreach my $dc (@dcs) {
     $outfiles{$lang} = $temp;
     $outfiles{"${lang}name"} = $filename;
 
-    print $temp $html->start_html(
+    my $start = $html->start_html(
         -title => "YARET",
         -encoding => 'UTF-8',
         -style => { -src => '../ret.css'},
@@ -227,6 +227,10 @@ foreach my $dc (@dcs) {
           { -type =>'JAVASCRIPT', -src => "../yaret.js", }
           ],
         );
+    # Hack for HTML 5 DTD.  Move off of CGI?
+    my $dtd = '<!DOCTYPE html>';
+    $start =~  s{<!DOCTYPE.*?>}{$dtd}s;
+    print $temp $start;
     print $temp "<h2 class=\"normal\">Yet Another Rift Event Tracker</h2>";
 
 # Insert links to other languages
@@ -314,7 +318,8 @@ foreach my $dc (@dcs) {
 # Fill in events
       foreach my $lang (@langs) {                                                                                                                                                                      
         my $temp = $outfiles{$lang};
-        print $temp "<tr class='$class'>\n";
+        my $id = "$row->{'eventid'}_$row->{'shardid'}_$row->{'zoneid'}_$row->{'starttime'}";
+        print $temp "<tr class='$class' id='$id'>\n";
         print $temp "<td>" . $eventsbyid{$lang}{$row->{"eventid"}} . "</td>";
         print $temp "<td class='pvp${pvp}'>" . $dc->{'shardsbyid'}{$row->{"shardid"}} . "</td>";
         print $temp "<td>" . $zonesbyid{$lang}{$row->{"zoneid"}} . "</td>";
