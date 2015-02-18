@@ -21,26 +21,27 @@ function readCookie(name) {
 function eraseCookie(name) {
         createCookie(name,"",-1);
 }
-function hidetr(i) {
-        var color = document.getElementById(i).style.color;
+function hidetr(id) {
+        console.log(sessionStorage.getItem(id));
+        var color = document.getElementById(id).style.color;
         if (color != "rgb(76, 76, 76)") {
-                document.getElementById(i).style.color = "#4C4C4C";
-                document.getElementById(i).oldColor = color;
+                document.getElementById(id).style.color = "#4C4C4C";
+                document.getElementById(id).oldColor = color;
 
-                var children = document.getElementById(i).getElementsByTagName("TD");
+                var children = document.getElementById(id).getElementsByTagName("TD");
                 for (var i=0; i<children.length; i++) {
                         children[i].oldColor = children[i].style.color;
                         children[i].style.color = "#4C4C4C";
                 }
-                sessionStorage.setItem(i,"hide");
+                sessionStorage.setItem(id,"hide");
         }
         else {
-                document.getElementById(i).style.color = document.getElementById(i).oldColor;
-                var children = document.getElementById(i).getElementsByTagName("TD");
+                document.getElementById(id).style.color = document.getElementById(id).oldColor;
+                var children = document.getElementById(id).getElementsByTagName("TD");
                 for (var i=0; i<children.length; i++) {
                         children[i].style.color = children[i].oldColor;
                 }
-                sessionStorage.removeItem(i);
+                sessionStorage.removeItem(id);
         }
 }
 function initialize() {
