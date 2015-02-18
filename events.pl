@@ -252,9 +252,12 @@ foreach my $dc (@dcs) {
 
 # Construct table
     print $temp '<div class="caption">' . "\n";
-    print $temp '<br /><div class="new">Newly started event</div> <div class="nearavg">Nearing/over its average run time</div> <div class="nearend">Nearing its maximum run time</div>';
+    print $temp '<h4>Legend</h4>';
+    print $temp '<hr /><div class="new">Newly started event</div> <div class="nearavg">Nearing/over its average run time</div> <div class="nearend">Nearing its maximum run time</div>';
     print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="unstable">Unstable Artifact</div> <div class="pony">Unicorns</div> <div class="yule">Fae Yule</div>';
     print $temp '<br /><div class="pvp1">PvP server</div>';
+    print $temp '<hr /><div>Click an event to grey it out.</div>';
+    print $temp '<br /><div>Hover over the elapsed time to see the average run time of this event on this cluster and with/without the PvP server.</div>';
     print $temp '</div>' . "\n";
   }
   my @headers = ("Event", "Shard", "Zone", "Age");
@@ -340,13 +343,12 @@ foreach my $dc (@dcs) {
     my $tempname = $outfiles{"${lang}name"};
     my $elapsed = tv_interval ($t0);
 
-    print $temp '<p class="footer">Hover over the elapsed time to see the average run time of this event (by cluster, with/without the PvP server(s)).</p>';
-
     my $dt = DateTime->now(time_zone => $dc->{"tz"});
     print $temp '<p></p><p class="disclaimer">Generated ' . $dt->strftime("%F %T %Z") . ' in ' . $elapsed . 's</p>';
 
+    print $temp "<p class=\"disclaimer\">Supported browsers: Chrome 4.0+, IE 8.0+, Firefox 3.5+, Safari 4.0+, Opera 11.5+</p>";
     print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
-    print $temp "<p class=\"disclaimer\">This site uses cookies to store user preferences. <a onclick=\"eraseCookie('sort')\">Erase cookies</a>.</p>\n";
+    print $temp "<p class=\"disclaimer\">This site uses cookies and local storage to store user preferences. <a onclick=\"eraseCookie('sort'); clearLocalStorage()\">Erase cookies and local storage</a>.</p>\n";
     print $temp $html->end_html;
     close $temp;
 

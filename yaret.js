@@ -26,9 +26,21 @@ function hidetr(i) {
         if (color != "rgb(76, 76, 76)") {
                 document.getElementById(i).style.color = "#4C4C4C";
                 document.getElementById(i).oldColor = color;
+
+                var children = document.getElementById(i).getElementsByTagName("TD");
+                for (var i=0; i<children.length; i++) {
+                        children[i].oldColor = children[i].style.color;
+                        children[i].style.color = "#4C4C4C";
+                }
+                sessionStorage.setItem(i,"hide");
         }
         else {
                 document.getElementById(i).style.color = document.getElementById(i).oldColor;
+                var children = document.getElementById(i).getElementsByTagName("TD");
+                for (var i=0; i<children.length; i++) {
+                        children[i].style.color = children[i].oldColor;
+                }
+                sessionStorage.removeItem(i);
         }
 }
 function initialize() {
@@ -65,14 +77,12 @@ function initialize() {
         for (var i=0; i<elements.length; i++) {
                trfuncs[i] = clicktr(elements[i].id);
                elements[i].addEventListener('click', trfuncs[i]);
+               var id = elements[i].id;
+               if (sessionStorage.getItem(id) == "hide") { hidetr(id); }
         }
   }
 }
-
+function clearLocalStorage() {
+        sessionStorage.clear();
+}
 window.onload = initialize;
-/*
-    localStorage.setItem("lastname", "Smith");
-    // Retrieve
-    document.getElementById("result").innerHTML = localStorage.getItem("lastname");
-sessionStorage.
-}*/
