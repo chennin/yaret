@@ -232,8 +232,8 @@ foreach my $dc (@dcs) {
 # Insert links to other languages
     print $temp "<p class=\"normal\">Language: ";
     foreach my $otherlang (@langs) {
-      if ($lang ne $otherlang) { print $temp '<a href="' . $otherlang . '.html"><img src="../' . $otherlang . '.png"></a> '; }
-      else { print $temp "<img class=\"gray\" src=\"../$otherlang.png\"> "; }
+      if ($lang ne $otherlang) { print $temp '<a href="' . $otherlang . '.html"><img src="../' . $otherlang . '.png" alt="' . $otherlang . ' flag" /></a> '; }
+      else { print $temp "<img class=\"gray\" src=\"../$otherlang.png\" alt=\"$otherlang flag\" /> "; }
     }
 
 # Insert links to other datacenter's pages
@@ -247,11 +247,11 @@ foreach my $dc (@dcs) {
     print $temp "</p>\n";
 
 # Construct table
-    print $temp '<span class="caption">' . "\n";
+    print $temp '<div class="caption">' . "\n";
     print $temp '<br /><div class="new">Newly started event</div> <div class="nearavg">Nearing/over its average run time</div> <div class="nearend">Nearing its maximum run time</div>';
     print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="unstable">Unstable Artifact</div> <div class="pony">Unicorns</div> <div class="yule">Fae Yule</div>';
     print $temp '<br /><div class="pvp1">PvP server</div>';
-    print $temp '</span>' . "\n";
+    print $temp '</div>' . "\n";
   }
   my @headers = ("Event", "Shard", "Zone", "Age");
 

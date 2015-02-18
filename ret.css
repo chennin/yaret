@@ -38,7 +38,7 @@ img.gray {
 						filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
 						zoom: 1;
 }
-span.caption {font-size:85%;text-align:left;width:20%;vertical-align:middle;margin-right:12%;float:right}
+div.caption {font-size:85%;text-align:left;width:20%;vertical-align:middle;margin-right:12%;float:right}
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
 	    content: " \25B4\25BE"
 }
