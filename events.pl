@@ -218,9 +218,14 @@ foreach my $dc (@dcs) {
         -title => "YARET",
         -encoding => 'UTF-8',
         -style => { -src => '../ret.css'},
-        -head => meta({-http_equiv => 'Refresh',
-          -content => "$REFRESH"}),
-        -script => { -type =>'JAVASCRIPT', -src => "../sorttable.js", },
+        -head => meta({
+          -http_equiv => 'Refresh',
+          -content => "$REFRESH"
+          }),
+        -script => [
+          { -type =>'JAVASCRIPT', -src => "../sorttable.js", },
+          { -type =>'JAVASCRIPT', -src => "../yaret.js", }
+          ],
         );
     print $temp "<h2 class=\"normal\">Yet Another Rift Event Tracker</h2>";
 
@@ -248,7 +253,7 @@ foreach my $dc (@dcs) {
     print $temp '<br /><div class="pvp1">PvP server</div>';
     print $temp '</span>' . "\n";
   }
-  my @headers = ("Event Name", "Shard", "Zone", "Elapsed Time");
+  my @headers = ("Event", "Shard", "Zone", "Age");
 
 # Retrieve events
   for (my $map = $maps; $map > 0; $map--) {
@@ -260,14 +265,15 @@ foreach my $dc (@dcs) {
       print $temp "<table class='ret sortable'>";
       print $temp "<thead><tr>\n";
       foreach my $header (@headers) {
-        print $temp "<th>$header</th>";
+        print $temp "<th class='$header'>$header</th>";
       }
       print $temp "</tr>";
       print $temp "</thead>\n";
       print $temp "<tbody>\n";
     }
     while (my $row = $sth->fetchrow_hashref()) {
-      my $time = floor((time - $row->{"starttime"})/60);
+      my $timesecs = time - $row->{"starttime"};
+      my $time = floor($timesecs/60);
       my $class = "oldnews";
       if ($map == $maps) { $class = "relevant"; }
       if ($row->{"eventid"} == 158) { $class .= " pony"; } # Hooves and Horns
@@ -312,7 +318,7 @@ foreach my $dc (@dcs) {
         print $temp "<td>" . $eventsbyid{$lang}{$row->{"eventid"}} . "</td>";
         print $temp "<td class='pvp${pvp}'>" . $dc->{'shardsbyid'}{$row->{"shardid"}} . "</td>";
         print $temp "<td>" . $zonesbyid{$lang}{$row->{"zoneid"}} . "</td>";
-        print $temp "<td sorttable_customkey=\"$time\" class=\"$nearend\" title=\"This event ended in an average of $avgruntime minutes in the past 30 days.\">" . $time . "m</td>";
+        print $temp "<td sorttable_customkey=\"$timesecs\" class=\"$nearend\" title=\"This event ended in an average of $avgruntime minutes in the past 30 days.\">" . $time . "m</td>";
         print $temp "</tr>\n";
       }
     }
@@ -335,8 +341,8 @@ foreach my $dc (@dcs) {
     print $temp '<p></p><p class="disclaimer">Generated ' . $dt->strftime("%F %T %Z") . ' in ' . $elapsed . 's</p>';
 
     print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
+    print $temp "<p class=\"disclaimer\">This site uses cookies to store user preferences.</p>\n";
     print $temp $html->end_html;
-
     close $temp;
 
     chmod oct("0644"), $tempname;
