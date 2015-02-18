@@ -257,7 +257,7 @@ foreach my $dc (@dcs) {
 
 # Retrieve events
   for (my $map = $maps; $map > 0; $map--) {
-    $sth = $dbh->prepare("SELECT * FROM events WHERE endtime = 0 AND shardid IN (SELECT id FROM shards WHERE dc = ?) AND zoneid IN (SELECT id FROM zones WHERE mapid = ?) ORDER BY starttime");
+    $sth = $dbh->prepare("SELECT * FROM events WHERE endtime = 0 AND shardid IN (SELECT id FROM shards WHERE dc = ?) AND zoneid IN (SELECT id FROM zones WHERE mapid = ?) ORDER BY starttime ASC");
     my $success = $sth->execute($dc->{"shortname"}, $map) or die "Unable to retrieve events for map. $!";
     foreach my $lang (@langs) {
       my $temp = $outfiles{$lang};
@@ -318,7 +318,7 @@ foreach my $dc (@dcs) {
         print $temp "<td>" . $eventsbyid{$lang}{$row->{"eventid"}} . "</td>";
         print $temp "<td class='pvp${pvp}'>" . $dc->{'shardsbyid'}{$row->{"shardid"}} . "</td>";
         print $temp "<td>" . $zonesbyid{$lang}{$row->{"zoneid"}} . "</td>";
-        print $temp "<td sorttable_customkey=\"$timesecs\" class=\"$nearend\" title=\"This event ended in an average of $avgruntime minutes in the past 30 days.\">" . $time . "m</td>";
+        print $temp "<td sorttable_customkey=\"" . (100000 - $timesecs) . "\" class=\"$nearend\" title=\"This event ended in an average of $avgruntime minutes in the past 30 days.\">" . $time . "m</td>";
         print $temp "</tr>\n";
       }
     }
