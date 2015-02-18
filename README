@@ -1,10 +1,16 @@
 Yet Another Rift Event Tracker
 
-This one in Perl, with more colored events, and with history tracking.
+FEATURES:
+
+        * Sorts by map first
+        * Has full translations for zones & events
+        * Keeps track of event run time history and shows average/max run time
+        * Uses more colors to convey information
+        * Can sort tables by any column, which is remembered
 
 See LICENSE for license details.
 
-See live version @ http://kiserai.net/rift
+See live version @ http://yaret.us.to
 
 A Unix system with Perl and MySQL is required.  The following Perl modules are
 also required. If you do not have them, install them via CPAN or your 
@@ -22,13 +28,17 @@ distribution's package manager if available:
 * Time::HiRes
 * File::Copy
 
-History tracking is done via MySQL.  Set up a database and user and fill in the
-values in ret.conf.
+INSTALL:
 
-Move ret.conf.dist to ret.conf and fill in the values.
+0. Make sure you have Perl, MySQL, and the above Perl modules installed
+1. Create a database (example: "ret") and DB user (example: "ret").
+2. Import the table.sql into this database.
+3. Move ret.conf.dist to ret.conf and fill in the values.
+4. Add a cron job to run events.pl. Example:
+        * * * * * /home/alucard/rift/events.pl
 
-Run the script with perl, preferably via cron.  HTML files for each datacenter
-(na and eu) are generated and put in /var/www/rift/ by default. You should
-change this destination by editing events.pl.  Include a trailing slash.
+HTML files for each datacenter (na and eu) are generated and put under
+/var/www/rift/ by default. You can change this destination by editing 
+events.pl.  Include a trailing slash.
 
 Thanks to RiftPluz for collecting most of the translations in one place.

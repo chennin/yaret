@@ -1,4 +1,3 @@
-SQLENABLE=true
 SQLUSER=ret
 SQLDB=ret
 SQLLOC=localhost
