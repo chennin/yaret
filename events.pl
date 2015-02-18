@@ -341,7 +341,7 @@ foreach my $dc (@dcs) {
     print $temp '<p></p><p class="disclaimer">Generated ' . $dt->strftime("%F %T %Z") . ' in ' . $elapsed . 's</p>';
 
     print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
-    print $temp "<p class=\"disclaimer\">This site uses cookies to store user preferences.</p>\n";
+    print $temp "<p class=\"disclaimer\">This site uses cookies to store user preferences. <a onclick=\"eraseCookie('sort')\">Erase cookies</a>.</p>\n";
     print $temp $html->end_html;
     close $temp;
 

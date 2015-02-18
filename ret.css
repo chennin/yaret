@@ -1,5 +1,6 @@
-A:link{color:#ff6}
-A:visited{color:#9AF}
+a{color:#ff6;cursor: pointer;}
+a:visited{color:#9AF}
+a:hover,a.hover { text-decoration: underline; }
 body{background-color:#000;font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;color:#FFF}
 span.link{color:#ff6}
 .tooltip{display:inline;position:relative}

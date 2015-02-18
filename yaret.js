@@ -40,3 +40,6 @@ function dopref() {
   }
 }
 window.onload = dopref;
+function eraseCookie(name) {
+        createCookie(name,"",-1);
+}
