@@ -30,6 +30,7 @@ use DBD::mysql;
 use Time::HiRes qw/gettimeofday tv_interval/;
 use File::Copy;
 use File::Basename;
+use Cwd qw/abs_path/;
 
 my $t0 = [gettimeofday];
 
