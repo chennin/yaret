@@ -31,11 +31,12 @@ distribution's package manager if available:
 
 INSTALL:
 
-0. Make sure you have Perl, MySQL, and the above Perl modules installed
-1. Create a database (example: "ret") and DB user (example: "ret").
-2. Import the table.sql into this database.
-3. Move ret.conf.dist to ret.conf and fill in the values.
-4. Add a cron job to run events.pl. Example:
+1. Make sure you have Perl, MySQL, and the above Perl modules installed
+2. Create a database (example: "yaret") and DB user (example: "yaret").
+3. Import yaret-initial.sql into this database. Example:
+        mysql -u ret -p ret < yaret-initial.sql
+4. Move ret.conf.dist to ret.conf and fill in the values.
+5. Add a cron job to run events.pl. Example:
         * * * * * /home/alucard/rift/events.pl
 
 HTML files for each datacenter (na and eu) are generated and put under
