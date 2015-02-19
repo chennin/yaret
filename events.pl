@@ -150,16 +150,19 @@ push(@dcs, \%eudc);
 sub createdir($) {
    my $dir = shift;
    if (-e $dir) {
-      if (!-d $WWWFOLDER) { die "$dir exists but is not a directory. $!\n"; }
+      if (!-d $dir) { die "$dir exists but is not a directory. $!\n"; }
       return;
    }
    if (!mkdir $dir) { die "Unable to create $dir. $!\n"; }
-   if (chmod 0755, $dir != 1) { print STDERR "Unable to set permissions on $dir, you may not be able to access it.\n" }
+   if (chmod(0755, $dir) != 1) { print STDERR "Unable to set permissions on $dir, you may not be able to access it.\n" }
 }
-
 if ($WWWFOLDER !~ m@/$@) { $WWWFOLDER .= '/'; }
 createdir($WWWFOLDER);
-foreach my $dc (@dcs) { createdir($WWWFOLDER . $dc->{"shortname"}); }
+foreach my $dc (@dcs) {
+  createdir($WWWFOLDER . $dc->{"shortname"});
+  if (!-e $WWWFOLDER . "index.html") { symlink($WWWFOLDER . $dc->{"shortname"} . "/en_US.html", $WWWFOLDER . "index.html"); }
+  if (!-e $WWWFOLDER . $dc->{"shortname"} . "index.html") { symlink($WWWFOLDER . $dc->{"shortname"} . "/en_US.html", $WWWFOLDER . $dc->{"shortname"} . "/index.html"); }
+}
 
 # REALLY DO NOT EDIT BELOW THIS LINE
 

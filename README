@@ -42,7 +42,10 @@ INSTALL:
 3. Import yaret-initial.sql into this database. Example:
         mysql -u yaret -p yaret < yaret-initial.sql
 4. Move ret.conf.dist to ret.conf and fill in the values.
-5. Add a cron job to run events.pl. Example:
+5. Create a destination (example: /var/www/rift) and make sure it is:
+   * Owned by the system user that will be running the script (don't usse root)
+   * Readable by the system user your Web server runs as (ex: www-data)
+6. Add a cron job to run events.pl. Example:
         * * * * * /home/alucard/rift/events.pl
 
 HTML files for each datacenter (na and eu) are generated and put under
