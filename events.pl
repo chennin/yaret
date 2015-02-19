@@ -191,7 +191,7 @@ foreach my $dc (@dcs) {
       print STDERR "Error retrieving events for " .  $shardname . ". " . $site->status_line . "\n";
       next;
     }
-    my $result = $json->decode($site->content) or die "Can't decode JSON result. $!\n";
+    my $result = $json->decode($site->decoded_content()) or die "Can't decode JSON result. $!\n";
     foreach my $zone (@{ $result->{"data"} }) { 
       if ($zone->{"name"}) { # an event
         if ($zone->{"name"} eq "Terror aus der Tiefe") { $zone->{"name"} = "Terror aus den Tiefen"; } # Fix for inconsistent Trion translation
