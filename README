@@ -13,9 +13,9 @@ See LICENSE for license details.
 
 See live version @ http://yaret.us.to
 
-A Unix system with Perl and MySQL is required.  The following Perl modules are
-also required. If you do not have them, install them via CPAN or your 
-distribution's package manager if available:
+A Unix system with Perl, MySQL, and a Web server is required.  The following
+Perl modules are also required. If you do not have them, install them via CPAN
+or your distribution's package manager if available:
 
 * JSON::XS
 * LWP::UserAgent
@@ -32,15 +32,20 @@ distribution's package manager if available:
 INSTALL:
 
 1. Make sure you have Perl, MySQL, and the above Perl modules installed
+  * Ubuntu 14.04 quick start: 
+      apt-get update
+      apt-get install mysql-server lighttpd libjson-xs-perl libwww-perl \
+         libdatetime-perl libconfig-simple-perl
+
 2. Create a database (example: "yaret") and DB user (example: "yaret").
 3. Import yaret-initial.sql into this database. Example:
-        mysql -u ret -p ret < yaret-initial.sql
+        mysql -u yaret -p yaret < yaret-initial.sql
 4. Move ret.conf.dist to ret.conf and fill in the values.
 5. Add a cron job to run events.pl. Example:
         * * * * * /home/alucard/rift/events.pl
 
 HTML files for each datacenter (na and eu) are generated and put under
 /var/www/rift/ by default. You can change this destination by editing 
-events.pl.  Include a trailing slash.
+ret.conf.  Include a trailing slash.
 
 Thanks to RiftPluz for collecting most of the translations in one place.

@@ -29,7 +29,7 @@ use Config::Simple;
 use DBD::mysql;
 use Time::HiRes qw/gettimeofday tv_interval/;
 use File::Copy;
-use encoding qw/utf8/;
+use utf8;
 
 my $t0 = [gettimeofday];
 

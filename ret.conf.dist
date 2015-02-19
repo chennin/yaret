@@ -1,5 +1,5 @@
-SQLUSER=ret
-SQLDB=ret
+SQLUSER=yaret
+SQLDB=yaret
 SQLLOC=localhost
 SQLPASS=
 WWWFOLDER=/var/www/rift/
