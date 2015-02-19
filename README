@@ -28,6 +28,7 @@ or your distribution's package manager if available:
 * File::Temp
 * Time::HiRes
 * File::Copy
+* File::Basename
 
 INSTALL:
 

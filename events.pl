@@ -29,13 +29,14 @@ use Config::Simple;
 use DBD::mysql;
 use Time::HiRes qw/gettimeofday tv_interval/;
 use File::Copy;
+use File::Basename;
 use utf8;
 
 my $t0 = [gettimeofday];
 
 my $REFRESH = 60;
 my $TIMEOUT = 5; # Timeout per HTTP request to the Rift server (one per shard)
-my $CONFIGFILE = "/home/alucard/rift/ret.conf";
+my $CONFIGFILE = dirname(__FILE__) . "/ret.conf";
 
 # DO NOT EDIT BELOW THIS LINE
 sub findmaxtime($);
