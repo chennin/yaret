@@ -157,16 +157,24 @@ sub createdir($) {
    if (!mkdir $dir) { die "Unable to create $dir. $!\n"; }
    if (chmod(0755, $dir) != 1) { print STDERR "Unable to set permissions on $dir, you may not be able to access it.\n" }
 }
+sub createlink($$) {
+  my $target = shift;
+  my $linkname = shift;
+  if (!-e $linkname) { symlink($target, $linkname); }
+}
 if ($WWWFOLDER !~ m@/$@) { $WWWFOLDER .= '/'; }
 createdir($WWWFOLDER);
 foreach my $dc (@dcs) {
   createdir($WWWFOLDER . $dc->{"shortname"});
-  if (!-e $WWWFOLDER . $dc->{"shortname"} . "index.html") { symlink($WWWFOLDER . $dc->{"shortname"} . "/en_US.html", $WWWFOLDER . $dc->{"shortname"} . "/index.html"); }
+  createlink($WWWFOLDER . $dc->{"shortname"} . "/en_US.html", $WWWFOLDER . $dc->{"shortname"} . "/index.html");
 }
 my $srcdir = dirname(abs_path(__FILE__)) . "/";
-if (!-e $WWWFOLDER . "index.html") { symlink($srcdir . "toplevelindex.html", $WWWFOLDER . "index.html"); }
-if (!-e $WWWFOLDER . "yaret.js") { symlink($srcdir . "yaret.js", $WWWFOLDER . "yaret.js"); }
-if (!-e $WWWFOLDER . "ret.css") { symlink($srcdir . "ret.css", $WWWFOLDER . "ret.css"); }
+createlink($srcdir . "toplevelindex.html", $WWWFOLDER . "index.html");
+createlink($srcdir . "yaret.js", $WWWFOLDER . "yaret.js");
+createlink($srcdir . "ret.css", $WWWFOLDER . "ret.css");
+foreach my $lang (@langs) {
+  createlink($srcdir . $lang . ".png", $WWWFOLDER . $lang . ".png");
+}
 
 # REALLY DO NOT EDIT BELOW THIS LINE
 
