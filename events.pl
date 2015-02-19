@@ -35,7 +35,7 @@ my $t0 = [gettimeofday];
 
 my $REFRESH = 60;
 my $TIMEOUT = 5; # Timeout per HTTP request to the Rift server (one per shard)
-my $CONFIGFILE = dirname(__FILE__) . "/ret.conf";
+my $CONFIGFILE = dirname(abs_path(__FILE__)) . "/ret.conf";
 
 # DO NOT EDIT BELOW THIS LINE
 sub findmaxtime($);
@@ -163,6 +163,8 @@ foreach my $dc (@dcs) {
   if (!-e $WWWFOLDER . "index.html") { symlink($WWWFOLDER . $dc->{"shortname"} . "/en_US.html", $WWWFOLDER . "index.html"); }
   if (!-e $WWWFOLDER . $dc->{"shortname"} . "index.html") { symlink($WWWFOLDER . $dc->{"shortname"} . "/en_US.html", $WWWFOLDER . $dc->{"shortname"} . "/index.html"); }
 }
+if (!-e $WWWFOLDER . "yaret.js") { symlink(dirname(abs_path(__FILE__)) . "/yaret.js", $WWWFOLDER . "yaret.js"); }
+if (!-e $WWWFOLDER . "ret.css") { symlink(dirname(abs_path(__FILE__)) . "/ret.css", $WWWFOLDER . "ret.css"); }
 
 # REALLY DO NOT EDIT BELOW THIS LINE
 
