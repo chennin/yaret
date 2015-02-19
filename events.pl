@@ -30,7 +30,6 @@ use DBD::mysql;
 use Time::HiRes qw/gettimeofday tv_interval/;
 use File::Copy;
 use File::Basename;
-use utf8;
 
 my $t0 = [gettimeofday];
 
