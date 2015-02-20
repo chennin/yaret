@@ -69,6 +69,13 @@ function initialize() {
   // If HTML5 local storage is available, use it to keep track of
   // events user does not want to see
   if (typeof(Storage) != "undefined") {
+        // Check PvP server setting & hide
+        var hidepvp = readCookie('pvp');
+        if (hidepvp == "hide") {
+                hidePvpRows();
+                document.getElementById('pvptoggle').innerHTML = "(show)";
+        }
+        // Check individual hiddens
         var trfuncs = [];
         function clicktr(i) {
                 return function() { hidetr(i, "true"); };
@@ -85,12 +92,6 @@ function initialize() {
   for (var i = 1; i <= 3; i++) {
         var hidemap  = readCookie('map' + i);
         if (hidemap == "hide") { showHide(i); }
-  }
-  // Check PvP server setting
-  var hidepvp = readCookie('pvp');
-  if (hidepvp == "hide") {
-        showHidePvP();
-        document.getElementById('pvptoggle').innerHTML = "(show)";
   }
 }
 function clearLocalStorage() {
@@ -110,6 +111,11 @@ function showHide(id) {
                 }
         }
 }
+function hidePvpRows() {
+        var elements = document.querySelectorAll('td.pvp1');
+        // hidetr takes care of toggling
+        for (var i=0; i<elements.length; i++) { hidetr(elements[i].parentNode.id, "false"); }
+}
 function showHidePvP() {
         var hidepvp = readCookie('pvp');
         if (hidepvp == "hide") {
@@ -120,8 +126,6 @@ function showHidePvP() {
                 createCookie('pvp','hide',365);
                 document.getElementById('pvptoggle').innerHTML = "(show)";
         }
-        var elements = document.querySelectorAll('td.pvp1');
-        // hidetr takes care of toggling
-        for (var i=0; i<elements.length; i++) { hidetr(elements[i].parentNode.id, "false"); }
+        hidePvpRows();
 }
 window.onload = initialize;

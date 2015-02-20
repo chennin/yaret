@@ -379,7 +379,7 @@ foreach my $dc (@dcs) {
 
     print $temp "<p class=\"disclaimer\">Supported browsers: Chrome 4.0+, IE 8.0+, Firefox 3.5+, Safari 4.0+, Opera 11.5+</p>";
     print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
-    print $temp "<p class=\"disclaimer\">This site uses cookies and local storage to store user preferences. <a onclick=\"eraseCookie('sort'); eraseCookie('map1'); eraseCookie('map2'); eraseCookie('map3'); clearLocalStorage()\">Erase cookies and local storage</a>.</p>\n";
+    print $temp "<p class=\"disclaimer\">This site uses cookies and local storage to store user preferences. <a onclick=\"eraseCookie('sort'); eraseCookie('map1'); eraseCookie('map2'); eraseCookie('map3'); eraseCookie('pvp'); clearLocalStorage()\">Erase cookies and local storage</a>.</p>\n";
     print $temp $html->end_html;
     close $temp;
 
