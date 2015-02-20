@@ -8,6 +8,7 @@ FEATURES:
         * Allows you to grey out events
         * Uses more colors to convey information
         * Can sort tables by any column, which is remembered
+        * Can hide maps entirely, which is remembered
 
 See LICENSE for license details.
 

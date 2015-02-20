@@ -82,8 +82,27 @@ function initialize() {
                if (sessionStorage.getItem(id) == "hide") { hidetr(id); }
         }
   }
+  // Check for and hide saved hidden maps
+  for (var i = 1; i <= 3; i++) {
+        var hidemap  = readCookie('map' + i);
+        if (hidemap == "hide") { showHide(i); }
+  }
 }
 function clearLocalStorage() {
         sessionStorage.clear();
+}
+function showHide(id) {
+        if (document.getElementById('table' + id)) {
+                if (document.getElementById('table' + id).style.display != 'none') {
+                        document.getElementById('table' + id).style.display = 'none';
+                        document.getElementById('label' + id).className = document.getElementById('label' + id).className.replace( /(?:^|\s)downarrow(?!\S)/g, ' rightarrow' );
+                        createCookie(id,"hide",365);
+                }
+                else {
+                        document.getElementById('table' + id).style.display = '';
+                        document.getElementById('label' + id).className = document.getElementById('label' + id).className.replace( /(?:^|\s)rghtarrow(?!\S)/g , ' downarrow' );
+                        eraseCookie(id);
+                }
+        }
 }
 window.onload = initialize;

@@ -43,3 +43,5 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 	    content: " \25B4\25BE"
 }
 h4.label{margin-left:5%;font-weight:700;text-align:left;margin-bottom: 0;}
+.downarrow:before { content: "\25BC  "; }
+.rightarrow:before { content: "\25B6  "; }
