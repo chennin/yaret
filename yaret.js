@@ -21,7 +21,7 @@ function readCookie(name) {
 function eraseCookie(name) {
         createCookie(name,"",-1);
 }
-function hidetr(id) {
+function hidetr(id,store) {
         var color = document.getElementById(id).style.color;
         if (color != "rgb(76, 76, 76)") {
                 document.getElementById(id).style.color = "#4C4C4C";
@@ -32,7 +32,7 @@ function hidetr(id) {
                         children[i].oldColor = children[i].style.color;
                         children[i].style.color = "#4C4C4C";
                 }
-                sessionStorage.setItem(id,"hide");
+                if (store == "true") { sessionStorage.setItem(id,"hide"); }
         }
         else {
                 document.getElementById(id).style.color = document.getElementById(id).oldColor;
@@ -71,20 +71,26 @@ function initialize() {
   if (typeof(Storage) != "undefined") {
         var trfuncs = [];
         function clicktr(i) {
-                return function() { hidetr(i); };
+                return function() { hidetr(i, "true"); };
         }
         var elements = document.querySelectorAll('tr.relevant, tr.oldnews');
         for (var i=0; i<elements.length; i++) {
                trfuncs[i] = clicktr(elements[i].id);
                elements[i].addEventListener('click', trfuncs[i]);
                var id = elements[i].id;
-               if (sessionStorage.getItem(id) == "hide") { hidetr(id); }
+               if (sessionStorage.getItem(id) == "hide") { hidetr(id, "false"); }
         }
   }
   // Check for and hide saved hidden maps
   for (var i = 1; i <= 3; i++) {
         var hidemap  = readCookie('map' + i);
         if (hidemap == "hide") { showHide(i); }
+  }
+  // Check PvP server setting
+  var hidepvp = readCookie('pvp');
+  if (hidepvp == "hide") {
+        showHidePvP();
+        document.getElementById('pvptoggle').innerHTML = "(show)";
   }
 }
 function clearLocalStorage() {
@@ -103,5 +109,19 @@ function showHide(id) {
                         eraseCookie('map' + id);
                 }
         }
+}
+function showHidePvP() {
+        var hidepvp = readCookie('pvp');
+        if (hidepvp == "hide") {
+                eraseCookie('pvp');
+                document.getElementById('pvptoggle').innerHTML = "(hide)";
+        }
+        else {
+                createCookie('pvp','hide',365);
+                document.getElementById('pvptoggle').innerHTML = "(show)";
+        }
+        var elements = document.querySelectorAll('td.pvp1');
+        // hidetr takes care of toggling
+        for (var i=0; i<elements.length; i++) { hidetr(elements[i].parentNode.id, "false"); }
 }
 window.onload = initialize;

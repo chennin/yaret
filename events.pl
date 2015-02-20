@@ -285,7 +285,7 @@ foreach my $dc (@dcs) {
     print $temp '<h4>Legend</h4>';
     print $temp '<hr /><div class="new">Newly started event</div> <div class="nearavg">Nearing/over its average run time</div> <div class="nearend">Nearing its maximum run time</div>';
     print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="unstable">Unstable Artifact</div> <div class="pony">Unicorns</div> <div class="yule">Fae Yule</div>';
-    print $temp '<br /><div class="pvp1">PvP server</div>';
+    print $temp '<br /><div class="pvp1">PvP server <a onclick="showHidePvP();" id="pvptoggle">(hide)</a></div>';
     print $temp '<hr /><div>Click an event to gray it out.</div>';
     print $temp '<br /><div>Hover over the elapsed time to see the average run time of this event on this cluster and with/without the PvP server.</div>';
     print $temp '<br /><div>Click a map name to hide the entire map.</div>';
