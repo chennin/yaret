@@ -5,7 +5,7 @@ FEATURES:
         * Sorts by map first
         * Has full translations for zones & events
         * Keeps track of event run time history and shows average/max run time
-        * Allows you to grey out events
+        * Allows you to gray out events
         * Uses more colors to convey information
         * Can sort tables by any column, which is remembered
         * Can hide maps entirely, which is remembered
