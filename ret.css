@@ -17,7 +17,7 @@ tooltip:hover:after{background:#333;background:rgba(0,0,0,.8);border-radius:5px;
 .unstable{color:#69F}
 .nearavg{color:#FF0}
 .nearend{color:#F00}
-.pvp1{color:#B20000}
+.pvp1{color:#B20000!important}
 table.ret,table.sortable{margin-left:5%;border-collapse:collapse;width:60%}
 table tbody{border:1px solid #fff;border-collapse:separate;border-spacing:1px}
 table tbody td{text-align:center}
@@ -44,4 +44,4 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 }
 h4.label{margin-left:5%;font-weight:700;text-align:left;margin-bottom: 0;}
 .downarrow:before { content: "\25BC  "; }
-.rightarrow:before { content: "\25B6  "; }
+.rightarrow:before { content: "\25B8  "; }

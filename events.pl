@@ -353,10 +353,10 @@ foreach my $dc (@dcs) {
       foreach my $lang (@langs) {                                                                                                                                                                      
         my $temp = $outfiles{$lang};
         my $id = "$row->{'eventid'}_$row->{'shardid'}_$row->{'zoneid'}_$row->{'starttime'}";
-        print $temp "<tr class='$class' id='$id'>\n";
-        print $temp "<td>" . $eventsbyid{$lang}{$row->{"eventid"}} . "</td>";
-        print $temp "<td class='pvp${pvp}'>" . $dc->{'shardsbyid'}{$row->{"shardid"}} . "</td>";
-        print $temp "<td>" . $zonesbyid{$lang}{$row->{"zoneid"}} . "</td>";
+        print $temp "<tr id='$id'>\n";
+        print $temp "<td class='$class'>" . $eventsbyid{$lang}{$row->{"eventid"}} . "</td>";
+        print $temp "<td class='$class pvp$pvp'>" . $dc->{'shardsbyid'}{$row->{"shardid"}} . "</td>";
+        print $temp "<td class='$class'>" . $zonesbyid{$lang}{$row->{"zoneid"}} . "</td>";
         print $temp "<td sorttable_customkey=\"" . (100000 - $timesecs) . "\" class=\"$nearend\" title=\"This event ended in an average of $avgruntime minutes in the past 30 days.\">" . $time . "m</td>";
         print $temp "</tr>\n";
       }
