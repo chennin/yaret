@@ -22,7 +22,6 @@ function eraseCookie(name) {
         createCookie(name,"",-1);
 }
 function hidetr(id) {
-        console.log(sessionStorage.getItem(id));
         var color = document.getElementById(id).style.color;
         if (color != "rgb(76, 76, 76)") {
                 document.getElementById(id).style.color = "#4C4C4C";
@@ -74,7 +73,7 @@ function initialize() {
         function clicktr(i) {
                 return function() { hidetr(i); };
         }
-        var elements = document.querySelectorAll('.relevant, .oldnews');
+        var elements = document.querySelectorAll('tr.relevant, tr.oldnews');
         for (var i=0; i<elements.length; i++) {
                trfuncs[i] = clicktr(elements[i].id);
                elements[i].addEventListener('click', trfuncs[i]);

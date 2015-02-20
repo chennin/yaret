@@ -353,7 +353,7 @@ foreach my $dc (@dcs) {
       foreach my $lang (@langs) {                                                                                                                                                                      
         my $temp = $outfiles{$lang};
         my $id = "$row->{'eventid'}_$row->{'shardid'}_$row->{'zoneid'}_$row->{'starttime'}";
-        print $temp "<tr id='$id'>\n";
+        print $temp "<tr class='$class' id='$id'>\n";
         print $temp "<td class='$class'>" . $eventsbyid{$lang}{$row->{"eventid"}} . "</td>";
         print $temp "<td class='$class pvp$pvp'>" . $dc->{'shardsbyid'}{$row->{"shardid"}} . "</td>";
         print $temp "<td class='$class'>" . $zonesbyid{$lang}{$row->{"zoneid"}} . "</td>";
