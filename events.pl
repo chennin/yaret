@@ -288,6 +288,7 @@ foreach my $dc (@dcs) {
     print $temp '<br /><div class="pvp1">PvP server</div>';
     print $temp '<hr /><div>Click an event to grey it out.</div>';
     print $temp '<br /><div>Hover over the elapsed time to see the average run time of this event on this cluster and with/without the PvP server.</div>';
+    print $temp '<br /><div>Click a map name to hide the entire map.</div>';
     print $temp '</div>' . "\n";
   }
   my @headers = ("Event", "Shard", "Zone", "Age");

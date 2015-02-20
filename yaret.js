@@ -96,12 +96,12 @@ function showHide(id) {
                 if (document.getElementById('table' + id).style.display != 'none') {
                         document.getElementById('table' + id).style.display = 'none';
                         document.getElementById('label' + id).className = document.getElementById('label' + id).className.replace( /(?:^|\s)downarrow(?!\S)/g, ' rightarrow' );
-                        createCookie(id,"hide",365);
+                        createCookie('map' + id,"hide",365);
                 }
                 else {
                         document.getElementById('table' + id).style.display = '';
-                        document.getElementById('label' + id).className = document.getElementById('label' + id).className.replace( /(?:^|\s)rghtarrow(?!\S)/g , ' downarrow' );
-                        eraseCookie(id);
+                        document.getElementById('label' + id).className = document.getElementById('label' + id).className.replace( /(?:^|\s)rightarrow(?!\S)/g , ' downarrow' );
+                        eraseCookie('map' + id);
                 }
         }
 }
