@@ -571,6 +571,8 @@ INSERT INTO `eventnames` VALUES
 ('Leviathan',179,'en_US',3600),
 ('Léviathan',179,'fr_FR',3600),
 ('The Ravenous Devourer',180,'en_US',7200),
+('Le Dévoreur vorace',180,'fr_FR',7200),
+('Der Gefräßige Verschlinger','de_DE',7200),
 ('Dunkelheit aus der Tiefe',181,'de_DE',7200),
 ('Darkness from the Depths',181,'en_US',7200),
 ('Ténèbres des Profondeurs',181,'fr_FR',7200);
