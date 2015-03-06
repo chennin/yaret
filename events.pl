@@ -281,7 +281,7 @@ foreach my $dc (@dcs) {
     print $temp "</p>\n";
 
 # Construct table
-    print $temp '<div class="caption">' . "\n";
+    print $temp '<div class="caption" id="caption">' . "\n";
     print $temp '<h4>Legend</h4>';
     print $temp '<hr /><div class="new">Newly started event</div> <div class="nearavg">Nearing/over its average run time</div> <div class="nearend">Nearing its maximum run time</div>';
     print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="unstable">Unstable Artifact</div> <div class="pony">Unicorns</div> <div class="yule">Fae Yule</div>';
@@ -289,7 +289,9 @@ foreach my $dc (@dcs) {
     print $temp '<hr /><div>Click an event to gray it out.</div>';
     print $temp '<br /><div>Hover over the elapsed time to see the average run time of this event on this cluster and with/without the PvP server.</div>';
     print $temp '<br /><div>Click a map name to hide the entire map.</div>';
+    print $temp '<hr /><div>This page refreshes once a minute.</div>' . "\n";
     print $temp '</div>' . "\n";
+    print $temp '<div class="caption"><a onclick="showHideLegend();" id="legendtoggle">Hide Legend</a></div>' . "\n";
   }
   my @headers = ("Event", "Shard", "Zone", "Age");
 
@@ -379,7 +381,7 @@ foreach my $dc (@dcs) {
 
     print $temp "<p class=\"disclaimer\">Supported browsers: Chrome 4.0+, IE 8.0+, Firefox 3.5+, Safari 4.0+, Opera 11.5+</p>";
     print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
-    print $temp "<p class=\"disclaimer\">This site uses cookies and local storage to store user preferences. <a onclick=\"eraseCookie('sort'); eraseCookie('map1'); eraseCookie('map2'); eraseCookie('map3'); eraseCookie('pvp'); clearLocalStorage()\">Erase cookies and local storage</a>.</p>\n";
+    print $temp "<p class=\"disclaimer\">This site uses cookies and local storage to store user preferences. <a onclick=\"eraseCookie('sort'); eraseCookie('map1'); eraseCookie('map2'); eraseCookie('map3'); eraseCookie('pvp'); eraseCookie('hideLegend'); clearLocalStorage()\">Erase cookies and local storage</a>.</p>\n";
     print $temp $html->end_html;
     close $temp;
 

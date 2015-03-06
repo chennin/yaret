@@ -93,6 +93,8 @@ function initialize() {
         var hidemap  = readCookie('map' + i);
         if (hidemap == "hide") { showHide(i); }
   }
+  var hideleg = readCookie('hidelegend');
+  if (hideleg == "true") { showHideLegend() }
 }
 function clearLocalStorage() {
         sessionStorage.clear();
@@ -108,6 +110,28 @@ function showHide(id) {
                         document.getElementById('table' + id).style.display = '';
                         document.getElementById('label' + id).className = document.getElementById('label' + id).className.replace( /(?:^|\s)rightarrow(?!\S)/g , ' downarrow' );
                         eraseCookie('map' + id);
+                }
+        }
+}
+function showHideLegend() {
+        if (document.getElementById('caption')) {
+                if (document.getElementById('caption').style.display != 'none') {
+                        document.getElementById('caption').style.display = 'none';
+                        var elements = document.getElementsByClassName('ret');
+                        for (var i=0; i<elements.length; i++) {
+                                elements[i].style.width = '85%';
+                        }
+                        document.getElementById('legendtoggle').innerHTML = "Show Legend";
+                        createCookie('hidelegend','true',365);
+                }
+                else {
+                        document.getElementById('caption').style.display = '';
+                        var elements = document.getElementsByClassName('ret');
+                        for (var i=0; i<elements.length; i++) {
+                                elements[i].style.width = '60%';
+                        }
+                        document.getElementById('legendtoggle').innerHTML = "Hide Legend";
+                        eraseCookie('hidelegend');
                 }
         }
 }
