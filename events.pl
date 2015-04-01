@@ -350,6 +350,8 @@ foreach my $dc (@dcs) {
 # Find max run time for this event
       my $maxtime = findmaxtime($row->{'eventid'});
       if ($time > ($maxtime/60 - 6)) { $nearend = "nearend"; }
+# Hide events well past their max run times due to API after restarts
+      if ($time > ($maxtime/60 + 5)) { next; }
 
 # Fill in events
       foreach my $lang (@langs) {                                                                                                                                                                      
