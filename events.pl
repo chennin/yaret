@@ -35,7 +35,7 @@ use Cwd qw/abs_path/;
 my $t0 = [gettimeofday];
 
 my $REFRESH = 60;
-my $TIMEOUT = 5; # Timeout per HTTP request to the Rift server (one per shard)
+my $TIMEOUT = 6; # Timeout per HTTP request to the Rift server (one per shard)
 my $CONFIGFILE = dirname(abs_path(__FILE__)) . "/ret.conf";
 
 # DO NOT EDIT BELOW THIS LINE
@@ -129,14 +129,14 @@ foreach my $lang (@langs) {
 }
 
 my %nadc = (
-    url => "http://chat-us.riftgame.com:8080/chatservice/zoneevent/list?shardId=",
+    url => "http://web-api-us.riftgame.com:8080/chatservice/zoneevent/list?shardId=",
     shortname => "na",
     shardsbyid => \%nabyid,
     shardsbyname => \%nabyname,
     tz => "America/Los_Angeles",
     );
 my %eudc = (
-    url => "http://chat-eu.riftgame.com:8080/chatservice/zoneevent/list?shardId=",
+    url => "http://web-api-eu.riftgame.com:8080/chatservice/zoneevent/list?shardId=",
     shortname => "eu",
     shardsbyid => \%eubyid,
     shardsbyname => \%eubyname,
@@ -197,10 +197,14 @@ foreach my $dc (@dcs) {
   foreach my $shardname (sort keys %{ $dc->{"shardsbyname"} } ) {  # %{ ... } = turning an array reference into a usable array
     my $site = $ua->get($dc->{"url"} . $dc->{'shardsbyname'}{$shardname});
     if (!$site->is_success) {
-      print STDERR "Error retrieving events for " .  $shardname . ". " . $site->status_line . "\n";
+      if (($site->status_line ne "500 Status read failed: Connection reset by peer") && ($site->status_line ne "500 read timeout")) {
+              print STDERR "Error retrieving events for " .  $shardname . ". " . $site->status_line . "\n";
+      }
       next;
     }
-    my $result = $json->decode($site->decoded_content()) or die "Can't decode JSON result. $!\n";
+    my $result = undef;
+    eval { $result = $json->decode($site->decoded_content()) or die "Can't decode JSON result. $!\n-----\n$site->decoded_content()\n-----"; };
+    if ($@) { die "Can't decode JSON result. " . $! . "\n" . $site->decoded_content() . "\n"; }
     foreach my $zone (@{ $result->{"data"} }) { 
       if ($zone->{"name"}) { # an event
         if ($zone->{"name"} eq "Terror aus der Tiefe") { $zone->{"name"} = "Terror aus den Tiefen"; } # Fix for inconsistent Trion translation
@@ -254,7 +258,8 @@ foreach my $dc (@dcs) {
           }),
         -script => [
           { -type =>'JAVASCRIPT', -src => "../sorttable.js", },
-          { -type =>'JAVASCRIPT', -src => "../yaret.js", }
+          { -type =>'JAVASCRIPT', -src => "../yaret.js", },
+#          { -type =>'JAVASCRIPT', -src => "http://www.magelocdn.com/pack/rift/en/magelo-bar.js#1", },
           ],
         );
     # Hack for HTML 5 DTD.  Move off of CGI?
@@ -318,7 +323,7 @@ foreach my $dc (@dcs) {
       if ($map == $maps) { $class = "relevant"; }
       if ($row->{"eventid"} == 158) { $class .= " pony"; } # Hooves and Horns
       elsif ($row->{"eventid"} == 154) { $class .= " behemoth"; }
-      elsif ($row->{"eventid"} == 129) { $class .= " yule"; }
+      elsif (($row->{"eventid"} == 129) || (($row->{"eventid"} >= 187) && ($row->{"eventid"} <= 191))) { $class .= " yule"; }
       elsif (($row->{"eventid"} >= 130) && ($row->{"eventid"} <= 153) && ($row->{"eventid"} != 152)) { $class .= " unstable"; }
 # Minutes to consider an event new
       if ($time < 5) { $class .= " new"; }
@@ -384,6 +389,7 @@ foreach my $dc (@dcs) {
     print $temp "<p class=\"disclaimer\">Supported browsers: Chrome 4.0+, IE 8.0+, Firefox 3.5+, Safari 4.0+, Opera 11.5+</p>";
     print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
     print $temp "<p class=\"disclaimer\">This site uses cookies and local storage to store user preferences. <a onclick=\"eraseCookie('sort'); eraseCookie('map1'); eraseCookie('map2'); eraseCookie('map3'); eraseCookie('pvp'); eraseCookie('hideLegend'); clearLocalStorage()\">Erase cookies and local storage</a>.</p>\n";
+    print $temp "<p class=\"disclaimer\">Contact via the <a href=\"http://forums.riftgame.com/private.php?do=newpm&u=6789104\">RIFT forums</a>.</p>\n";
     print $temp $html->end_html;
     close $temp;
 
