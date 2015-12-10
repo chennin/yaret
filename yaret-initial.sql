@@ -1,3 +1,9 @@
+-- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (i686)
+--
+-- Host: localhost    Database: ret
+-- ------------------------------------------------------
+-- Server version	5.5.46-0+deb7u1
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -127,7 +133,7 @@ INSERT INTO `eventnames` VALUES
 ('Secrets of the Deep',31,'en_US',7200),
 ('Secrets des profondeurs',31,'fr_FR',7200),
 ('Gefahr im Gebirge',32,'de_DE',7200),
-('Run To The Hills',32,'en_US',7200),
+('Run to the Hills',32,'en_US',7200),
 ('Fuir vers les collines',32,'fr_FR',7200),
 ('Das Leben einer Sumpfmutter',33,'de_DE',7200),
 ('Life of a Bog Mother',33,'en_US',7200),
@@ -349,7 +355,7 @@ INSERT INTO `eventnames` VALUES
 ('The Stone Titan',105,'en_US',7200),
 ('Le Titan de pierre',105,'fr_FR',7200),
 ('Der Fall des Hammers',106,'de_DE',7200),
-('Fall Of The Hammer',106,'en_US',7200),
+('Fall of the Hammer',106,'en_US',7200),
 ('La chute du Marteau',106,'fr_FR',7200),
 ('Marsch der Legion',107,'de_DE',7200),
 ('March Of The Legion',107,'en_US',7200),
@@ -570,12 +576,40 @@ INSERT INTO `eventnames` VALUES
 ('Leviathan',179,'de_DE',3600),
 ('Leviathan',179,'en_US',3600),
 ('Léviathan',179,'fr_FR',3600),
+('Der Gefräßige Verschlinger',180,'de_DE',7200),
 ('The Ravenous Devourer',180,'en_US',7200),
 ('Le Dévoreur vorace',180,'fr_FR',7200),
-('Der Gefräßige Verschlinger','de_DE',7200),
 ('Dunkelheit aus der Tiefe',181,'de_DE',7200),
 ('Darkness from the Depths',181,'en_US',7200),
-('Ténèbres des Profondeurs',181,'fr_FR',7200);
+('Ténèbres des Profondeurs',181,'fr_FR',7200),
+('Saint Carwin Mathos',182,'en_US',7200),
+('Die Wiedergeburt der Legion',183,'de_DE',7200),
+('Rebirth of the Legion',183,'en_US',7200),
+('Renaissance de la Légion',183,'fr_FR',7200),
+('Feuersturm',184,'de_DE',7200),
+('Fire Storm',184,'en_US',7200),
+('Tempête de feu',184,'fr_FR',7200),
+('Irdener Angriff',185,'de_DE',7200),
+('Earthen Assault',185,'en_US',7200),
+('Assaut de Terre',185,'fr_FR',7200),
+('Die Welle der Zerstörung',186,'de_DE',7200),
+('Tide of Destruction',186,'en_US',7200),
+('Marée de la destruction',186,'fr_FR',7200),
+('Feen-Julfestgeschenke: Silberwald',187,'de_DE',1800),
+('Fae Yule Gifts: Silverwood',187,'en_US',1800),
+('Cadeaux de la Fête de l\'hiver : Bois d\'Argent',187,'fr_FR',1800),
+('Feen-Julfestgeschenke: Ashora',188,'de_DE',1800),
+('Fae Yule Gifts: Ashora',188,'en_US',1800),
+('Cadeaux de la Fête de l\'hiver : Ashora',188,'fr_FR',1800),
+('Feen-Julfestgeschenke: Wundwaldregion',189,'de_DE',1800),
+('Fae Yule Gifts: Scarwood Reach',189,'en_US',1800),
+('Cadeaux de la Fête de l\'hiver : Étendue de Bois Meurtris',189,'fr_FR',1800),
+('Feen-Julfestgeschenke: Königreich Pelladane',190,'de_DE',1800),
+('Fae Yule Gifts: Kingdom of Pelladane',190,'en_US',1800),
+('Cadeaux de la Fête de l\'hiver : Royaume de Pelladane',190,'fr_FR',1800),
+('Feen-Julfestgeschenke: Kap Jul',191,'de_DE',1800),
+('Fae Yule Gifts: Cape Jule',191,'en_US',1800),
+('Cadeaux de la Fête de l\'hiver : Cap Yule',191,'fr_FR',1800);
 /*!40000 ALTER TABLE `eventnames` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -720,6 +754,9 @@ INSERT INTO `zones` VALUES
 ('Dämmerwald',27,'de_DE',1),
 ('Gloamwood',27,'en_US',1),
 ('Bois du Crépuscule',27,'fr_FR',1),
+('Ebenenberührte Wildnis',28,'de_DE',3),
+('Planetouched Wilds',28,'en_US',3),
+('Étendues marquées par les Plans',28,'fr_FR',3),
 ('Goboro-Riff',301,'de_DE',3),
 ('Goboro Reef',301,'en_US',3),
 ('Récif de Goboro',301,'fr_FR',3),
@@ -788,3 +825,5 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-12-10 15:41:13
