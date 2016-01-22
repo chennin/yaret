@@ -197,9 +197,9 @@ foreach my $dc (@dcs) {
   foreach my $shardname (sort keys %{ $dc->{"shardsbyname"} } ) {  # %{ ... } = turning an array reference into a usable array
     my $site = $ua->get($dc->{"url"} . $dc->{'shardsbyname'}{$shardname});
     if (!$site->is_success) {
-      if (($site->status_line ne "500 Status read failed: Connection reset by peer") && ($site->status_line ne "500 read timeout")) {
+#      if (($site->status_line ne "500 Status read failed: Connection reset by peer") && ($site->status_line ne "500 read timeout")) {
               print STDERR "Error retrieving events for " .  $shardname . ". " . $site->status_line . "\n";
-      }
+#      }
       next;
     }
     my $result = undef;
@@ -323,7 +323,7 @@ foreach my $dc (@dcs) {
       if ($map == $maps) { $class = "relevant"; }
       if ($row->{"eventid"} == 158) { $class .= " pony"; } # Hooves and Horns
       elsif ($row->{"eventid"} == 154) { $class .= " behemoth"; }
-      elsif (($row->{"eventid"} == 129) || (($row->{"eventid"} >= 187) && ($row->{"eventid"} <= 191))) { $class .= " yule"; }
+      elsif (($row->{"eventid"} == 129) || (($row->{"eventid"} >= 187) && ($row->{"eventid"} <= 192))) { $class .= " yule"; }
       elsif (($row->{"eventid"} >= 130) && ($row->{"eventid"} <= 153) && ($row->{"eventid"} != 152)) { $class .= " unstable"; }
 # Minutes to consider an event new
       if ($time < 5) { $class .= " new"; }
@@ -363,6 +363,7 @@ foreach my $dc (@dcs) {
         my $temp = $outfiles{$lang};
         my $id = "$row->{'eventid'}_$row->{'shardid'}_$row->{'zoneid'}_$row->{'starttime'}";
         print $temp "<tr class='$class' id='$id'>\n";
+#        print STDERR "$row->{'eventid'}\n";
         print $temp "<td class='$class'>" . $eventsbyid{$lang}{$row->{"eventid"}} . "</td>";
         print $temp "<td class='$class pvp$pvp'>" . $dc->{'shardsbyid'}{$row->{"shardid"}} . "</td>";
         print $temp "<td class='$class'>" . $zonesbyid{$lang}{$row->{"zoneid"}} . "</td>";
