@@ -22,23 +22,20 @@ function eraseCookie(name) {
         createCookie(name,"",-1);
 }
 function hidetr(id,store) {
-        var color = document.getElementById(id).style.color;
-        if (color != "rgb(76, 76, 76)") {
-                document.getElementById(id).style.color = "#4C4C4C";
-                document.getElementById(id).oldColor = color;
+        if (! document.getElementById(id).className.match(/(?:^|\s)tagged(?!\S)/) ) {
+                document.getElementById(id).className += " tagged";
 
                 var children = document.getElementById(id).getElementsByTagName("TD");
                 for (var i=0; i<children.length; i++) {
-                        children[i].oldColor = children[i].style.color;
-                        children[i].style.color = "#4C4C4C";
+                        children[i].className += " tagged";
                 }
                 if (store == "true") { sessionStorage.setItem(id,"hide"); }
         }
         else {
-                document.getElementById(id).style.color = document.getElementById(id).oldColor;
+                document.getElementById(id).className = document.getElementById(id).className.replace( /(?:^|\s)tagged(?!\S)/g , '' )
                 var children = document.getElementById(id).getElementsByTagName("TD");
                 for (var i=0; i<children.length; i++) {
-                        children[i].style.color = children[i].oldColor;
+                        children[i].className = children[i].className.replace( /(?:^|\s)tagged(?!\S)/g , '' )
                 }
                 sessionStorage.removeItem(id);
         }

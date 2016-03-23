@@ -1,7 +1,7 @@
 a{color:#ff6;cursor: pointer;}
 a:visited{color:#9AF}
 a:hover,a.hover { text-decoration: underline; }
-body{background-color:#000;font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;color:#FFF}
+body{background-color:#010101;font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;color:#FFF}
 span.link{color:#ff6}
 .tooltip{display:inline;position:relative}
 tooltip:hover:after{background:#333;background:rgba(0,0,0,.8);border-radius:5px;bottom:26px;color:#fff;content:attr(title);left:20%;padding:5px 15px;position:absolute;z-index:98;width:220px}
@@ -10,23 +10,27 @@ tooltip:hover:after{background:#333;background:rgba(0,0,0,.8);border-radius:5px;
 .end{color:red}
 .relevant{color:#FFF}
 /*.oldnews{color:#999}*/
-.pony{color:#F3C}
-.behemoth{color:#F60}
+.pony{color:#ff4081}
+.behemoth{color:#ff5722}
 /*.volan{color:#FF9!important}*/
-.yule{color:#0F0}
-.unstable{color:#69F}
-.nearavg{color:#FF0}
-.nearend{color:#F00}
-td.pvp1,div.pvp1{color:#B20000}
-table.ret,table.sortable{margin-left:5%;border-collapse:collapse;width:67%;}
-table tbody{border:1px solid #fff;border-collapse:separate;border-spacing:1px}
-table tbody td{text-align:center}
-table.ret tr:nth-child(even) {background: #00002D;}
-table tr.stats:nth-child(even){background-color:#00002D}
+.yule{color:#00e676}
+.unstable{color:#03a9f4}
+.nearavg{color:#ffeb3b}
+.nearend{color:#d50000}
+td.pvp1,div.pvp1{color:#9c27b0}
+.tagged{opacity:0.5;}
+table.ret,table.sortable{margin-left:5%;width:67%;border:2px solid white;border-collapse:separate;border-spacing:0;border-radius:15px;}
+th:first-child{border-radius: 15px 0 0 0;}
+th:last-child{border-radius: 0 15px 0 0;}
+tr:last-child>td:first-child{border-radius: 0 0 0 15px;}
+tr:last-child>td:last-child{border-radius: 0 0 15px 0;}
+table tbody td{text-align:center;}
+table.ret tr:nth-child(even) td{background: #1a237e;}
+table tr.stats:nth-child(even) td{background-color:#1a237e}
 table tbody tr.firstold{border-top:1px dotted gray}
-table tbody tr:hover{background-color:#333!important}
-table thead{font-weight:700;text-align:center}
-p.disclaimer{font-size:70%;margin-left:5%;width:70%}
+table tbody tr:hover td{background-color:#212121!important}
+table thead tr th{font-weight:700;text-align:center;background:#424242;}
+p.disclaimer{font-size:70%;margin-left:5%;width:70%;opacity:0.7}
 p.footer{font-size:90%;margin-left:5%;width:70%}
 .normal{margin-left:5%;width:70%}
 img.gray {
