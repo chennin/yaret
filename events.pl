@@ -308,7 +308,7 @@ foreach my $dc (@dcs) {
       my $temp = $outfiles{$lang};
       print $temp "<h4 class=\"label downarrow\" onclick=\"showHide('$map')\" id=\"label$map\">$mapsbyid{$map} </h4>\n";
       print $temp "<table class='ret sortable' id=\"table$map\">";
-      print $temp "<thead><tr>\n";
+      print $temp "<thead>\n<tr class=\"header\">";
       foreach my $header (@headers) {
         print $temp "<th class='$header'>$header</th>";
       }
@@ -362,7 +362,7 @@ foreach my $dc (@dcs) {
       foreach my $lang (@langs) {                                                                                                                                                                      
         my $temp = $outfiles{$lang};
         my $id = "$row->{'eventid'}_$row->{'shardid'}_$row->{'zoneid'}_$row->{'starttime'}";
-        print $temp "<tr class='$class' id='$id'>\n";
+        print $temp "<tr class='$class' id='$id'>";
 #        print STDERR "$row->{'eventid'}\n";
         print $temp "<td class='$class'>" . $eventsbyid{$lang}{$row->{"eventid"}} . "</td>";
         print $temp "<td class='$class pvp$pvp'>" . $dc->{'shardsbyid'}{$row->{"shardid"}} . "</td>";

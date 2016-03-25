@@ -92,6 +92,18 @@ function initialize() {
   }
   var hideleg = readCookie('hidelegend');
   if (hideleg == "true") { showHideLegend() }
+
+  // Fix CSS on tables with no events
+  var tables = document.getElementsByTagName("table");
+  for (var i=0; i<tables.length; i++) {
+        trs = tables[i].getElementsByTagName("tr");
+        console.log(trs);
+        if ((trs.length < 2) && (trs.length > 0)) {
+                row = trs[0];
+                row.firstChild.style.borderRadius = "15px 0 0 15px";
+                row.lastChild.style.borderRadius = "0 15px 15px 0";
+        }
+  }
 }
 function clearLocalStorage() {
         sessionStorage.clear();

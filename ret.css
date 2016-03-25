@@ -22,13 +22,14 @@ td.pvp1,div.pvp1{color:#9c27b0}
 table.ret,table.sortable{margin-left:5%;width:67%;border:2px solid white;border-collapse:separate;border-spacing:0;border-radius:15px;}
 th:first-child{border-radius: 15px 0 0 0;}
 th:last-child{border-radius: 0 15px 0 0;}
+th:only-child{border-radius: 15px 15px 0 0;}
 tr:last-child>td:first-child{border-radius: 0 0 0 15px;}
 tr:last-child>td:last-child{border-radius: 0 0 15px 0;}
 table tbody td{text-align:center;}
-table.ret tr:nth-child(even) td{background: #1a237e;}
+table.ret tr:nth-child(even) td{background: #212121;}
 table tr.stats:nth-child(even) td{background-color:#1a237e}
 table tbody tr.firstold{border-top:1px dotted gray}
-table tbody tr:hover td{background-color:#212121!important}
+table tbody tr:hover td{background-color:#616161!important}
 table thead tr th{font-weight:700;text-align:center;background:#424242;}
 p.disclaimer{font-size:70%;margin-left:5%;width:70%;opacity:0.7}
 p.footer{font-size:90%;margin-left:5%;width:70%}
