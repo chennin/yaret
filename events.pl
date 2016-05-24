@@ -129,14 +129,14 @@ foreach my $lang (@langs) {
 }
 
 my %nadc = (
-    url => "http://web-api-us.riftgame.com:8080/chatservice/zoneevent/list?shardId=",
+    url => "https://web-api-us.riftgame.com/chatservice/zoneevent/list?shardId=",
     shortname => "na",
     shardsbyid => \%nabyid,
     shardsbyname => \%nabyname,
     tz => "America/Los_Angeles",
     );
 my %eudc = (
-    url => "http://web-api-eu.riftgame.com:8080/chatservice/zoneevent/list?shardId=",
+    url => "https://web-api-eu.riftgame.com/chatservice/zoneevent/list?shardId=",
     shortname => "eu",
     shardsbyid => \%eubyid,
     shardsbyname => \%eubyname,
