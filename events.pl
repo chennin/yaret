@@ -287,16 +287,18 @@ foreach my $dc (@dcs) {
 
 # Construct table
     print $temp '<div class="caption" id="caption">' . "\n";
-    print $temp '<h4>Legend</h4>';
-    print $temp '<hr /><div class="new">Newly started event</div> <div class="nearavg">Nearing/over its average run time</div> <div class="nearend">Nearing its maximum run time</div>';
-    print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="unstable">Unstable Artifact</div> <div class="pony">Unicorns</div> <div class="yule">Fae Yule</div>';
+    print $temp '<h3>About</h3>';
+    print $temp 'This site lets you see all currently running zone events in <a href="http://www.trionworlds.com/rift/en/">RIFT</a>. Select your region and language, check the list, get in game and go there!';
+    print $temp '<hr /><h4>Event Formatting</h4><div class="new">Recently started</div> <div class="nearavg">Nearing/over its average run time</div> <div class="nearend">Nearing its maximum run time</div>';
+    print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="unstable">Unstable Artifact</div> <div class="pony">Unicornalia promo</div> <div class="yule">Fae Yule</div>';
     print $temp '<br /><div class="pvp1">PvP server <a onclick="showHidePvP();" id="pvptoggle">(hide)</a></div>';
-    print $temp '<hr /><div>Click an event to <span class="tagged">gray</span> it out.</div>';
-    print $temp '<br /><div>Hover over the elapsed time to see the average run time of this event on this cluster and with/without the PvP server.</div>';
+    print $temp '<hr /><h4>Usage</h4><div>Find an event you are interested in. Hop to the shard it is on and teleport there, then do the event! But remember that an event may complete (or fail) before you get there!</div>';
+    print $temp '<br /><div>Click an event to <span class="tagged">gray</span> it out.</div>';
+    print $temp '<br /><div>Hover over the elapsed time to see the average run time of this event over the last 30 days in this region.</div>';
     print $temp '<br /><div>Click a map name to hide the entire map.</div>';
     print $temp '<hr /><div>This page refreshes once a minute.</div>' . "\n";
     print $temp '</div>' . "\n";
-    print $temp '<div class="caption"><a onclick="showHideLegend();" id="legendtoggle">Hide Legend</a></div>' . "\n";
+    print $temp '<div class="caption"><a onclick="showHideLegend();" id="legendtoggle">Click to hide this About sidebar</a></div>' . "\n";
   }
   my @headers = ("Event", "Shard", "Zone", "Age");
 
