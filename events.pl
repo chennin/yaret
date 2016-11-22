@@ -87,20 +87,20 @@ foreach my $lang (@langs) {
 # Get & store maps
 my $maps = 0;
 my %mapsbyid = ();
-$sth = $dbh->prepare("SELECT id,map FROM maps");
-my $success = $sth->execute();
-if (!$success) { die "Can't get maps. $DBI::errstr\n"; }
-else {
+foreach my $lang (@langs) {
+  if (!$mapsbyid{$lang}) { $mapsbyid{$lang} = (); }
+  $sth = $dbh->prepare("SELECT id,map FROM maps WHERE lang = ?");
+  $sth->execute($lang) or die "Can't get maps. $DBI::errstr\n"; 
   while (my $row = $sth->fetchrow_hashref()) {
-    if (!$mapsbyid{$row->{'id'}}) { $mapsbyid{$row->{'id'}} = $row->{'map'}; }
+    $mapsbyid{$lang}{$row->{'id'}} = $row->{'map'};
   }
 }
-$maps = keys %mapsbyid;
+$maps = keys %{ $mapsbyid{"en_US"} };
 
 # Get & store shards to reference by name and ID
 my (%eubyid, %nabyid, %eubyname, %nabyname, %pvps);
 $sth = $dbh->prepare("SELECT id, name, dc, pvp FROM shards");
-$success = $sth->execute();
+my $success = $sth->execute();
 if (!$success) { die "Can't get shards. $DBI::errstr\n"; }
 else {
   while (my $row = $sth->fetchrow_hashref()) {
@@ -308,7 +308,7 @@ foreach my $dc (@dcs) {
     my $success = $sth->execute($dc->{"shortname"}, $map) or die "Unable to retrieve events for map. $!";
     foreach my $lang (@langs) {
       my $temp = $outfiles{$lang};
-      print $temp "<h4 class=\"label downarrow\" onclick=\"showHide('$map')\" id=\"label$map\">$mapsbyid{$map} </h4>\n";
+      print $temp "<h4 class=\"label downarrow\" onclick=\"showHide('$map')\" id=\"label$map\">$mapsbyid{$lang}{$map} </h4>\n";
       print $temp "<table class='ret sortable' id=\"table$map\">";
       print $temp "<thead>\n<tr class=\"header\">";
       foreach my $header (@headers) {
