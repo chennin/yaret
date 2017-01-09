@@ -290,7 +290,7 @@ foreach my $dc (@dcs) {
     print $temp '<h3>About</h3>';
     print $temp 'This site lets you see all currently running zone events in <a href="http://www.trionworlds.com/rift/en/">RIFT</a>. Select your region and language, check the list, get in game and go there!';
     print $temp '<hr /><h4>Event Formatting</h4><div class="new">Recently started</div> <div class="nearavg">Nearing/over its average run time</div> <div class="nearend">Nearing its maximum run time</div>';
-    print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="unstable">Unstable Artifact</div> <div class="pony">Unicornalia promo</div> <div class="yule">Fae Yule</div>';
+    print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="unstable">Unstable Artifact</div> <div class="pony">Unicornalia promo</div> <div class="yule">Fae Yule</div> <div class="fortress">Fortress Siege</div>';
     print $temp '<br /><div class="pvp1">PvP server <a onclick="showHidePvP();" id="pvptoggle">(hide)</a></div>';
     print $temp '<hr /><h4>Usage</h4><div>Find an event you are interested in. Hop to the shard it is on and teleport there, then do the event! But remember that an event may complete (or fail) before you get there!</div>';
     print $temp '<br /><div>Click an event to <span class="tagged">gray</span> it out.</div>';
@@ -327,6 +327,7 @@ foreach my $dc (@dcs) {
       elsif ($row->{"eventid"} == 154) { $class .= " behemoth"; }
       elsif (($row->{"eventid"} == 129) || (($row->{"eventid"} >= 187) && ($row->{"eventid"} <= 192))) { $class .= " yule"; }
       elsif (($row->{"eventid"} >= 130) && ($row->{"eventid"} <= 153) && ($row->{"eventid"} != 152)) { $class .= " unstable"; }
+      elsif (($row->{"eventid"} >= 201) && ($row->{"eventid"} <= 202)) { $class .= " fortress"; }
 # Minutes to consider an event new
       if ($time < 5) { $class .= " new"; }
 # Find average run time for this event on this cluster
