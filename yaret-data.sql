@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
 --
 -- Host: localhost    Database: ret
 -- ------------------------------------------------------
--- Server version	5.5.46-0+deb7u1
+-- Server version	5.7.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,23 +14,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `eventnames`
---
-
-DROP TABLE IF EXISTS `eventnames`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `eventnames` (
-  `name` varchar(64) NOT NULL,
-  `id` int(10) unsigned NOT NULL,
-  `lang` varchar(8) NOT NULL DEFAULT '',
-  `maxruntime` int(10) unsigned DEFAULT '7200',
-  PRIMARY KEY (`id`,`lang`),
-  KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `eventnames`
@@ -582,6 +565,7 @@ INSERT INTO `eventnames` VALUES
 ('Dunkelheit aus der Tiefe',181,'de_DE',7200),
 ('Darkness from the Depths',181,'en_US',7200),
 ('Ténèbres des Profondeurs',181,'fr_FR',7200),
+('Sankt Carwin Mathos',182,'de_DE',7200),
 ('Saint Carwin Mathos',182,'en_US',7200),
 ('Die Wiedergeburt der Legion',183,'de_DE',7200),
 ('Rebirth of the Legion',183,'en_US',7200),
@@ -609,47 +593,36 @@ INSERT INTO `eventnames` VALUES
 ('Cadeaux de la Fête de l\'hiver : Royaume de Pelladane',190,'fr_FR',1800),
 ('Feen-Julfestgeschenke: Kap Jul',191,'de_DE',1800),
 ('Fae Yule Gifts: Cape Jule',191,'en_US',1800),
-('Cadeaux de la Fête de l\'hiver : Cap Yule',191,'fr_FR',1800);
+('Cadeaux de la Fête de l\'hiver : Cap Yule',191,'fr_FR',1800),
+('Feen-Julfestgeschenke: Freimark',192,'de_DE',1800),
+('Fae Yule Gifts: Freemarch',192,'en_US',1800),
+('Cadeaux de la Fête de l\'hiver : Libremarche',192,'fr_FR',1800),
+('Ein Schwarm Krallen',193,'de_DE',7200),
+('Swarm of Talons',193,'en_US',7200),
+('Des serres par centaines',193,'fr_FR',7200),
+('Kosmische Leere',194,'de_DE',7200),
+('Cosmic Void',194,'en_US',7200),
+('Vide cosmique',194,'fr_FR',7200),
+('Zyklonischer Konflikt',196,'de_DE',7200),
+('Cyclonic Conflict',196,'en_US',7200),
+('Conflit cyclonique',196,'fr_FR',7200),
+('Plattenverschiebung',197,'de_DE',7200),
+('Tectonic Drift',197,'en_US',7200),
+('Dérive tectonique',197,'fr_FR',7200),
+('Kauterisierte Kalamität',198,'de_DE',7200),
+('Cauterized Calamity',198,'en_US',7200),
+('Calamité et cautérisation',198,'fr_FR',7200),
+('Grausiger Gartenbau',199,'de_DE',7200),
+('Horrific Horticulture',199,'en_US',7200),
+('Horticulture terrifiante',199,'fr_FR',7200),
+('Kometeneis',200,'de_DE',7200),
+('Cometary Ice',200,'en_US',7200),
+('Glace cométaire',200,'fr_FR',7200),
+('Xarths Schädel Knacken',201,'de_DE',2100),
+('Cracking Xarth\'s Skull',201,'en_US',2100),
+('Fracasser le Crâne de Xarth',201,'fr_FR',2100);
 /*!40000 ALTER TABLE `eventnames` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `events`
---
-
-DROP TABLE IF EXISTS `events`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `events` (
-  `shardid` int(10) unsigned NOT NULL,
-  `zoneid` int(10) unsigned NOT NULL,
-  `eventid` int(10) unsigned NOT NULL,
-  `starttime` int(10) unsigned NOT NULL,
-  `endtime` int(10) unsigned DEFAULT '0',
-  PRIMARY KEY (`shardid`,`zoneid`,`eventid`,`starttime`),
-  KEY `zoneid` (`zoneid`),
-  KEY `eventid` (`eventid`),
-  KEY `end_index` (`endtime`),
-  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`shardid`) REFERENCES `shards` (`id`),
-  CONSTRAINT `events_ibfk_2` FOREIGN KEY (`zoneid`) REFERENCES `zones` (`id`),
-  CONSTRAINT `events_ibfk_3` FOREIGN KEY (`eventid`) REFERENCES `eventnames` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `maps`
---
-
-DROP TABLE IF EXISTS `maps`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `maps` (
-  `map` varchar(16) NOT NULL,
-  `id` smallint(5) unsigned NOT NULL,
-  `lang` varchar(8) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `maps`
@@ -658,28 +631,20 @@ CREATE TABLE `maps` (
 LOCK TABLES `maps` WRITE;
 /*!40000 ALTER TABLE `maps` DISABLE KEYS */;
 INSERT INTO `maps` VALUES 
+('Mathosia',1,'de_DE'),
 ('Mathosia',1,'en_US'),
+('Mathosia',1,'fr_FR'),
+('Brevane/Dämmerland',2,'de_DE'),
 ('Brevane/Dusken',2,'en_US'),
-('Plane of Water',3,'en_US');
+('Tynandra/Brunante',2,'fr_FR'),
+('Ebene des Wasser',3,'de_DE'),
+('Plane of Water',3,'en_US'),
+('Plan de l\'Eau',3,'fr_FR'),
+('Himmlische Lande',4,'de_DE'),
+('Celestial Lands',4,'en_US'),
+('Terres Célestes',4,'fr_FR');
 /*!40000 ALTER TABLE `maps` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `shards`
---
-
-DROP TABLE IF EXISTS `shards`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `shards` (
-  `dc` varchar(8) NOT NULL,
-  `id` int(10) unsigned NOT NULL,
-  `name` varchar(16) NOT NULL,
-  `pvp` tinyint(1) DEFAULT '0',
-  `lang` varchar(8) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `shards`
@@ -703,25 +668,6 @@ INSERT INTO `shards` VALUES
 ('eu',2741,'Typhiria',0,'en_GB');
 /*!40000 ALTER TABLE `shards` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `zones`
---
-
-DROP TABLE IF EXISTS `zones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `zones` (
-  `name` varchar(32) NOT NULL,
-  `id` int(10) unsigned NOT NULL,
-  `lang` varchar(8) NOT NULL DEFAULT '',
-  `mapid` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`,`lang`),
-  KEY `id` (`id`),
-  KEY `mapid` (`mapid`),
-  CONSTRAINT `zones_ibfk_1` FOREIGN KEY (`mapid`) REFERENCES `maps` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `zones`
@@ -781,6 +727,9 @@ INSERT INTO `zones` VALUES
 ('Königreich Pelladane',479431687,'de_DE',2),
 ('Kingdom of Pelladane',479431687,'en_US',2),
 ('Royaume de Pelladane',479431687,'fr_FR',2),
+('Gedlonianisches Ödland',788055204,'de_DE',4),
+('Gedlo Badlands',788055204,'en_US',4),
+('Maleterres de Gedlo',788055204,'fr_FR',4),
 ('Ashora',790513416,'de_DE',2),
 ('Ashora',790513416,'en_US',2),
 ('Ashora',790513416,'fr_FR',2),
@@ -790,6 +739,9 @@ INSERT INTO `zones` VALUES
 ('Morban',956914599,'de_DE',2),
 ('Morban',956914599,'en_US',2),
 ('Morban',956914599,'fr_FR',2),
+('Xarth-Sumpf',1208799201,'de_DE',4),
+('Xarth Mire',1208799201,'en_US',4),
+('Bourbier de Xarth',1208799201,'fr_FR',4),
 ('Östliche Besitztümer',1213399942,'de_DE',2),
 ('Eastern Holdings',1213399942,'en_US',2),
 ('Fiefs de l\'Orient',1213399942,'fr_FR',2),
@@ -813,7 +765,13 @@ INSERT INTO `zones` VALUES
 ('Cœur de la Cité',1967477725,'fr_FR',2),
 ('Glutinsel',1992854106,'de_DE',1),
 ('Ember Isle',1992854106,'en_US',1),
-('Île de Braise',1992854106,'fr_FR',1);
+('Île de Braise',1992854106,'fr_FR',1),
+('Aschenfall',2007770238,'de_DE',4),
+('Ashenfell',2007770238,'en_US',4),
+('Chutecendres',2007770238,'fr_FR',4),
+('Skatherran-Wald',2066418614,'de_DE',4),
+('Scatherran Forest',2066418614,'en_US',4),
+('Forêt des Bourreaux',2066418614,'fr_FR',4);
 /*!40000 ALTER TABLE `zones` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -826,4 +784,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-10 15:41:13
+-- Dump completed on 2017-01-08 19:36:13
