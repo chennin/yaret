@@ -217,7 +217,7 @@ foreach my $dc (@dcs) {
           my $row = $laststate->[$index];
           if ($row->{'shardid'} eq $dc->{'shardsbyname'}{$shardname} && $row->{'zoneid'} eq $zone->{'zoneId'} && $row->{'eventid'} eq $eventsbyname{$zone->{'name'}} && $row->{'starttime'} eq $zone->{'started'}) {
             $seenagain = 1;
-            my $removed = splice(@{ $laststate }, $index, 1);
+            unless (($eventsbyname{$zone->{'name'}} == 202) && ($zone->{'started'} + 7200 < time)) { my $removed = splice(@{ $laststate }, $index, 1); }
           }
         }
 
@@ -405,6 +405,7 @@ foreach my $dc (@dcs) {
 # Any rows still in the last known state table are not currently running so the
 # end time should be updated.
 foreach my $row (@{ $laststate }) {
+  if (($row->{'eventid'} == 202) && ($row->{'starttime'} + 7200 > time)) { next; }
   $sth = $dbh->prepare("UPDATE events SET endtime = ? WHERE shardid = ? AND zoneid = ? AND eventid = ? AND starttime = ? AND endtime = 0");
   my $endtime = time;
   my $maxtime = findmaxtime($row->{'eventid'});
