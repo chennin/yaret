@@ -119,12 +119,14 @@ else {
 
 # Get & store zone definitions                                                                                                                                                                       
 my %zonesbyid = ();
+my %zonelevel = ();
 foreach my $lang (@langs) {
     if (!$zonesbyid{$lang}) { $zonesbyid{$lang} = (); }
-    $sth = $dbh->prepare("SELECT id, name FROM zones WHERE lang=?");
+    $sth = $dbh->prepare("SELECT id, name, maxlevel FROM zones WHERE lang=?");
     $sth->execute($lang) or die "Can't get zone names. $DBI::errstr\n";
     while (my $row = $sth->fetchrow_hashref()) {                                                                                                                                                       
       $zonesbyid{$lang}{$row->{'id'}} = $row->{'name'};
+      $zonelevel{$row->{'id'}} = $row->{'maxlevel'};
     }
 }
 
@@ -370,7 +372,7 @@ foreach my $dc (@dcs) {
 #        print STDERR "$row->{'eventid'}\n";
         print $temp "<td class='$class'>" . $eventsbyid{$lang}{$row->{"eventid"}} . "</td>";
         print $temp "<td class='$class pvp$pvp'>" . $dc->{'shardsbyid'}{$row->{"shardid"}} . "</td>";
-        print $temp "<td class='$class'>" . $zonesbyid{$lang}{$row->{"zoneid"}} . "</td>";
+        print $temp "<td sorttable_customkey=\"" . (100 - $zonelevel{$row->{"zoneid"}}) . "\" class='$class'>" . $zonesbyid{$lang}{$row->{"zoneid"}} . "</td>";
         print $temp "<td sorttable_customkey=\"" . (100000 - $timesecs) . "\" class=\"$nearend\" title=\"This event ended in an average of $avgruntime minutes in the past 30 days.\">" . $time . "m</td>";
         print $temp "</tr>\n";
       }
