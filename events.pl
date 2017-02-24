@@ -394,7 +394,7 @@ foreach my $dc (@dcs) {
     print $temp '<p></p><p class="disclaimer">Generated ' . $dt->strftime("%F %T %Z") . ' in ' . $elapsed . 's</p>';
 
     print $temp "<p class=\"disclaimer\">Supported browsers: Chrome 4.0+, IE 8.0+, Firefox 3.5+, Safari 4.0+, Opera 11.5+</p>";
-    print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
+    print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Starfall Prophecy, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
     print $temp "<p class=\"disclaimer\">This site uses cookies and local storage to store user preferences. <a onclick=\"eraseCookie('sort'); eraseCookie('map1'); eraseCookie('map2'); eraseCookie('map3'); eraseCookie('pvp'); eraseCookie('hideLegend'); clearLocalStorage()\">Erase cookies and local storage</a>.</p>\n";
     print $temp "<p class=\"disclaimer\">Contact via the <a href=\"http://forums.riftgame.com/private.php?do=newpm&u=6789104\">RIFT forums</a>.</p>\n";
     print $temp $html->end_html;
@@ -412,7 +412,7 @@ foreach my $row (@{ $laststate }) {
   my $endtime = time;
   my $maxtime = findmaxtime($row->{'eventid'});
 # If the end time is more than the max (due to server restarts and API keeping
-# them up, set it to the max + 1 minute
+# them up) set it to the max + 1 minute
   if ($endtime - $row->{'starttime'} > $maxtime) { $endtime = $row->{'starttime'} + $maxtime + 60; }
   my $success = $sth->execute($endtime, $row->{'shardid'}, $row->{'zoneid'}, $row->{'eventid'}, $row->{'starttime'});
   if (!$success) {
