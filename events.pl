@@ -194,7 +194,7 @@ $sth = $dbh->prepare("SELECT * FROM events WHERE endtime = 0");
 $sth->execute() or die "Can't get running events. $DBI::errstr\n";
 $laststate = $sth->fetchall_arrayref({});
 
-# Go through each DC, retrieve events, and construct web pages
+# Go through each DC, retrieve events, and insert new events
 foreach my $dc (@dcs) {
   foreach my $shardname (sort keys %{ $dc->{"shardsbyname"} } ) {  # %{ ... } = turning an array reference into a usable array
     my $site = $ua->get($dc->{"url"} . $dc->{'shardsbyname'}{$shardname});
@@ -240,7 +240,27 @@ foreach my $dc (@dcs) {
       } # an event
     }
   }
-# Now construct page
+}
+
+# Any rows still in the last known state table are not currently running so the
+# end time should be updated.
+foreach my $row (@{ $laststate }) {
+  if (($row->{'eventid'} == 202) && ($row->{'starttime'} + 7200 > time)) { next; }
+  $sth = $dbh->prepare("UPDATE events SET endtime = ? WHERE shardid = ? AND zoneid = ? AND eventid = ? AND starttime = ? AND endtime = 0");
+  my $endtime = time;
+  my $maxtime = findmaxtime($row->{'eventid'});
+# If the end time is more than the max (due to server restarts and API keeping
+# them up) set it to the max + 1 minute
+  if ($endtime - $row->{'starttime'} > $maxtime) { $endtime = $row->{'starttime'} + $maxtime + 60; }
+  my $success = $sth->execute($endtime, $row->{'shardid'}, $row->{'zoneid'}, $row->{'eventid'}, $row->{'starttime'});
+  if (!$success) {
+    print STDERR "Error removing. " . $DBI::errstr . "\n";
+    print STDERR time . "$row->{'shardid'}, $row->{'zoneid'}, $row->{'eventid'}, $row->{'starttime'}\n";
+  }
+}
+
+# Now construct web page with only current events
+foreach my $dc (@dcs) {
   my $html = new CGI;
 # Safely use temp files (moved later)
   my %outfiles = ();
@@ -402,22 +422,6 @@ foreach my $dc (@dcs) {
 
     chmod oct("0644"), $tempname;
     move($tempname, $WWWFOLDER . $dc->{"shortname"} . '/' . $lang . ".html") or die "Unable to move file. $!";
-  }
-}
-# Any rows still in the last known state table are not currently running so the
-# end time should be updated.
-foreach my $row (@{ $laststate }) {
-  if (($row->{'eventid'} == 202) && ($row->{'starttime'} + 7200 > time)) { next; }
-  $sth = $dbh->prepare("UPDATE events SET endtime = ? WHERE shardid = ? AND zoneid = ? AND eventid = ? AND starttime = ? AND endtime = 0");
-  my $endtime = time;
-  my $maxtime = findmaxtime($row->{'eventid'});
-# If the end time is more than the max (due to server restarts and API keeping
-# them up) set it to the max + 1 minute
-  if ($endtime - $row->{'starttime'} > $maxtime) { $endtime = $row->{'starttime'} + $maxtime + 60; }
-  my $success = $sth->execute($endtime, $row->{'shardid'}, $row->{'zoneid'}, $row->{'eventid'}, $row->{'starttime'});
-  if (!$success) {
-    print STDERR "Error removing. " . $DBI::errstr . "\n";
-    print STDERR time . "$row->{'shardid'}, $row->{'zoneid'}, $row->{'eventid'}, $row->{'starttime'}\n";
   }
 }
 
