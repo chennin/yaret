@@ -259,8 +259,12 @@ foreach my $row (@{ $laststate }) {
   }
 }
 
+# Time start to SQL populated
+my $elapsed1 = tv_interval($t0);
+
 # Now construct web page with only current events
 foreach my $dc (@dcs) {
+  my $t1 = [gettimeofday];
   my $html = new CGI;
 # Safely use temp files (moved later)
   my %outfiles = ();
@@ -408,10 +412,11 @@ foreach my $dc (@dcs) {
   foreach my $lang (@langs) {                                                                                                                                                                      
     my $temp = $outfiles{$lang};
     my $tempname = $outfiles{"${lang}name"};
-    my $elapsed = tv_interval ($t0);
+# Web site constructed
+    my $elapsed2 = tv_interval ($t1);
 
     my $dt = DateTime->now(time_zone => $dc->{"tz"});
-    print $temp '<p></p><p class="disclaimer">Generated ' . $dt->strftime("%F %T %Z") . ' in ' . $elapsed . 's</p>';
+    print $temp '<p></p><p class="disclaimer">Generated ' . $dt->strftime("%F %T %Z") . ' in ' . $elapsed1 . 's + ' . $elapsed2 . 's</p>';
 
     print $temp "<p class=\"disclaimer\">Supported browsers: Chrome 4.0+, IE 8.0+, Firefox 3.5+, Safari 4.0+, Opera 11.5+</p>";
     print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Starfall Prophecy, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
