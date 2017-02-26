@@ -2,12 +2,13 @@ Yet Another Rift Event Tracker
 
 FEATURES:
 
-        * Sorts by map first
+        * Sorts by map (expansion) first
         * Has full translations for zones & events
         * Keeps track of event run time history and shows average/max run time
-        * Allows you to gray out events
+        * Allows you to gray out events you have tagged
         * Uses more colors to convey information
         * Can sort tables by any column, which is remembered
+        * Within a map, zones are sorted by level
         * Can hide maps entirely, which is remembered
         * Can suppress PvP servers entirely, which is remembered
 
