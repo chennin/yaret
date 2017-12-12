@@ -313,7 +313,7 @@ foreach my $dc (@dcs) {
 # Construct table
     print $temp '<div class="caption" id="caption">' . "\n";
     print $temp '<h3>About</h3>';
-    print $temp 'This site lets you see all currently running zone events in <a href="http://www.trionworlds.com/rift/en/">RIFT</a>. Select your region and language, check the list, get in game and go there!';
+    print $temp 'This site shows you all currently running zone events in <a href="http://www.trionworlds.com/rift/en/">RIFT</a>. Select your region and language, check the list, get in game and go there!';
     print $temp '<hr /><h4>Event Formatting</h4><div class="new">Recently started</div> <div class="nearavg">Nearing/over its average run time</div> <div class="nearend">Nearing its maximum run time</div>';
     print $temp '<br /><div class="behemoth">Bloodfire Behemoth</div> <div class="unstable">Unstable Artifact</div> <div class="pony">Unicornalia promo</div> <div class="yule">Fae Yule</div> <div class="fortress">Fortress Siege</div>';
     print $temp '<br /><div class="pvp1">PvP server <a onclick="showHidePvP();" id="pvptoggle">(hide)</a></div>';
@@ -418,7 +418,7 @@ foreach my $dc (@dcs) {
     print $temp '<p></p><p class="disclaimer">Generated ' . $dt->strftime("%F %T %Z") . ' in ' . $elapsed1 . 's + ' . $elapsed2 . 's</p>';
 
     print $temp "<p class=\"disclaimer\">Supported browsers: Chrome 4.0+, IE 8.0+, Firefox 3.5+, Safari 4.0+, Opera 11.5+</p>";
-    print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Starfall Prophecy, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
+    print $temp "<p class=\"disclaimer\">Trion, Trion Worlds, RIFT, Storm Legion, Nightmare Tide, Prophecy of Ahnket, Telara, and their respective logos, are trademarks or registered trademarks of Trion Worlds, Inc. in the U.S. and other countries. This site is not affiliated with Trion Worlds or any of its affiliates.</p>\n";
     print $temp "<p class=\"disclaimer\">This site uses cookies and local storage to store user preferences. <a onclick=\"eraseCookie('sort'); eraseCookie('map1'); eraseCookie('map2'); eraseCookie('map3'); eraseCookie('pvp'); eraseCookie('hideLegend'); clearLocalStorage()\">Erase cookies and local storage</a>.</p>\n";
     print $temp "<p class=\"disclaimer\">Contact via the <a href=\"http://forums.riftgame.com/private.php?do=newpm&u=6789104\">RIFT forums</a>.</p>\n";
     print $temp $html->end_html;
