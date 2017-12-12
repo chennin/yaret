@@ -182,7 +182,6 @@ foreach my $lang (@langs) {
 
 # Set up "browser"
 my $ua = LWP::UserAgent->new(
-    agent => 'Opera/9.80 (X11; Linux x86_64) Presto/2.12.388 Version/12.16',
     timeout => $TIMEOUT,
     );
 
