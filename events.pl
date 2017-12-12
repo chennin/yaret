@@ -347,6 +347,7 @@ foreach my $dc (@dcs) {
       my $timesecs = time - $row->{"starttime"};
       my $time = floor($timesecs/60);
       my $class = "oldnews";
+      my $planes = undef;
       if ($map == $maps) { $class = "relevant"; }
       if ($row->{"eventid"} == 158) { $class .= " pony"; } # Hooves and Horns
       elsif ($row->{"eventid"} == 154) { $class .= " behemoth"; }
@@ -387,13 +388,23 @@ foreach my $dc (@dcs) {
 # Fudge by 1 minute under max time (if we're displaying the max time for an event, it's over)
       if ($time > ($maxtime/60 - 1)) { next; }
 
+      my $sthp = $dbh->prepare("SELECT planes FROM eventnames WHERE id=? LIMIT 1");
+      $sthp->execute($row->{"eventid"}) or die $!;
+      ($planes) = $sthp->fetchrow_array;
+      #print STDERR $planes;
 # Fill in events
       foreach my $lang (@langs) {                                                                                                                                                                      
         my $temp = $outfiles{$lang};
         my $id = "$row->{'eventid'}_$row->{'shardid'}_$row->{'zoneid'}_$row->{'starttime'}";
         print $temp "<tr class='$class' id='$id'>";
 #        print STDERR "$row->{'eventid'}\n";
-        print $temp "<td class='$class'>" . $eventsbyid{$lang}{$row->{"eventid"}} . "</td>";
+        print $temp "<td class='$class'>" . $eventsbyid{$lang}{$row->{"eventid"}};
+        if (defined($planes) && $planes ne "") {
+		foreach my $plane (split(",",$planes)) {
+			print $temp ' <img alt="' . $plane . '" src="../icon/' . $plane . '.png" />';
+		}
+	}
+        print $temp "</td>";
         print $temp "<td class='$class pvp$pvp'>" . $dc->{'shardsbyid'}{$row->{"shardid"}} . "</td>";
         print $temp "<td sorttable_customkey=\"" . (100 - $zonelevel{$row->{"zoneid"}}) . "\" class='$class'>" . $zonesbyid{$lang}{$row->{"zoneid"}} . "</td>";
         print $temp "<td sorttable_customkey=\"" . (100000 - $timesecs) . "\" class=\"$nearend\" title=\"This event ended in an average of $avgruntime minutes in the past 30 days.\">" . $time . "m</td>";
