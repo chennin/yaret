@@ -407,7 +407,7 @@ foreach my $dc (@dcs) {
         print $temp "<td class='$class'>" . $eventsbyid{$lang}{$row->{"eventid"}};
         if (defined($planes) && $planes ne "") {
 		foreach my $plane (split(",",$planes)) {
-			print $temp ' <img alt="' . $plane . '" src="../icon/' . $plane . '.png" />';
+			print $temp ' <img alt="(' . $plane . ')" src="../icon/' . $plane . '.png" />';
 		}
 	}
         print $temp "</td>";
