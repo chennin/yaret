@@ -335,6 +335,12 @@ foreach my $dc (@dcs) {
   for (my $map = $maps; $map > 0; $map--) {
     $sth = $dbh->prepare("SELECT * FROM events WHERE endtime = 0 AND shardid IN (SELECT id FROM shards WHERE dc = ?) AND zoneid IN (SELECT id FROM zones WHERE mapid = ?) ORDER BY starttime ASC");
     my $success = $sth->execute($dc->{"shortname"}, $map) or die "Unable to retrieve events for map. $!";
+    if ($sth->rows == 0) {
+      foreach my $lang (@langs) {
+        print { $outfiles{$lang} } "<h4 class=\"label\" title=\"Zero events found\">&#x20e0; $mapsbyid{$lang}{$map} </h4>\n";
+      }
+      next;
+    }
     foreach my $lang (@langs) {
       my $temp = $outfiles{$lang};
       print $temp "<h4 class=\"label downarrow\" onclick=\"showHide('$map')\" id=\"label$map\">$mapsbyid{$lang}{$map} </h4>\n";
