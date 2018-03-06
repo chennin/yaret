@@ -86,7 +86,7 @@ function initialize() {
         }
   }
   // Check for and hide saved hidden maps
-  for (var i = 1; i <= 3; i++) {
+  for (var i = 1; i <= 5; i++) {
         var hidemap  = readCookie('map' + i);
         if (hidemap == "hide") { showHide(i); }
   }
