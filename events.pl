@@ -35,7 +35,7 @@ use Cwd qw/abs_path/;
 my $t0 = [gettimeofday];
 
 my $REFRESH = 60;
-my $TIMEOUT = 6; # Timeout per HTTP request to the Rift server (one per shard)
+my $TIMEOUT = 4; # Timeout per HTTP request to the Rift server (one per shard)
 my $CONFIGFILE = dirname(abs_path(__FILE__)) . "/ret.conf";
 
 # DO NOT EDIT BELOW THIS LINE
