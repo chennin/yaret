@@ -337,7 +337,7 @@ foreach my $dc (@dcs) {
     my $success = $sth->execute($dc->{"shortname"}, $map) or die "Unable to retrieve events for map. $!";
     if ($sth->rows == 0) {
       foreach my $lang (@langs) {
-        print { $outfiles{$lang} } "<h4 class=\"label\" title=\"Zero events found\">&#x20e0; $mapsbyid{$lang}{$map} </h4>\n";
+        print { $outfiles{$lang} } "<h4 class=\"label\" title=\"Zero events found\">&empty; $mapsbyid{$lang}{$map} </h4>\n";
       }
       next;
     }
