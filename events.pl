@@ -21,6 +21,8 @@ use strict;
 use warnings;
 use JSON::XS;
 use LWP::UserAgent;
+use XML::RSS;
+use Date::Parse;
 use POSIX qw/floor strftime/;
 use DateTime;
 use CGI qw/meta param/;
@@ -261,6 +263,25 @@ foreach my $row (@{ $laststate }) {
 # Time start to SQL populated
 my $elapsed1 = tv_interval($t0);
 
+my %maint;
+my $rss = new XML::RSS;
+foreach my $dc (@dcs) {
+  $maint{$dc->{"shortname"}} = 0;
+  my $mdc = $dc->{"shortname"};
+  if ($mdc eq "prime") {
+    $mdc = "na";
+    if (defined($maint{$mdc})) { $maint{$dc} = $maint{$mdc}; next; }
+  }
+  my $site = $ua->get("http://rss.trionworlds.com/live/maintenance/rift-${mdc}-en.rss");
+  if (!$site->is_success) {
+    print STDERR "Error retrieving maintenance info " . $site->status_line . "\n";
+  }
+  $rss->parse($site->decoded_content);
+  foreach my $item (@{$rss->{'items'}}) {
+    if (DateTime->now()->epoch > str2time($item->{'pubDate'})) { $maint{$dc->{"shortname"}} = 1; }
+  }
+}
+
 # Now construct web page with only current events
 foreach my $dc (@dcs) {
   my $t1 = [gettimeofday];
@@ -313,6 +334,9 @@ foreach my $dc (@dcs) {
       print $temp '<h3 style="color:skyblue;" class="normal">Enter to win a RIFT 5th Anniversary Snail Mount <a href="https://gleam.io/WH0pP/rift-anniversary-snail-giveaway">here</a>.</h2>';
       print $temp '<h4 class="normal">Prime will be supported as soon as possible - but I don\'t know exactly when that will be.</h4>';
 #   }
+    if ($maint{$dc->{"shortname"}} == 1) {
+      print $temp '<h4 class="normal" style="color:lemonchiffon;" class="normal"><em>NOTE</em>: RIFT is currently in a maintenance window so anything below may be inaccurate.</h4>';
+    }
 
 # Construct table
     print $temp '<div class="caption" id="caption">' . "\n";
