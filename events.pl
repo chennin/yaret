@@ -273,12 +273,11 @@ foreach my $dc (@dcs) {
     if (defined($maint{$mdc})) { $maint{$dc} = $maint{$mdc}; next; }
   }
   my $site = $ua->get("http://rss.trionworlds.com/live/maintenance/rift-${mdc}-en.rss");
-  if (!$site->is_success) {
-    print STDERR "Error retrieving maintenance info " . $site->status_line . "\n";
-  }
-  $rss->parse($site->decoded_content);
-  foreach my $item (@{$rss->{'items'}}) {
-    if (DateTime->now()->epoch > str2time($item->{'pubDate'})) { $maint{$dc->{"shortname"}} = 1; }
+  if ($site->is_success) {
+    $rss->parse($site->decoded_content);
+    foreach my $item (@{$rss->{'items'}}) {
+      if (DateTime->now()->epoch > str2time($item->{'pubDate'})) { $maint{$dc->{"shortname"}} = 1; }
+    }
   }
 }
 
