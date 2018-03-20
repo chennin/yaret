@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
+-- MySQL dump 10.16  Distrib 10.2.13-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: ret
 -- ------------------------------------------------------
--- Server version	5.7.17
+-- Server version	10.2.13-MariaDB-10.2.13+maria~xenial-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,9 +26,11 @@ CREATE TABLE `eventnames` (
   `name` varchar(64) NOT NULL,
   `id` int(10) unsigned NOT NULL,
   `lang` varchar(8) NOT NULL DEFAULT '',
-  `maxruntime` int(10) unsigned DEFAULT '7200',
+  `maxruntime` int(10) unsigned DEFAULT 7200,
+  `planes` set('fire','water','air','life','death','earth') DEFAULT NULL,
   PRIMARY KEY (`id`,`lang`),
-  KEY `id` (`id`)
+  KEY `id` (`id`),
+  KEY `i_lang` (`lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -44,7 +46,7 @@ CREATE TABLE `events` (
   `zoneid` int(10) unsigned NOT NULL,
   `eventid` int(10) unsigned NOT NULL,
   `starttime` int(10) unsigned NOT NULL,
-  `endtime` int(10) unsigned DEFAULT '0',
+  `endtime` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`shardid`,`zoneid`,`eventid`,`starttime`),
   KEY `zoneid` (`zoneid`),
   KEY `eventid` (`eventid`),
@@ -66,7 +68,8 @@ CREATE TABLE `maps` (
   `map` varchar(32) DEFAULT NULL,
   `id` smallint(5) unsigned NOT NULL,
   `lang` varchar(8) NOT NULL,
-  PRIMARY KEY (`id`,`lang`)
+  PRIMARY KEY (`id`,`lang`),
+  KEY `i_lang` (`lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -81,9 +84,10 @@ CREATE TABLE `shards` (
   `dc` varchar(8) NOT NULL,
   `id` int(10) unsigned NOT NULL,
   `name` varchar(16) NOT NULL,
-  `pvp` tinyint(1) DEFAULT '0',
+  `pvp` tinyint(1) DEFAULT 0,
   `lang` varchar(8) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `dc` (`dc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -99,9 +103,11 @@ CREATE TABLE `zones` (
   `id` int(10) unsigned NOT NULL,
   `lang` varchar(8) NOT NULL DEFAULT '',
   `mapid` smallint(5) unsigned NOT NULL,
+  `maxlevel` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`,`lang`),
   KEY `id` (`id`),
   KEY `mapid` (`mapid`),
+  KEY `lang` (`lang`),
   CONSTRAINT `zones_ibfk_1` FOREIGN KEY (`mapid`) REFERENCES `maps` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -115,4 +121,4 @@ CREATE TABLE `zones` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-08 19:35:40
+-- Dump completed on 2018-03-20 13:40:27
