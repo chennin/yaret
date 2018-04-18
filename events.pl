@@ -266,7 +266,7 @@ my $elapsed1 = tv_interval($t0);
 my %maint;
 my $rss = new XML::RSS;
 foreach my $dc (@dcs) {
-  $maint{$dc->{"shortname"}} = 0;
+  $maint{$dc->{"shortname"}} = "";
   my $mdc = $dc->{"shortname"};
   if ($mdc eq "prime") {
     $mdc = "na";
@@ -276,7 +276,11 @@ foreach my $dc (@dcs) {
   if ($site->is_success) {
     $rss->parse($site->decoded_content);
     foreach my $item (@{$rss->{'items'}}) {
-      if (DateTime->now()->epoch > str2time($item->{'pubDate'})) { $maint{$dc->{"shortname"}} = 1; }
+      $item->{'pubDate'} =~ s/PST/PDT/; #hack
+      $item->{'pubDate'} =~ s/CST/CDT/; #hack
+      #my $mainttime = DateTime->from_epoch(epoch => str2time($item->{'pubDate'}, time_zone => "-0600"))->epoch();
+      #print DateTime->now()->epoch . " " . str2time($item->{'pubDate'}, "America/Chicago") . " " . $mainttime . "\n";
+      if (DateTime->now()->epoch > str2time($item->{'pubDate'})) { $maint{$dc->{"shortname"}} = $item->{'link'}; }
     }
   }
 }
@@ -330,11 +334,10 @@ foreach my $dc (@dcs) {
     }
     print $temp "</p>\n";
 #    if ($dc->{"shortname"} eq "na") {
-      print $temp '<h3 style="color:skyblue;" class="normal">Enter to win a RIFT 5th Anniversary Snail Mount <a href="https://gleam.io/WH0pP/rift-anniversary-snail-giveaway">here</a>.</h2>';
-      print $temp '<h4 class="normal">Prime will be supported as soon as possible - but I don\'t know exactly when that will be.</h4>';
+#      print $temp '<h3 style="color:skyblue;" class="normal">News Message</h2>';
 #   }
-    if ($maint{$dc->{"shortname"}} == 1) {
-      print $temp '<h4 class="normal" style="color:lemonchiffon;" class="normal"><em>NOTE</em>: RIFT is currently in a maintenance window so anything below may be inaccurate.</h4>';
+    if ($maint{$dc->{"shortname"}} ne "") {
+      print $temp '<h4 class="normal" style="color:lemonchiffon;" class="normal"><em>NOTE</em>: RIFT is currently in a <a href="' . $maint{$dc->{"shortname"}} . '">planned maintenance window</a> so anything below may be inaccurate.</h4>';
     }
 
 # Construct table
