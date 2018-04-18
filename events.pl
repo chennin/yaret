@@ -100,7 +100,7 @@ foreach my $lang (@langs) {
 $maps = keys %{ $mapsbyid{"en_US"} };
 
 # Get & store shards to reference by name and ID
-my (%eubyid, %nabyid, %eubyname, %nabyname, %pvps);
+my (%eubyid, %nabyid, %eubyname, %nabyname, %primebyname, %primebyid, %pvps);
 $sth = $dbh->prepare("SELECT id, name, dc, pvp FROM shards");
 my $success = $sth->execute();
 if (!$success) { die "Can't get shards. $DBI::errstr\n"; }
@@ -113,6 +113,10 @@ else {
     elsif ($row->{'dc'} eq "na") {
       $nabyid{$row->{'id'}} = $row->{'name'};
       $nabyname{$row->{'name'}} = $row->{'id'};
+    }
+    elsif ($row->{'dc'} eq "prime") {
+      $primebyid{$row->{'id'}} = $row->{'name'};
+      $primebyname{$row->{'name'}} = $row->{'id'};
     }
 # Keep track of PvP servers for later in/exclusion from average times
     $pvps{$row->{'name'}} = $row->{'pvp'};
@@ -146,10 +150,18 @@ my %eudc = (
     shardsbyname => \%eubyname,
     tz => "GMT",
     );
+my %primedc = (
+    url => "https://web-api-us.riftgame.com/chatservice/zoneevent/list?shardId=",
+    shortname => "prime",
+    shardsbyid => \%primebyid,
+    shardsbyname => \%primebyname,
+    tz => "America/Los_Angeles",
+    );
 
 my @dcs = ();
 push(@dcs, \%nadc);
 push(@dcs, \%eudc);
+push(@dcs, \%primedc);
 
 # Make sure output folders are correct
 sub createdir($) {
