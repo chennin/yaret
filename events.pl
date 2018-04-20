@@ -371,6 +371,7 @@ foreach my $dc (@dcs) {
 
 # Retrieve events
   for (my $map = $maps; $map > 0; $map--) {
+    if ($map > 1 && $dc->{"shortname"} eq "prime") { next; } # Prime short-circuit
     $sth = $dbh->prepare("SELECT * FROM events WHERE endtime = 0 AND shardid IN (SELECT id FROM shards WHERE dc = ?) AND zoneid IN (SELECT id FROM zones WHERE mapid = ?) ORDER BY starttime ASC");
     my $success = $sth->execute($dc->{"shortname"}, $map) or die "Unable to retrieve events for map. $!";
     if ($sth->rows == 0) {
