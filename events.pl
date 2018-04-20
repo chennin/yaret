@@ -282,7 +282,7 @@ foreach my $dc (@dcs) {
   my $mdc = $dc->{"shortname"};
   if ($mdc eq "prime") {
     $mdc = "na";
-    if (defined($maint{$mdc})) { $maint{$dc} = $maint{$mdc}; next; }
+    if (defined($maint{$mdc})) { $maint{$dc->{"shortname"}} = $maint{$mdc}; next; }
   }
   my $site = $ua->get("http://rss.trionworlds.com/live/maintenance/rift-${mdc}-en.rss");
   if ($site->is_success) {
