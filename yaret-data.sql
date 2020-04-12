@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.2.13-MariaDB, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.16  Distrib 10.2.31-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: ret
 -- ------------------------------------------------------
--- Server version	10.2.13-MariaDB-10.2.13+maria~xenial-log
+-- Server version	10.2.31-MariaDB-10.2.31+maria~xenial-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -399,9 +399,9 @@ INSERT INTO `eventnames` VALUES ('Champions des Feuersturms',1,'de_DE',7200,'fir
 ('Böses Erwachen',126,'de_DE',7200,'life'),
 ('Rude Awakening',126,'en_US',7200,'life'),
 ('Réveil difficile',126,'fr_FR',7200,'life'),
-('Exuvie von Khargroth',127,'de_DE',7200,NULL),
-('The Exuvia of Khargroth',127,'en_US',7200,NULL),
-('L\'Exuvie de Khargroth',127,'fr_FR',7200,NULL),
+('Exuvie von Khargroth',127,'de_DE',7200,'life'),
+('The Exuvia of Khargroth',127,'en_US',7200,'life'),
+('L\'Exuvie de Khargroth',127,'fr_FR',7200,'life'),
 ('Die steigenden Tiefen',128,'de_DE',7200,'water'),
 ('The Rising Depths',128,'en_US',7200,'water'),
 ('Le Soulèvement des profondeurs',128,'fr_FR',7200,'water'),
@@ -640,7 +640,43 @@ INSERT INTO `eventnames` VALUES ('Champions des Feuersturms',1,'de_DE',7200,'fir
 ('La Tempête gronde',210,'fr_FR',5400,NULL),
 ('Das prekäre Gleichgewicht: Ahnket',211,'de_DE',5400,NULL),
 ('Tipping the Scale: Ahnket',211,'en_US',5400,NULL),
-('Équilibrage : Ahnket',211,'fr_FR',5400,NULL);
+('Équilibrage : Ahnket',211,'fr_FR',5400,NULL),
+('A Clash of Power',212,'en_US',NULL,NULL),
+('Civil Unrest',213,'en_US',NULL,NULL),
+('Into the Depths',214,'en_US',NULL,NULL),
+('Invasion: Freemarch',215,'en_US',7200,NULL),
+('Invasion: Gloamwood',216,'en_US',7200,NULL),
+('Invasion: Scarwood Reach',217,'en_US',7200,NULL),
+('Invasion: Silverwood',218,'en_US',7200,NULL),
+('Invasion: Stonefield',219,'en_US',7200,NULL),
+('Skies Over Gedlo',220,'en_US',7200,NULL),
+('The Grim Harvest',221,'en_US',NULL,NULL),
+('The Scrying Game',222,'en_US',NULL,NULL),
+('War Machine 124-KT',223,'en_US',NULL,NULL),
+('Der Zwielicht-Forst',224,'de_DE',2700,'death'),
+('The Twilight Forest',224,'en_US',2700,'death'),
+('La forêt du crépuscule',224,'fr_FR',2700,'death'),
+('Die Rache der Könige',225,'de_DE',2700,'death'),
+('The Revenge of the Kings',225,'en_US',2700,'death'),
+('La Revanche des rois',225,'fr_FR',2700,'death'),
+('Kinder der Nacht',226,'de_DE',2700,'death'),
+('Children of the Night',226,'en_US',2700,'death'),
+('Enfants de la Nuit',226,'fr_FR',2700,'death'),
+('Der Seelenfluss',227,'de_DE',2700,'death'),
+('The River of Souls',227,'en_US',2700,'death'),
+('Le Fleuve des Âmes',227,'fr_FR',2700,'death'),
+('Die Flucht der Altvorderen',228,'de_DE',2700,'death'),
+('Escape of the Ancients',228,'en_US',2700,'death'),
+('Fuite des Anciens',228,'fr_FR',2700,'death'),
+('Ancient Spirits of Evil',229,'de_DE',2700,'death'),
+('Ancient Spirits of Evil',229,'en_US',2700,'death'),
+('Ancient Spirits of Evil',229,'fr_FR',2700,'death'),
+('Verteidiger der Elemente',230,'de_DE',7200,'air'),
+('Defender of the Elements',230,'en_US',7200,'air'),
+('Défenseur des Éléments',230,'fr_FR',7200,'air'),
+('Die Vögel',231,'de_DE',7200,'death'),
+('The Birds',231,'en_US',7200,'death'),
+('Les oiseaux',231,'fr_FR',7200,'death');
 /*!40000 ALTER TABLE `eventnames` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -671,20 +707,20 @@ UNLOCK TABLES;
 
 LOCK TABLES `shards` WRITE;
 /*!40000 ALTER TABLE `shards` DISABLE KEYS */;
-INSERT INTO `shards` VALUES ('na',1701,'Seastone',1,'en_US'),
-('na',1702,'Greybriar',0,'en_US'),
-('na',1704,'Deepwood',0,'en_US'),
-('na',1706,'Wolfsbane',0,'en_US'),
-('na',1707,'Faeblight',0,'en_US'),
-('na',1708,'Laethys',0,'en_US'),
-('na',1721,'Hailol',0,'en_US'),
-('prime',1801,'Vigil',0,'en_US'),
-('eu',2702,'Bloodiron',1,'en_GB'),
-('eu',2711,'Brutwacht',0,'de_DE'),
-('eu',2714,'Brisesol',0,'fr_FR'),
-('eu',2721,'Gelidra',0,'en_GB'),
-('eu',2722,'Zaviel',0,'en_GB'),
-('eu',2741,'Typhiria',0,'en_GB');
+INSERT INTO `shards` VALUES ('na',1701,'Seastone',1,'en_US',1),
+('na',1702,'Greybriar',0,'en_US',1),
+('na',1704,'Deepwood',0,'en_US',1),
+('na',1706,'Wolfsbane',0,'en_US',1),
+('na',1707,'Faeblight',0,'en_US',1),
+('na',1708,'Laethys',0,'en_US',1),
+('na',1721,'Hailol',0,'en_US',1),
+('prime',1801,'Vigil',0,'en_US',0),
+('eu',2702,'Bloodiron',1,'en_GB',1),
+('eu',2711,'Brutwacht',0,'de_DE',1),
+('eu',2714,'Brisesol',0,'fr_FR',1),
+('eu',2721,'Gelidra',0,'en_GB',0),
+('eu',2722,'Zaviel',0,'en_GB',0),
+('eu',2741,'Typhiria',0,'en_GB',1);
 /*!40000 ALTER TABLE `shards` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -805,4 +841,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-20 13:31:47
+-- Dump completed on 2020-04-12 13:09:15
