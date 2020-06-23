@@ -161,7 +161,7 @@ my %primedc = (
 my @dcs = ();
 push(@dcs, \%nadc);
 push(@dcs, \%eudc);
-push(@dcs, \%primedc);
+#push(@dcs, \%primedc);
 
 # Make sure output folders are correct
 sub createdir($) {
