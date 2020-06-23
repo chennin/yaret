@@ -398,11 +398,19 @@ foreach my $dc (@dcs) {
       my $class = "oldnews";
       my $planes = undef;
       if ($map == $maps) { $class = "relevant"; }
-      if ($row->{"eventid"} == 158) { $class .= " pony"; } # Hooves and Horns
-#      elsif ($row->{"eventid"} == 154) { $class .= " behemoth"; }
-      elsif (($row->{"eventid"} == 129) || (($row->{"eventid"} >= 187) && ($row->{"eventid"} <= 192))) { $class .= " yule"; }
+##      lsif ($row->{"eventid"} == 154) { $class .= " behemoth"; }
+      if (
+         ($row->{"eventid"} == 129) || (($row->{"eventid"} >= 187) && ($row->{"eventid"} <= 192)) || # yule
+         ($row->{"eventid"} == 158) || # Hooves and Horns
+#         (($row->{"eventid"} >= 224) && ($row->{"eventid"} <= 229)) || # Grim Remembrance
+         ($row->{"eventid"} == 127) || # Summerfest
+         ($row->{"eventid"} == 157) || ($row->{"eventid"} == 159) || # CtA Hellbug
+         ($row->{"eventid"} == 230) || # CtA Mech
+         ($row->{"eventid"} == 231) || # CtA Budgie
+         ($row->{"eventid"} == 79) || ($row->{"eventid"} == 3) # Carnival
+      ) { $class .= " yule"; }
       elsif (($row->{"eventid"} >= 130) && ($row->{"eventid"} <= 153) && ($row->{"eventid"} != 152)) { $class .= " unstable"; }
-#      elsif (($row->{"eventid"} >= 201) && ($row->{"eventid"} <= 202)) { $class .= " fortress"; }
+##      elsif (($row->{"eventid"} >= 201) && ($row->{"eventid"} <= 202)) { $class .= " fortress"; }
       elsif (($row->{"eventid"} >= 206) && ($row->{"eventid"} <= 211)) { $class .= " vostigar"; }
 
 # Minutes to consider an event new
