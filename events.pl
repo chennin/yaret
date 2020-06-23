@@ -232,7 +232,7 @@ foreach my $dc (@dcs) {
           my $row = $laststate->[$index];
           if ($row->{'shardid'} eq $dc->{'shardsbyname'}{$shardname} && $row->{'zoneid'} eq $zone->{'zoneId'} && $row->{'eventid'} eq $eventsbyname{$zone->{'name'}} && $row->{'starttime'} eq $zone->{'started'}) {
             $seenagain = 1;
-            unless (($eventsbyname{$zone->{'name'}} == 202) && ($zone->{'started'} + 7200 < time)) { my $removed = splice(@{ $laststate }, $index, 1); }
+            my $removed = splice(@{ $laststate }, $index, 1);
           }
         }
 
@@ -292,7 +292,12 @@ foreach my $dc (@dcs) {
       $item->{'pubDate'} =~ s/CST/CDT/; #hack
       #my $mainttime = DateTime->from_epoch(epoch => str2time($item->{'pubDate'}, time_zone => "-0600"))->epoch();
       #print DateTime->now()->epoch . " " . str2time($item->{'pubDate'}, "America/Chicago") . " " . $mainttime . "\n";
-      if (DateTime->now()->epoch > str2time($item->{'pubDate'})) { $maint{$dc->{"shortname"}} = $item->{'link'}; }
+      if (DateTime->now()->epoch > str2time($item->{'pubDate'})) {
+        if (defined $item->{'link'}) {
+          $maint{$dc->{"shortname"}} = $item->{'link'};
+        }
+        else { $maint{$dc->{"shortname"}} = "nolink"; }
+      }
     }
   }
 }
@@ -349,7 +354,10 @@ foreach my $dc (@dcs) {
 #      print $temp '<h3 style="color:skyblue;" class="normal">News Message</h2>';
 #   }
     if ($maint{$dc->{"shortname"}} ne "") {
-      print $temp '<h4 class="normal" style="color:lemonchiffon;" class="normal"><em>NOTE</em>: RIFT is currently in a <a href="' . $maint{$dc->{"shortname"}} . '">planned maintenance window</a> so anything below may be inaccurate.</h4>';
+      my $hrstr = '';
+      if ($maint{$dc->{"shortname"}} eq "nolink") { $hrstr = "planned maintenance window"; }
+      else { $hrstr = '<a href="' . $maint{$dc->{"shortname"}} . '">planned maintenance window</a>'; }
+      print $temp '<h4 class="normal" style="color:lemonchiffon;" class="normal"><em>NOTE</em>: RIFT is currently in a ' . $hrstr . ' so anything below may be inaccurate.</h4>';
     }
 
 # Construct table
