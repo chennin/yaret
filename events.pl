@@ -258,7 +258,7 @@ foreach my $dc (@dcs) {
 # Any rows still in the last known state table are not currently running so the
 # end time should be updated.
 foreach my $row (@{ $laststate }) {
-  if (($row->{'eventid'} == 202) && ($row->{'starttime'} + 7200 > time)) { next; }
+#  if (($row->{'eventid'} == 202) && ($row->{'starttime'} + 7200 > time)) { next; }
   $sth = $dbh->prepare("UPDATE events SET endtime = ? WHERE shardid = ? AND zoneid = ? AND eventid = ? AND starttime = ? AND endtime = 0");
   my $endtime = time;
   my $maxtime = findmaxtime($row->{'eventid'});
