@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.2.13-MariaDB, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.16  Distrib 10.2.32-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: ret
 -- ------------------------------------------------------
--- Server version	10.2.13-MariaDB-10.2.13+maria~xenial-log
+-- Server version	10.2.32-MariaDB-10.2.32+maria~xenial-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -86,6 +86,7 @@ CREATE TABLE `shards` (
   `name` varchar(16) NOT NULL,
   `pvp` tinyint(1) DEFAULT 0,
   `lang` varchar(8) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `dc` (`dc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -121,4 +122,4 @@ CREATE TABLE `zones` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-20 13:40:27
+-- Dump completed on 2020-06-23 17:57:14
