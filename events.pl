@@ -357,7 +357,7 @@ foreach my $dc (@dcs) {
     print $temp '<h3>About</h3>';
     print $temp 'This site shows you all currently running zone events in <a href="http://www.trionworlds.com/rift/en/">RIFT</a>. Select your region and language, check the list, get in game and go there!';
     print $temp '<hr /><h4>Event Formatting</h4><div class="new">Recently started</div> <div class="nearavg">Nearing/over its average run time</div> <div class="nearend">Nearing its maximum run time</div>';
-    print $temp '<br /><div class="unstable">Unstable Artifact</div> <div class="yule">Fae Yule</div> <div class="vostigar">Vostigar Peaks event</div>';
+    print $temp '<br /><div class="unstable">Unstable Artifact</div> <div class="yule">Seasonal / Special event</div> <div class="vostigar">Vostigar Peaks event</div>';
     print $temp '<br /><div class="pvp1">PvP server <a onclick="showHidePvP();" id="pvptoggle">(hide)</a></div>';
     print $temp '<hr /><h4>Usage</h4><div>Find an event you are interested in. Hop to the shard it is on and teleport there, then do the event! But remember that an event may complete (or fail) before you get there!</div>';
     print $temp '<br /><div>Click an event to <span class="tagged">gray</span> it out.</div>';
