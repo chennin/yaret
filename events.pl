@@ -101,7 +101,7 @@ $maps = keys %{ $mapsbyid{"en_US"} };
 
 # Get & store shards to reference by name and ID
 my (%eubyid, %nabyid, %eubyname, %nabyname, %primebyname, %primebyid, %pvps);
-$sth = $dbh->prepare("SELECT id, name, dc, pvp FROM shards");
+$sth = $dbh->prepare("SELECT id, name, dc, pvp FROM shards WHERE active = true");
 my $success = $sth->execute();
 if (!$success) { die "Can't get shards. $DBI::errstr\n"; }
 else {
